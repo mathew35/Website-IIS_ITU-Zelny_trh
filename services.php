@@ -67,6 +67,45 @@ class AccountService
         $stmt->execute(NULL);
         return $stmt;
     }
+    // how to use add()
+    // $db = new AccountService();
+    // $db->add("SPECIFIC_CROP", "(NULL,'cibula','zelenina','najsamlepsiaaaaaaaa',0,0,0,NULL)");
+    function add($table, $values)
+    {
+        $cols = $this->pdo->prepare("SHOW COLUMNS FROM " . $table . ";");
+        $cols->execute(NULL);
+        $item = $cols->fetch();
+        $res = "(" . $item[0];
+        $item = $cols->fetch();
+        for ($i = 1; $i < $cols->rowCount(); $i++) {
+            $res = $res . ", " . $item[0];
+            $item = $cols->fetch();
+        }
+        $res = $res . ")";
+        $query = $this->pdo->prepare("INSERT INTO " . $table . " " . $res . " VALUES " . $values . ";");
+        $query->execute(NULL);
+    }
+    // how to use remove()
+    // $db = new AccountService();
+    // $test = $db->remove("SPECIFIC_CROP", "CROPID=2");
+    function remove($table, $condition)
+    {
+        if ($condition == NULL) $condition = 0;
+        $query = $this->pdo->prepare("DELETE FROM " . $table . " WHERE " . $condition);
+        $query->execute(NULL);
+    }
+    // how to use get()
+    // $db = new AccountService();
+    // $test = $db->get("SPECIFIC_CROP", "CROP_NAME", "CROPID=2");
+    // $item = $test->fetch();
+    // echo $item[0];
+    function get($table, $what, $condition)
+    {
+        if ($condition == NULL) $condition = 1;
+        $query = $this->pdo->prepare("SELECT " . $what . " FROM " . $table . " WHERE " . $condition . ";");
+        $query->execute(NULL);
+        return $query;
+    }
 }
 function require_user()
 {
