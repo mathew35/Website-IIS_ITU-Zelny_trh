@@ -63,7 +63,7 @@ footer {
 table {
     display: block;
     background-color: none;
-    width: 90vw;
+    width: 80%;
     height: max(80%, 20%);
     margin: 0;
     padding: 0;
@@ -75,7 +75,7 @@ tr {
     display: inline-flex;
     background-color: yellow;
     justify-content: space-evenly;
-    width: 90vw;
+    width: 100%;
     margin: 0;
     padding: 0;
     padding-top: 1%;
@@ -91,16 +91,22 @@ tr {
 
 #table {
     display: block;
-    width: 91%;
-    height: 65vh;
+    width: 100vw;
+    height: 75%;
     padding: 10vh;
+    padding-inline: 10vw;
     margin: 0;
 }
 
 #tableItem {
     display: block;
-    width: 14vw;
+    width: 12vw;
     height: 12vh;
+}
+
+tbody {
+    width: 100%;
+    display: block;
 }
 
 button {
