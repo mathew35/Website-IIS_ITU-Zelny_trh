@@ -143,3 +143,27 @@ button {
     width: 90%;
     height: 50%;
 }
+
+.popup {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#popupBackground {
+    background-color: lightblue;
+    opacity: .4;
+    z-index: 1;
+}
+
+#popupWin {
+    width: 60vw;
+    height: 80vh;
+    top: 10vh;
+    left: 20vw;
+    background-color: aqua;
+    z-index:  1;
+}
