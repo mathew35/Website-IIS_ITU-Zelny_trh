@@ -18,7 +18,14 @@
         }
 
         // pridat puvod
-        // pridat farmare
+        public function getLocation(){
+            //nejdrive potreba pridat lokaci
+        }
+
+        // pridat farmare 
+        public function getFarmer(){
+            //nejdrive potreba propoji farmer a specific crop
+        }
 
         public function getDescript(){
             $gettext = $this->db->get("SPECIFIC_CROP","DESCRIPTION","CROPID=" . $this->id);
@@ -60,12 +67,25 @@
             }
         }
 
+        public function addAmount(){
+            //ziskat amount od uzivatele
+            //$crop = $this->id; 
+            //$amount = 1;
+
+            //vlozit do cart_crop/shopping_cart ?
+            //$this->db->add("CART_CROP", "(" . 55 . $crop . $amount . ")");
+        }
 
     }
     $product = new ProductDetail(1);
     $product->getName();
+    $product->getFarmer();
+    $product->getLocation();
     $product->getDescript();
     $product->getPrice();
+
+    $product->addAmount();
+
     $product->getAvgRatings();
     $product->getRatings();
     ?>
