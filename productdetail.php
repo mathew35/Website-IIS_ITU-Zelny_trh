@@ -85,10 +85,14 @@
             $place = $getplace->fetch();
 
             for ($i = 0; $i < $getplace->rowCount(); $i++) {
-                echo "<a role='button'><button>" . $place[0] . " od " . $date[0] . " do " . $date2[0] . "<br>" . "</button></a>";
+                echo $place[0] . " od " . $date[0] . " do " . $date2[0];
                 $place = $getplace->fetch();
                 $date = $getdate->fetch();
                 $date2 = $getdate2->fetch();
+                echo '<form method="POST" action="harvestdetail.php">
+                        <input type="submit" name="login"
+                        class="button" value="Zobrazit detaily"/>
+                    </form>';
             }
 
         }
