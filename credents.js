@@ -74,17 +74,15 @@ function post(dest, form) {
     const request = new XMLHttpRequest();
     var data = null;
     if (form != null) {
-        data = new FormData(document.getElementById("loginForm"));
+        data = new FormData(form);
     }
-    console.log(dest);
     request.open("POST", dest);
     request.send(data);
     return request;
 }
 
 function formpost(dest) {
-    const form = new FormData(document.getElementById("loginForm"));
-    const request = post(dest, form);
+    const request = post(dest, document.getElementById("loginForm"));
     request.addEventListener("load", (event) => {
         if (request.status == 200)
             if (dest == "login.php") {
@@ -140,23 +138,36 @@ function logout() {
     request.send();
     request.addEventListener("load", (evenr) => {
         sessionStorage.removeItem('user');
+        sessionStorage.removeItem('farmer');
+        sessionStorage.removeItem('farmer_view');
         credents();
+        location.reload();
     })
 }
 
 function farmer() {
-    console.log("farmer");
-    const request = new XMLHttpRequest();
-    request.open("POST", "farmer.php");
-    request.send();
-    request.addEventListener("load", (evenr) => {
-        if (request.responseText == false) {
-            if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+    if (sessionStorage.getItem('farmer') == null) {
+        const request = post("farmer.php", null);
+        request.addEventListener("load", (evenr) => {
+            if (request.responseText == false) {
+                if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+            } else {
+                sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
+                sessionStorage.setItem('farmer_view', 1);
+            }
+            location.reload();
+        })
+    } else {
+        var req = post("farmer.php", null);
+        if (sessionStorage.getItem('farmer_view') != null) {
+            sessionStorage.removeItem('farmer_view');
         } else {
-            sessionStorage.setItem('farmer', 1);
+            sessionStorage.setItem('farmer_view', 1);
         }
-        location.reload();
-    })
+        req.addEventListener("load", () => {
+            location.reload();
+        })
+    }
 }
 
 function profile() {
@@ -199,7 +210,7 @@ function credents() {
         cartButton.onclick = cart;
         cartButton.textContent = "Cart";
         cartButton.id = "cartButton";
-        if (sessionStorage.getItem('farmer') != null) {
+        if (sessionStorage.getItem('farmer_view') != null) {
             cartButton.onclick = orders;
             cartButton.textContent = "Orders";
         }

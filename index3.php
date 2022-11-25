@@ -50,6 +50,5 @@ require "services.php";
 </body>
 <script src="credents.js"></script>
 <script src="logo.js"></script>
-<!-- <script src="farmer_view.js"></script> -->
 
 </html>

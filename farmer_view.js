@@ -1,40 +1,101 @@
 function get_own_products() {
-    return "";
+    const request = new XMLHttpRequest();
+    var data = null;
+    request.open("POST", 'farmer_products.php');
+    request.send();
+    return request
+}
+
+function add_prod_post() {
+    const request = post('add_prod.php', document.getElementById("addForm"));
+    request.addEventListener("load", (event) => {
+        console.log("update view");
+        console.log(request.responseText);
+    })
 }
 
 function form_add() {
-    let content = document.getElementById("table");
+    let popup = document.getElementById("popupWin");
     let form = document.createElement("form");
     form.id = "addForm";
-    form.action = "javascript:formpost('login.php')";
+    form.action = "javascript:add_prod_post()";
     form.method = "POST";
-    let labelLogin = document.createElement('label');
-    labelLogin.htmlFor = "login";
-    labelLogin.textContent = "Login";
-    form.appendChild(labelLogin);
+
+    let labelCat = document.createElement('label');
+    labelCat.htmlFor = "category";
+    labelCat.textContent = "Kategoria";
+    form.appendChild(labelCat);
 
     form.appendChild(document.createElement("br"));
 
-    let inputLogin = document.createElement("input");
-    inputLogin.type = "text";
-    inputLogin.id = "login";
-    inputLogin.name = "login";
-    form.appendChild(inputLogin);
+    let selectCat = document.createElement("select");
+    selectCat.selectedIndex = 1;
+    selectCat.id = "category";
+    selectCat.name = "category";
+
+    let categories = post('categories.php', null);
+    categories.addEventListener("load", () => {
+        var item = categories.responseText;
+        item = item.split(',');
+        for (let i = 0; i < item.length; i++) {
+            let option = document.createElement('option');
+            option.value = item[i];
+            option.textContent = item[i];
+            selectCat.appendChild(option);
+        }
+    })
+    form.appendChild(selectCat);
 
     form.appendChild(document.createElement("br"));
 
-    let labelPasswd = document.createElement('label');
-    labelPasswd.htmlFor = "password";
-    labelPasswd.textContent = "Password";
-    form.appendChild(labelPasswd);
+    let labelCrop = document.createElement('label');
+    labelCrop.htmlFor = "crop";
+    labelCrop.textContent = "Plodina";
+    form.appendChild(labelCrop);
 
     form.appendChild(document.createElement("br"));
 
-    let inputPasswd = document.createElement("input");
-    inputPasswd.type = "password";
-    inputPasswd.id = "password";
-    inputPasswd.name = "password";
-    form.appendChild(inputPasswd);
+    let selectCrop = document.createElement("select");
+    selectCrop.id = "crop";
+    selectCrop.name = "crop";
+    form.appendChild(selectCrop);
+    let addNew = document.createElement('option');
+    addNew.textContent = "Pridaj novu";
+    addNew.value = "addNew";
+    selectCrop.appendChild(addNew);
+    let crops = post('crops.php', null);
+    crops.addEventListener("load", () => {
+        var item = crops.responseText;
+        item = item.split(',');
+        for (let i = 0; i < item.length; i++) {
+            let option = document.createElement('option');
+            option.value = item[i];
+            option.textContent = item[i];
+            selectCrop.appendChild(option);
+        }
+        selectCrop.selectedIndex = "1";
+    })
+    let labelNewCrop = document.createElement('label');
+    labelNewCrop.htmlFor = "newCrop";
+    labelNewCrop.textContent = "newCrop";
+    labelNewCrop.style = 'visibility: hidden';
+    let inputNewCrop = document.createElement('input');
+    inputNewCrop.type = "text";
+    inputNewCrop.id = "newCrop";
+    inputNewCrop.name = "newCrop";
+    inputNewCrop.style = 'visibility: hidden';
+    form.appendChild(document.createElement("br"));
+    form.appendChild(inputNewCrop);
+    form.appendChild(document.createElement("br"));
+    selectCrop.addEventListener("change", () => {
+        if (selectCrop.selectedIndex == "0") {
+            inputNewCrop.style = "visibility: 'visible'";
+        } else {
+            inputNewCrop.style = 'visibility: hidden';
+        }
+    })
+
+
 
     form.appendChild(document.createElement("br"));
     let submit = document.createElement("button");
@@ -48,8 +109,7 @@ function form_add() {
     form.appendChild(submit);
     form.appendChild(cancel);
 
-    content.appendChild(form);
-    return form;
+    popup.appendChild(form);
 }
 
 function new_product() {
@@ -58,10 +118,14 @@ function new_product() {
 }
 
 function farmer_view() {
+    if (sessionStorage.getItem('farmer') == null) {
+        console.log("no farmer");
+        return;
+    }
     console.log("farmer_view");
     let content = document.getElementById("table");
     let table = document.createElement("table");
-    let data = get_own_products();
+    let dataRequest = get_own_products();
     let tr = document.createElement("tr");
     let addProduct = document.createElement("td");
     addProduct.id = "addProduct";
@@ -74,30 +138,35 @@ function farmer_view() {
     });
     addProduct.appendChild(div);
     tr.appendChild(addProduct);
-    for (const row in data) {
-        if (tr.childNodes.length % 6 == 0) {
-            table.appendChild(tr);
-            tr = document.createElement("tr");
+    dataRequest.addEventListener("load", () => {
+        let data = dataRequest.responseText.split(',');
+        console.log(data.length);
+        for (let i = 0; i < data.length; i++) {
+            if (tr.childNodes.length % 6 == 0) {
+                table.appendChild(tr);
+                tr = document.createElement("tr");
+            }
+            let product = document.createElement("td");
+            div = document.createElement("div");
+            div.id = "tableItem";
+            div.textContent = data[i];
+            console.log(data[i]);
+            product.appendChild(div);
+            tr.appendChild(product);
         }
-        let product = document.createElement("td");
-        div = document.createElement("div");
-        div.id = "tableItem";
-        div.textContent = row['CROP'];
-        product.appendChild(div);
-        tr.appendChild(product);
-    }
-    if (tr.childNodes.length % 6 != 0) {
-        let n = tr.childNodes.length % 6;
-        for (let i = 6; i > n; i--) {
-            let dummy = document.createElement("td");
-            let dummydiv = document.createElement("div");
-            dummydiv.id = "tableItem";
-            dummydiv.style = "visibility: hidden";
-            dummydiv.textContent = "Place holder";
-            dummy.appendChild(dummydiv);
-            tr.appendChild(dummy);
+        if (tr.childNodes.length % 6 != 0) {
+            let n = tr.childNodes.length % 6;
+            for (let i = 6; i > n; i--) {
+                let dummy = document.createElement("td");
+                let dummydiv = document.createElement("div");
+                dummydiv.id = "tableItem";
+                dummydiv.style = "visibility: hidden";
+                dummydiv.textContent = "Place holder";
+                dummy.appendChild(dummydiv);
+                tr.appendChild(dummy);
+            }
         }
-    }
+    })
     table.appendChild(tr);
     content.appendChild(table);
 }
