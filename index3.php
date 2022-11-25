@@ -13,15 +13,16 @@ require "services.php";
     <link rel="icon" href="VrablikWebIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css" type="text/css">
     <title>Document</title>
+    <script src="farmer_view.js"></script>
 </head>
 
 <body>
     <nav>
         <div id='navbar'>
             <div id='logo'>
-                <?php
-                include 'logo.php';
-                ?>
+                <!-- <?php
+                        include 'logo.php';
+                        ?> -->
             </div>
         </div>
         <div id='navbar'>
@@ -36,8 +37,6 @@ require "services.php";
                 <!-- <?php
                         include 'credents.php';
                         ?> -->
-                <script src="credents.js">
-                </script>
 
             </div>
         </div>
@@ -49,5 +48,8 @@ require "services.php";
     </div>
     <footer>footer fooo</footer>
 </body>
+<script src="credents.js"></script>
+<script src="logo.js"></script>
+<!-- <script src="farmer_view.js"></script> -->
 
 </html>

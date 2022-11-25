@@ -103,6 +103,12 @@ tr {
     height: 12vh;
 }
 
+.tableItem {
+    display: block;
+    width: 12vw;
+    height: 12vh;
+}
+
 tbody {
     width: 100%;
     display: block;

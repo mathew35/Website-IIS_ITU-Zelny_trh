@@ -70,12 +70,21 @@ function form(type) {
     credents.appendChild(form);
 }
 
-function formpost(dest) {
+function post(dest, form) {
     const request = new XMLHttpRequest();
-    const form = new FormData(document.getElementById("loginForm"));
+    var data = null;
+    if (form != null) {
+        data = new FormData(document.getElementById("loginForm"));
+    }
     console.log(dest);
     request.open("POST", dest);
-    request.send(form);
+    request.send(data);
+    return request;
+}
+
+function formpost(dest) {
+    const form = new FormData(document.getElementById("loginForm"));
+    const request = post(dest, form);
     request.addEventListener("load", (event) => {
         if (request.status == 200)
             if (dest == "login.php") {
@@ -133,12 +142,41 @@ function logout() {
         sessionStorage.removeItem('user');
         credents();
     })
+}
 
+function farmer() {
+    console.log("farmer");
+    const request = new XMLHttpRequest();
+    request.open("POST", "farmer.php");
+    request.send();
+    request.addEventListener("load", (evenr) => {
+        if (request.responseText == false) {
+            if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+        } else {
+            sessionStorage.setItem('farmer', 1);
+        }
+        location.reload();
+    })
+}
+
+function profile() {
+    console.log("profile");
+}
+
+function cart() {
+    console.log("cart");
+}
+
+function orders() {
+    console.log("orders");
 }
 
 function credents() {
     let credents = document.getElementById("credents");
     if (sessionStorage.getItem('user') == null) {
+        if (document.getElementById("profileButton") != null) document.getElementById("profileButton").remove();
+        if (document.getElementById("cartButton") != null) document.getElementById("cartButton").remove();
+        if (document.getElementById("farmerButton") != null) document.getElementById("farmerButton").remove();
         if (document.getElementById("logoutButton") != null) document.getElementById("logoutButton").remove();
         let loginButton = document.createElement('button');
         let registerButton = document.createElement('button');
@@ -153,11 +191,29 @@ function credents() {
     } else {
         if (document.getElementById("loginButton") != null) document.getElementById("loginButton").remove();
         if (document.getElementById("registerButton") != null) document.getElementById("registerButton").remove();
+        let profileButton = document.createElement('button');
+        profileButton.onclick = profile;
+        profileButton.textContent = "Profile";
+        profileButton.id = "profileButton";
+        let cartButton = document.createElement('button');
+        cartButton.onclick = cart;
+        cartButton.textContent = "Cart";
+        cartButton.id = "cartButton";
+        if (sessionStorage.getItem('farmer') != null) {
+            cartButton.onclick = orders;
+            cartButton.textContent = "Orders";
+        }
+
+        let farmerButton = document.createElement('button');
+        farmerButton.onclick = farmer;
+        farmerButton.textContent = "Farmer";
+        farmerButton.id = "farmerButton";
         let logoutButton = document.createElement('button');
         logoutButton.onclick = logout;
         logoutButton.textContent = "Log out";
         logoutButton.id = "logoutButton";
-        credents.appendChild(logoutButton);
+
+        credents.append(profileButton, cartButton, farmerButton, logoutButton);
     }
 }
 credents();
