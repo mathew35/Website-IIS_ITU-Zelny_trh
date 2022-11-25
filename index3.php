@@ -33,9 +33,12 @@ require "services.php";
         </div>
         <div id='navbar'>
             <div id='credents'>
-                <?php
-                include 'credents.php';
-                ?>
+                <!-- <?php
+                        include 'credents.php';
+                        ?> -->
+                <script src="credents.js">
+                </script>
+
             </div>
         </div>
     </nav>

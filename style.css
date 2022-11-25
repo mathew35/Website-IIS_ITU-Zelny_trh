@@ -164,5 +164,8 @@ button {
     top: 10vh;
     left: 20vw;
     background-color: aqua;
-    z-index:  1;
+    z-index: 1;
+    color: red;
+    justify-content: center;
+    text-align: center;
 }

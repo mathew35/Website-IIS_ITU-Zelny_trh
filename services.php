@@ -29,33 +29,6 @@ class AccountService
             return $this->lastError[2]; //the message
     }
 
-    function addAccount($data)
-    {
-        $stmt = $this->pdo->prepare('INSERT INTO ACCOUNTS (login, password) VALUES (?, ?)');
-        $login = $data['login'];
-        $pwd = password_hash($data['password'], PASSWORD_DEFAULT);
-        if ($stmt->execute([$login, $pwd])) {
-            $newid = $this->pdo->lastInsertId();
-            $data['id'] = $newid;
-            return $data;
-        } else {
-            $this->lastError = $stmt->errorInfo();
-            return FALSE;
-        }
-    }
-
-    function getAccount($login)
-    {
-        $stmt = $this->pdo->prepare('SELECT id, login, password FROM ACCOUNTS WHERE login = ?');
-        $stmt->execute([$login]);
-        return $stmt->fetch();
-    }
-
-    function isValidAccount($login, $password)
-    {
-        $data = $this->getAccount($login);
-        return password_verify($password, $data['password']);
-    }
     function getCrops($which)
     {
         if ($which == NULL || $which == 'none') {
@@ -103,7 +76,7 @@ class AccountService
     {
         if ($condition == NULL) $condition = 1;
         $query = $this->pdo->prepare("SELECT " . $what . " FROM " . $table . " WHERE " . $condition . ";");
-        $query->execute(NULL);
+        $query->execute();
         return $query;
     }
 }
