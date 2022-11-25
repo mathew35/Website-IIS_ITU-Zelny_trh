@@ -50,7 +50,7 @@
                 $stars = $getstars->fetch();
             }
             $avg =  $sum / $count;
-            echo round($avg, 0) . "/5 <br>";
+            echo "Průměr: " . round($avg, 0) . "/5 Hvězdiček <br>";
         }
 
         public function getRatings(){
@@ -76,8 +76,25 @@
             //$this->db->add("CART_CROP", "(" . 55 . $crop . $amount . ")");
         }
 
+        public function harvest(){
+            $getdate = $this->db->get("HARVEST_EVENT E, HARVEST_CROP C","E.DATE_FROM","E.EVENTID = C.EVENTID AND C.CROPID=" . $this->id);
+            $date = $getdate->fetch();
+            $getdate2 = $this->db->get("HARVEST_EVENT E, HARVEST_CROP C","E.DATE_TO","E.EVENTID = C.EVENTID AND C.CROPID=" . $this->id);
+            $date2 = $getdate2->fetch();
+            $getplace = $this->db->get("HARVEST_EVENT E, HARVEST_CROP C","E.PLACE","E.EVENTID = C.EVENTID AND C.CROPID=" . $this->id);
+            $place = $getplace->fetch();
+
+            for ($i = 0; $i < $getplace->rowCount(); $i++) {
+                echo "<a role='button'><button>" . $place[0] . " od " . $date[0] . " do " . $date2[0] . "<br>" . "</button></a>";
+                $place = $getplace->fetch();
+                $date = $getdate->fetch();
+                $date2 = $getdate2->fetch();
+            }
+
+        }
+
     }
-    $product = new ProductDetail(1);
+    $product = new ProductDetail(1); // zde budeme volat příslušné ID produktu
     $product->getName();
     $product->getFarmer();
     $product->getLocation();
@@ -88,6 +105,8 @@
 
     $product->getAvgRatings();
     $product->getRatings();
+
+    $product->harvest();
     ?>
     
 </table>
