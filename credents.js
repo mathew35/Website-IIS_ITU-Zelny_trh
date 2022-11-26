@@ -23,6 +23,7 @@ function form(type) {
     form.id = "loginForm";
     form.action = "javascript:formpost('login.php')";
     form.method = "POST";
+
     let labelLogin = document.createElement('label');
     labelLogin.htmlFor = "login";
     labelLogin.textContent = "Login";
@@ -63,20 +64,36 @@ function form(type) {
     if (type == 'register') {
         submit.textContent = "Register";
         form.action = "javascript:formpost('register.php')";
+
+        let labelName = document.createElement("label");
+        labelName.htmlFor = "fullname";
+        labelName.textContent = "Full Name";
+        form.appendChild(labelName);
+
+        let inputName = document.createElement("input");
+        inputName.type = "text";
+        inputName.id = "fullname";
+        inputName.name = "fullname";
+        form.appendChild(document.createElement("br"));
+        form.appendChild(inputName);
+        form.appendChild(document.createElement("br"));
+
+        let labelEmail = document.createElement("label");
+        labelEmail.htmlFor = "email";
+        labelEmail.textContent = "E-mail";
+        form.appendChild(labelEmail);
+
+        let inputEmail = document.createElement("input");
+        inputEmail.type = "text";
+        inputEmail.id = "email";
+        inputEmail.name = "email";
+        form.appendChild(document.createElement("br"));
+        form.appendChild(inputEmail);
+
         //divider
         let hr = document.createElement("hr");
         hr.style.width = "40%";
         form.appendChild(hr);
-
-        let labelName = document.createElement("label");
-        labelName.htmlFor = "fullname";
-        labelName.textContent   = "Full Name";
-        form.appendChild(labelName);
-
-        let inputName = document.createElement("input");
-        inputName.type   = "text";
-        inputName.id   = "fullname";
-        inputName.name   = "fullname";
     }
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -193,6 +210,11 @@ function farmer() {
     }
 }
 
+function become_farmer() {
+    overlay();
+    form("farmer");
+}
+
 function cart() {
     console.log("cart");
 }
@@ -265,8 +287,13 @@ function credents() {
         }
 
         let farmerButton = document.createElement('button');
-        farmerButton.onclick = farmer;
-        farmerButton.textContent = "Farmer";
+        if (sessionStorage.getItem('farmer') == null) {
+            farmerButton.onclick = become_farmer;
+            farmerButton.textContent = "Become farmer";
+        } else {
+            farmerButton.onclick = farmer;
+            farmerButton.textContent = "My products";
+        }
         farmerButton.id = "farmerButton";
         let logoutButton = document.createElement('button');
         logoutButton.onclick = logout;
