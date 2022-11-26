@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (isset($_SESSION['user'])) {
+    echo $_SESSION['user'];
+    return;
+}
 require "services.php";
 $db = new AccountService();
 $user = $db->get('ACCOUNTS', '*', "(LOGIN='" . $_POST['login'] . "')");

@@ -17,5 +17,5 @@ for ($i = 0; $i < $crop->rowCount(); $i++) {
 }
 echo $ret[0];
 for ($i = 1; $i < 4; $i++) {
-    echo "," . $ret[$i];
+    echo " " . $ret[$i];
 }

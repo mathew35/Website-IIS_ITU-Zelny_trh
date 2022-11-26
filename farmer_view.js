@@ -1,23 +1,21 @@
-function get_own_products() {
-    console.log(sessionStorage.getItem('table'));
+function get_own(what, from) {
     const request = new XMLHttpRequest();
-    request.open("POST", 'farmer_products.php');
+    request.open("POST", from);
     request.send();
     request.addEventListener("load", () => {
         let newData = request.responseText.split(',');
         console.log("update");
-        sessionStorage.setItem('table', newData);
-        farmer_view();
+        sessionStorage.setItem(what, newData);
+        farmer_view_pick();
     })
 }
 
 function add_prod_post() {
     const request = post('add_prod.php', document.getElementById("addForm"));
     request.addEventListener("load", (event) => {
-        let response = String(request.responseText).split(',');
-        console.log(response);
-        sessionStorage.getItem('table').push(response);
-        farmer_view();
+        let response = request.responseText;
+        sessionStorage.setItem('ownProducts', sessionStorage.getItem('ownProducts') + "," + response);
+        farmer_view_pick();
     })
 }
 
@@ -84,24 +82,36 @@ function form_add() {
     })
     let labelNewCrop = document.createElement('label');
     labelNewCrop.htmlFor = "newCrop";
-    labelNewCrop.textContent = "newCrop";
-    labelNewCrop.style = 'visibility: hidden';
+    labelNewCrop.textContent = "Nazov novej plodiny";
+    labelNewCrop.style = 'display:none';
+    let inputBr = document.createElement("br");
+    inputBr.style = 'display:none';
+    let labelBr = document.createElement("br");
+    labelBr.style = 'display:none';
     let inputNewCrop = document.createElement('input');
     inputNewCrop.type = "text";
     inputNewCrop.id = "newCrop";
     inputNewCrop.name = "newCrop";
-    inputNewCrop.style = 'visibility: hidden';
+    inputNewCrop.style = 'display: none';
     form.appendChild(document.createElement("br"));
+    form.appendChild(labelNewCrop);
+    form.appendChild(labelBr);
     form.appendChild(inputNewCrop);
-    form.appendChild(document.createElement("br"));
+    form.appendChild(inputBr);
+
     selectCrop.addEventListener("change", () => {
         if (selectCrop.selectedIndex == "0") {
-            inputNewCrop.style = "visibility: 'visible'";
+            inputNewCrop.style = '';
+            inputBr.style = '';
+            labelNewCrop.style = '';
+            labelBr.style = '';
         } else {
-            inputNewCrop.style = 'visibility: hidden';
+            inputNewCrop.style = 'display:none';
+            inputBr.style = 'display:none';
+            labelNewCrop.style = 'display:none';
+            labelBr.style = 'display:none';
         }
     })
-
 
 
     form.appendChild(document.createElement("br"));
@@ -124,49 +134,42 @@ function new_product() {
     form_add();
 }
 
-let data = null;
-get_own_products();
-
-function farmer_view() {
-    if (sessionStorage.getItem('farmer_view') == null) {
-        console.log("no farmer");
-        clearInterval(updateFarmer_view);
-        return;
+function generate_table(type, data) {
+    let scrollTop = 0;
+    if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) {
+        scrollTop = document.getElementById("table").getElementsByTagName("table").item(0).scrollTop;
+        document.getElementById("table").getElementsByTagName("table").item(0).remove();
     }
-    if (updateFarmer_view == null) {
-        updateFarmer_view = setInterval(farmer_view, 5000);
-        get_prods = setInterval(get_own_products, 5000);
-    }
-    console.log("farmer_view");
-    if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) document.getElementById("table").getElementsByTagName("table").item(0).remove();
     let content = document.getElementById("table");
     let table = document.createElement("table");
-    data = String(sessionStorage.getItem('table')).split(',');
     let tr = document.createElement("tr");
-    let addProduct = document.createElement("td");
-    addProduct.id = "addProduct";
-    // addProduct.textContent = "Pridaj novy produkt";
-    let div = document.createElement("div");
-    div.id = "tableItem";
-    div.textContent = "Pridaj novy produkt";
-    div.addEventListener("click", (event) => {
-        new_product();
-    });
-    addProduct.appendChild(div);
-    tr.appendChild(addProduct);
+    if (type == "farmer_view") {
+        let addProduct = document.createElement("td");
+        addProduct.id = "addProduct";
+        let div = document.createElement("div");
+        div.id = "tableItem";
+        div.textContent = "Pridaj novy produkt";
+        div.addEventListener("click", (event) => {
+            new_product();
+        });
+        addProduct.appendChild(div);
+        tr.appendChild(addProduct);
+    }
     if (data != null) {
-        for (let i = 0; i < data.length; i++) {
-            if (tr.childNodes.length % 6 == 0) {
-                table.appendChild(tr);
-                tr = document.createElement("tr");
+        if (data[0] != "null") {
+            for (let i = 0; i < data.length; i++) {
+                if (tr.childNodes.length % 6 == 0) {
+                    table.appendChild(tr);
+                    tr = document.createElement("tr");
+                }
+                let product = document.createElement("td");
+                let div = document.createElement("div");
+                div.id = "tableItem";
+                div.textContent = data[i];
+                div.style = null;
+                product.appendChild(div);
+                tr.appendChild(product);
             }
-            let product = document.createElement("td");
-            let div = document.createElement("div");
-            div.id = "tableItem";
-            div.textContent = data[i];
-            div.style = null;
-            product.appendChild(div);
-            tr.appendChild(product);
         }
     }
     if (tr.childNodes.length % 6 != 0) {
@@ -181,8 +184,63 @@ function farmer_view() {
             tr.appendChild(dummy);
         }
     }
-    table.appendChild(tr);
+    if (table.children.length == 0 && tr.children.length == 0) {
+        //no orders 
+        let noOrder = document.createElement("p");
+        noOrder.textContent = "No orders!";
+        table.append(noOrder);
+    } else {
+        table.appendChild(tr);
+
+    }
     content.appendChild(table);
+    table.scrollTo(0, scrollTop);
+
 }
-let updateFarmer_view = setInterval(farmer_view, 5000);
-let get_prods = setInterval(get_own_products, 5000);
+
+let data = null;
+get_own('ownProducts', 'farmer_products.php');
+get_own('ownOrders', 'farmer_orders.php');
+
+
+function farmer_view() {
+    // if (sessionStorage.getItem('farmer_view') != "products") {
+    //     clearInterval(updateFarmer_view_pick);
+    //     clearInterval(get_prods);
+    //     console.log("should not be here");
+    //     return;
+    // }
+    if (updateFarmer_view == null) {
+        updateFarmer_view = setInterval(farmer_view_pick, 5000);
+        get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+    }
+    console.log("farmer_view");
+    data = String(sessionStorage.getItem('ownProducts')).split(',');
+    generate_table("farmer_view", data);
+}
+
+function order_view() {
+    if (updateFarmer_view == null) {
+        updateFarmer_view = setInterval(farmer_view_pick, 5000);
+        get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+    }
+    console.log("order view");
+    data = String(sessionStorage.getItem('orders')).split(',');
+    generate_table("farm_view", data);
+
+
+}
+
+function farmer_view_pick() {
+    if (sessionStorage.getItem('farmer_view') == "products") {
+        farmer_view();
+    } else if (sessionStorage.getItem('farmer_view') == "orders") {
+        order_view();
+    } else {
+        clearInterval(updateFarmer_view);
+        clearInterval(get_prods);
+    }
+}
+
+let updateFarmer_view = setInterval(farmer_view_pick, 5000);
+let get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
