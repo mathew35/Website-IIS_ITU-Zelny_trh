@@ -1,3 +1,3 @@
 <script>
-    farmer_view()
+    farmer_view_pick()
 </script>

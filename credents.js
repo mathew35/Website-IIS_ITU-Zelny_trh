@@ -63,6 +63,20 @@ function form(type) {
     if (type == 'register') {
         submit.textContent = "Register";
         form.action = "javascript:formpost('register.php')";
+        //divider
+        let hr = document.createElement("hr");
+        hr.style.width = "40%";
+        form.appendChild(hr);
+
+        let labelName = document.createElement("label");
+        labelName.htmlFor = "fullname";
+        labelName.textContent   = "Full Name";
+        form.appendChild(labelName);
+
+        let inputName = document.createElement("input");
+        inputName.type   = "text";
+        inputName.id   = "fullname";
+        inputName.name   = "fullname";
     }
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -87,15 +101,15 @@ function formpost(dest) {
         if (request.status == 200)
             if (dest == "login.php") {
                 if (request.responseText != "" && request.responseText != "error") {
-                    document.getElementById("popupBackground").remove();
-                    document.getElementById("popupWin").remove();
+                    if (document.getElementById("popupBackground") != null) document.getElementById("popupBackground").remove();
+                    if (document.getElementById("popupWin") != null) document.getElementById("popupWin").remove();
                     sessionStorage.setItem('user', request.readyTest);
                     credents();
                 } else {
                     let form = document.getElementById("loginForm");
                     let error = document.createElement("p");
                     error.textContent = "Wrong login or password";
-                    form.appendChild(error);
+                    if (form != null) form.appendChild(error);
                 }
                 return;
             }
@@ -124,7 +138,6 @@ function formpost(dest) {
 function login() {
     overlay();
     form('login');
-    // console.log(document.getElementById("user").value);
 }
 
 function register() {
@@ -153,25 +166,31 @@ function farmer() {
                 if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
             } else {
                 sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
-                sessionStorage.setItem('farmer_view', 1);
+                sessionStorage.setItem('farmer_view', "products");
             }
+            farmer_view_pick();
             location.reload();
         })
     } else {
-        var req = post("farmer.php", null);
-        if (sessionStorage.getItem('farmer_view') != null) {
+        if (sessionStorage.getItem('farmer_view') == "products") {
+            var req = post("farmer.php", null);
             sessionStorage.removeItem('farmer_view');
-        } else {
-            sessionStorage.setItem('farmer_view', 1);
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
+        } else if (sessionStorage.getItem('farmer_view') == "orders") {
+            sessionStorage.setItem('farmer_view', 'products');
+            farmer_view_pick();
+        } else if (sessionStorage.getItem('farmer_view') == null) {
+            var req = post("farmer.php", null);
+            sessionStorage.setItem('farmer_view', "products");
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
         }
-        req.addEventListener("load", () => {
-            location.reload();
-        })
     }
-}
-
-function profile() {
-    console.log("profile");
 }
 
 function cart() {
@@ -179,8 +198,38 @@ function cart() {
 }
 
 function orders() {
-    console.log("orders");
+    if (sessionStorage.getItem('farmer') == null) {
+        const request = post("farmer.php", null);
+        request.addEventListener("load", (evenr) => {
+            if (request.responseText == false) {
+                if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+                //
+            } else {
+                sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
+                sessionStorage.setItem('farmer_view', "orders");
+            }
+            farmer_view_pick();
+            location.reload();
+        })
+    } else {
+        if (sessionStorage.getItem('farmer_view') == "orders") {
+            var req = post("farmer.php", null);
+            sessionStorage.removeItem('farmer_view');
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
+        } else if (sessionStorage.getItem('farmer_view') == "products") {
+            sessionStorage.setItem('farmer_view', "orders");
+            farmer_view_pick();
+        } else {}
+    }
 }
+
+function profile() {
+    console.log("profile");
+}
+
 
 function credents() {
     let credents = document.getElementById("credents");
@@ -228,3 +277,8 @@ function credents() {
     }
 }
 credents();
+if (sessionStorage.getItem('user') == null) formpost('login.php');
+
+//init farmer_view
+get_own('ownProducts', 'farmer_products.php');
+get_own('ownOrders', 'farmer_orders.php');
