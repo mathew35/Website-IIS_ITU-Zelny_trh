@@ -13,14 +13,14 @@
     }
     $arr = $crops->fetch();
     $width = 6;
-    for ($i = 0; $i < $crops->rowCount(); $i++) {
+    for ($i = 1; $i - 1 < $crops->rowCount(); $i++) {
         echo "<td><div id='tableItem'>";
         for ($j = 0; $j < 4; $j++) {
             echo $arr[$j] . " ";
         }
         echo "</div></td>";
         $arr = $crops->fetch();
-        if ($i % 5 == 0 && $i != 0 && $i + 1 != $crops->rowCount()) echo "</tr><tr>";
+        if ($i % 6 == 0 && $i != $crops->rowCount()) echo "</tr><tr>";
     }
     if ($crops->rowCount() % 6 != 0) {
         $i = $crops->rowCount() % 6;

@@ -1,16 +1,23 @@
 function get_own_products() {
+    console.log(sessionStorage.getItem('table'));
     const request = new XMLHttpRequest();
-    var data = null;
     request.open("POST", 'farmer_products.php');
     request.send();
-    return request
+    request.addEventListener("load", () => {
+        let newData = request.responseText.split(',');
+        console.log("update");
+        sessionStorage.setItem('table', newData);
+        farmer_view();
+    })
 }
 
 function add_prod_post() {
     const request = post('add_prod.php', document.getElementById("addForm"));
     request.addEventListener("load", (event) => {
-        console.log("update view");
-        console.log(request.responseText);
+        let response = String(request.responseText).split(',');
+        console.log(response);
+        sessionStorage.getItem('table').push(response);
+        farmer_view();
     })
 }
 
@@ -114,18 +121,27 @@ function form_add() {
 
 function new_product() {
     overlay();
-    var form = form_add();
+    form_add();
 }
 
+let data = null;
+get_own_products();
+
 function farmer_view() {
-    if (sessionStorage.getItem('farmer') == null) {
+    if (sessionStorage.getItem('farmer_view') == null) {
         console.log("no farmer");
+        clearInterval(updateFarmer_view);
         return;
     }
+    if (updateFarmer_view == null) {
+        updateFarmer_view = setInterval(farmer_view, 5000);
+        get_prods = setInterval(get_own_products, 5000);
+    }
     console.log("farmer_view");
+    if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) document.getElementById("table").getElementsByTagName("table").item(0).remove();
     let content = document.getElementById("table");
     let table = document.createElement("table");
-    let dataRequest = get_own_products();
+    data = String(sessionStorage.getItem('table')).split(',');
     let tr = document.createElement("tr");
     let addProduct = document.createElement("td");
     addProduct.id = "addProduct";
@@ -138,35 +154,35 @@ function farmer_view() {
     });
     addProduct.appendChild(div);
     tr.appendChild(addProduct);
-    dataRequest.addEventListener("load", () => {
-        let data = dataRequest.responseText.split(',');
-        console.log(data.length);
+    if (data != null) {
         for (let i = 0; i < data.length; i++) {
             if (tr.childNodes.length % 6 == 0) {
                 table.appendChild(tr);
                 tr = document.createElement("tr");
             }
             let product = document.createElement("td");
-            div = document.createElement("div");
+            let div = document.createElement("div");
             div.id = "tableItem";
             div.textContent = data[i];
-            console.log(data[i]);
+            div.style = null;
             product.appendChild(div);
             tr.appendChild(product);
         }
-        if (tr.childNodes.length % 6 != 0) {
-            let n = tr.childNodes.length % 6;
-            for (let i = 6; i > n; i--) {
-                let dummy = document.createElement("td");
-                let dummydiv = document.createElement("div");
-                dummydiv.id = "tableItem";
-                dummydiv.style = "visibility: hidden";
-                dummydiv.textContent = "Place holder";
-                dummy.appendChild(dummydiv);
-                tr.appendChild(dummy);
-            }
+    }
+    if (tr.childNodes.length % 6 != 0) {
+        let n = tr.childNodes.length % 6;
+        for (let i = 6; i > n; i--) {
+            let dummy = document.createElement("td");
+            let dummydiv = document.createElement("div");
+            dummydiv.id = "tableItem";
+            dummydiv.style = "visibility: hidden";
+            dummydiv.textContent = "Place holder";
+            dummy.appendChild(dummydiv);
+            tr.appendChild(dummy);
         }
-    })
+    }
     table.appendChild(tr);
     content.appendChild(table);
 }
+let updateFarmer_view = setInterval(farmer_view, 5000);
+let get_prods = setInterval(get_own_products, 5000);
