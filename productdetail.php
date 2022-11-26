@@ -92,13 +92,18 @@ class ProductDetail
         $place = $getplace->fetch();
 
         for ($i = 0; $i < $getplace->rowCount(); $i++) {
+            echo '<div class="column left">';
             $harvestdetail = new HarvestDetail($this->id, $place[0]);
             $harvestdetail->getName();
             $harvestdetail->getPlace();
             $harvestdetail->getDate();
             $harvestdetail->getDescript();
+            echo '</div>';
 
+            echo '<div class="column right">';
             echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $place[0] . ')">Zúčastnit se</button>';
+            echo '</div>';
+
 
             $place = $getplace->fetch();
         }
@@ -132,7 +137,9 @@ $product->getRatings();
 	<div class="container">
 		<button type="submit" class="harvest" onclick="openPopup()">Samosběr</button>
 		<div class="popup" id="popup">
+            <div class="popup-harvest">
                 <?php $product->harvest() ?>
+            </div>
 			<button type="button" onclick="closePopup()">Close</button>
 			
 		</div>
@@ -154,7 +161,6 @@ function joinharvest(eid){
         data: { "param1": eid},
         success: function(response) { alert(response); }
     });
- 
 }
 
 

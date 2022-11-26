@@ -17,7 +17,7 @@
         {
             $getname = $this->db->get("SPECIFIC_CROP", "CROP_NAME", "CROPID=" . $this->id);
             $name = $getname->fetch();
-            echo $name[0] . "<br>";
+            echo "<h2>" . $name[0] . "</h2>";
         }
 
         public function getDate()
@@ -25,33 +25,26 @@
             $getdate1 = $this->db->get("HARVEST_EVENT", "DATE_FROM", "EVENTID=" . $this->eventid);
             $date1 = $getdate1->fetch();
 
-            echo "od " . $date1[0] . "<br>";
+            echo "<p>" . "od " . $date1[0] . "</p>";
 
             $getdate2 = $this->db->get("HARVEST_EVENT", "DATE_TO", "EVENTID=" . $this->eventid);
             $date2 = $getdate2->fetch();
 
-            echo "do " . $date2[0] . "<br>";
+            echo "<p>" . "do " . $date2[0] . "</p>";
         }
 
         public function getPlace()
         {
             $getplace = $this->db->get("HARVEST_EVENT", "PLACE", "EVENTID=" . $this->eventid);
             $place = $getplace->fetch();
-            echo $place[0] . "<br>";
+            echo "<p>" . $place[0] . "</p>";
         }
 
         public function getDescript()
         {
             $gettext = $this->db->get("HARVEST_EVENT", "DESCRIPTION", "EVENTID=" . $this->eventid);
             $text = $gettext->fetch();
-            echo "Popis: " . $text[0] . "<br>";
-        }
-
-        
-        public function submit()
-        {
-            
-            
+            echo "<p>" . "Popis: " . $text[0] . "</p>";
         }
 
     }

@@ -48,6 +48,27 @@
 	visibility: hidden;
 }
 
+.column {
+	width: 540px;
+  	float: left;
+}
+
+.left {
+	background-color:#add8e6;
+  	width: 70%;
+	margin: 2.5%;
+}
+
+.right {
+  	width: 20%;
+	margin: 2.5%;
+
+}
+
+.popup-harvest h2{
+	text-align: center;
+}
+
 .open-popup{
 	visibility: visible;
 }
@@ -67,7 +88,7 @@
 	width: 100%;
 	margin-top: 50Px;
 	padding: 10px 0;
-	background: #6fd649;
+	background: #84d16a;
 	color: #fff;
 	border: 0;
 	outline: none;
