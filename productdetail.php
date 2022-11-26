@@ -54,11 +54,14 @@ class ProductDetail
         $stars = $getstars->fetch();
         $count = $getstars->rowCount();
         $sum = 0;
+        $avg = 0;
         for ($i = 0; $i < $count; $i++) {
             $sum += $stars[0];
             $stars = $getstars->fetch();
         }
-        $avg = $sum / $count;
+        if($count != 0){
+            $avg = $sum / $count;
+        }
         echo "Průměr: " . round($avg, 0) . "/5 Hvězdiček <br>";
     }
 
@@ -136,7 +139,7 @@ $product->getRatings();
 
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
+    
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">

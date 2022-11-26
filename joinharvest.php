@@ -1,9 +1,11 @@
 <?php 
     require_once "services.php";
     function joinharv($data){
+        session_start();
         $db = new AccountService();
         $eid = $data;
-        $db->add("HARVEST_EVENT_ATTENDANTS", "(" . $eid . ", 'xmnamka55')"); // přidat přímo usera v session
+        $user = $_SESSION['user'];
+        $db->add("HARVEST_EVENT_ATTENDANTS", "(" . $eid . ", ' . $user .')"); // přidat přímo usera v session
         echo $eid;
     }
 

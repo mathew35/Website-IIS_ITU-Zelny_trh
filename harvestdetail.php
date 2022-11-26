@@ -1,5 +1,4 @@
 <?php
-    require "services.php";
     class HarvestDetail
     {
         private $id;
