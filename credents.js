@@ -63,6 +63,20 @@ function form(type) {
     if (type == 'register') {
         submit.textContent = "Register";
         form.action = "javascript:formpost('register.php')";
+        //divider
+        let hr = document.createElement("hr");
+        hr.style.width = "40%";
+        form.appendChild(hr);
+
+        let labelName = document.createElement("label");
+        labelName.htmlFor = "fullname";
+        labelName.textContent   = "Full Name";
+        form.appendChild(labelName);
+
+        let inputName = document.createElement("input");
+        inputName.type   = "text";
+        inputName.id   = "fullname";
+        inputName.name   = "fullname";
     }
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -124,7 +138,6 @@ function formpost(dest) {
 function login() {
     overlay();
     form('login');
-    // console.log(document.getElementById("user").value);
 }
 
 function register() {
@@ -180,10 +193,6 @@ function farmer() {
     }
 }
 
-function profile() {
-    console.log("profile");
-}
-
 function cart() {
     console.log("cart");
 }
@@ -216,6 +225,11 @@ function orders() {
         } else {}
     }
 }
+
+function profile() {
+    console.log("profile");
+}
+
 
 function credents() {
     let credents = document.getElementById("credents");
@@ -264,3 +278,7 @@ function credents() {
 }
 credents();
 if (sessionStorage.getItem('user') == null) formpost('login.php');
+
+//init farmer_view
+get_own('ownProducts', 'farmer_products.php');
+get_own('ownOrders', 'farmer_orders.php');
