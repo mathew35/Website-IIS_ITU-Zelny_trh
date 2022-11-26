@@ -25,6 +25,17 @@
 	border-radius: 30px;
 }
 
+.logharvest{
+	padding: 10px 60px;
+	background: rgb(206, 200, 200);
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 22px;
+	font-weight: 500;
+	border-radius: 10px;
+}
+
 .popup{
 	width: 600px;
 	background: #fff;

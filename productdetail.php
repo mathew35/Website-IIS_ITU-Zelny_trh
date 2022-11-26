@@ -98,6 +98,9 @@ class ProductDetail
             $harvestdetail->getDate();
             $harvestdetail->getDescript();
             $harvestdetail->submit();
+
+            echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $place[0] . ')">Zúčastnit se</button>';
+
             $place = $getplace->fetch();
         }
 
@@ -118,7 +121,6 @@ $product->getRatings();
 
 ?>
 
-
 <html>
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -130,21 +132,28 @@ $product->getRatings();
 		<button type="submit" class="harvest" onclick="openPopup()">Samosběr</button>
 		<div class="popup" id="popup">
                 <?php $product->harvest() ?>
-                <?php $harvestdetail = new HarvestDetail(1,3); ?>
 			<button type="button" onclick="closePopup()">Close</button>
 			
 		</div>
 	</div>
-<script> 
-  					
+
+<script> 			
 let popup = document.getElementById("popup");
 
 function openPopup(){
-	
 	popup.classList.add("open-popup");	
 }
 function closePopup(){
 	popup.classList.remove("open-popup");
+}
+function joinharvest(eid){
+    if(0){ // isset($_SESSION['user']
+        <?php ?>
+    }
+    else{
+        alert("Pro účast vyžaduje přihlášení uživatele!");
+    }
+    
 }
 </script>
 </body>
