@@ -47,8 +47,10 @@
             echo "Popis: " . $text[0] . "<br>";
         }
 
+        
         public function submit()
         {
+            
             
         }
 

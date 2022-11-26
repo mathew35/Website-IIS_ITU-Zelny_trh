@@ -97,7 +97,6 @@ class ProductDetail
             $harvestdetail->getPlace();
             $harvestdetail->getDate();
             $harvestdetail->getDescript();
-            $harvestdetail->submit();
 
             echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $place[0] . ')">Zúčastnit se</button>';
 
@@ -105,6 +104,7 @@ class ProductDetail
         }
 
     }
+    
 
 }
 $product = new ProductDetail(1); // zde budeme volat příslušné ID produktu
@@ -123,6 +123,7 @@ $product->getRatings();
 
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">
@@ -147,14 +148,17 @@ function closePopup(){
 	popup.classList.remove("open-popup");
 }
 function joinharvest(eid){
-    if(0){ // isset($_SESSION['user']
-        <?php ?>
-    }
-    else{
-        alert("Pro účast vyžaduje přihlášení uživatele!");
-    }
-    
+    $.ajax({
+        url: 'joinharvest.php',
+        type: 'post',
+        data: { "param1": eid},
+        success: function(response) { alert(response); }
+    });
+ 
 }
+
+
+
 </script>
 </body>
 </html>
