@@ -1,0 +1,90 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+.harvest{
+	padding: 10px 60px;
+	background: #fff;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 22px;
+	font-weight: 500;
+	border-radius: 30px;
+}
+
+.logharvest{
+	padding: 10px 60px;
+	background: rgb(206, 200, 200);
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 22px;
+	font-weight: 500;
+	border-radius: 10px;
+}
+
+.popup{
+	width: 600px;
+	background: #fff;
+	border-radius: 6px;
+	position: absolute;
+	margin: 0 auto;
+	text-align: center;
+	padding: 0 30px 30px;
+	color: #333;
+	visibility: hidden;
+}
+
+.column {
+	width: 540px;
+  	float: left;
+}
+
+.left {
+	background-color:#add8e6;
+  	width: 70%;
+	margin: 2.5%;
+}
+
+.right {
+  	width: 20%;
+	margin: 2.5%;
+
+}
+
+.popup-harvest h2{
+	text-align: center;
+}
+
+.open-popup{
+	visibility: visible;
+}
+
+.popup h2{
+	text-align: center;
+	font-size: 38px;
+	font-weight: 500;
+	margin: 30px 0 10px;
+}
+
+.popup p{
+	text-align: center;
+}
+
+.popup button{
+	width: 100%;
+	margin-top: 50Px;
+	padding: 10px 0;
+	background: #84d16a;
+	color: #fff;
+	border: 0;
+	outline: none;
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
