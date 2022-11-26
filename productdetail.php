@@ -13,6 +13,7 @@ class ProductDetail
         $this->db = new AccountService();
     }
 
+
     public function getName()
     {
         $getname = $this->db->get("SPECIFIC_CROP", "CROP_NAME", "CROPID=" . $this->id);
@@ -112,7 +113,14 @@ class ProductDetail
     
 
 }
-$product = new ProductDetail(1); // zde budeme volat příslušné ID produktu
+if(isset($_GET['detail'])){
+    $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID produktu 
+    $product->getName();
+}
+else{
+    $product = new ProductDetail(1); // test
+}
+
 $product->getName();
 $product->getFarmer();
 $product->getLocation();
@@ -134,7 +142,7 @@ $product->getRatings();
 	<link rel="stylesheet" href="productstyle.css">
 </head>
 <body>
-	<div class="container">
+	
 		<button type="submit" class="harvest" onclick="openPopup()">Samosběr</button>
 		<div class="popup" id="popup">
             <div class="popup-harvest">
@@ -143,7 +151,7 @@ $product->getRatings();
 			<button type="button" onclick="closePopup()">Close</button>
 			
 		</div>
-	</div>
+	
 
 <script> 			
 let popup = document.getElementById("popup");

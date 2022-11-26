@@ -14,7 +14,8 @@
     $arr = $crops->fetch();
     $width = 6;
     for ($i = 1; $i - 1 < $crops->rowCount(); $i++) {
-        echo "<td><div id='tableItem'>";
+        $par = $arr[0];
+        echo '<td><div id="tableItem"><a href="index3.php?detail='. $par .'"><button id="myBtn">Detail</button></a>';
         for ($j = 0; $j < 4; $j++) {
             echo $arr[$j] . " ";
         }
