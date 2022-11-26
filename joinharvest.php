@@ -1,12 +1,11 @@
 <?php 
-    require_once "services.php";
     function joinharv($data){
         session_start();
         $db = new AccountService();
         $eid = $data;
         $user = $_SESSION['user'];
-        $db->add("HARVEST_EVENT_ATTENDANTS", "(" . $eid . ", ' . $user .')"); // přidat přímo usera v session
-        echo $eid;
+        $db->add("HARVEST_EVENT_ATTENDANTS", "(".$eid.",".$user.")");
+        echo "Uživatel " . $user . " byl úspěšně přihlášen na samosběr " . $eid . ".";
     }
 
     if (isset($_POST['param1'])) {

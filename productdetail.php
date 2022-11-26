@@ -136,15 +136,12 @@ $product->getAvgRatings();
 $product->getRatings();
 
 ?>
-
-<html>
 <head>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">
 </head>
-<body>
 	
 		<button type="submit" class="harvest" onclick="openPopup()">Samosběr</button>
 		<div class="popup" id="popup">
@@ -177,5 +174,3 @@ function joinharvest(eid){
 
 
 </script>
-</body>
-</html>
