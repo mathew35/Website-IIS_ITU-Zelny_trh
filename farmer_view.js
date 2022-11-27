@@ -145,7 +145,92 @@ function updateOnOrder(status, id) {
     })
 }
 
+// function find(param) {
+//     let params = location.href.split('?');
+//     if (params.length <= 1) return null;
+//     params = params[1].split('&');
+//     for (let i = 0; i < params.length; i++) {
+//         let actual = params[i].split("=");
+//         if (actual[0] == param) return i;
+//     }
+//     return null;
+// }
+
+// function isset(parameter) {
+//     if (find(parameter) != null) return true;
+//     // let params = location.href.split('?');
+//     // for (let i = 1; i < params.length; i++) {
+//     //     if (params[i].split("=")[0] == parameter) return true;
+//     // }
+//     return false;
+// }
+
+// if (sessionStorage.getItem('removedParams') == "") sessionStorage.setItem('removedParams', Array(0));
+// else console.log(sessionStorage.getItem('removedParams'));
+
+// function store(param) {
+//     let removedParams = sessionStorage.getItem("removedParams").split(',');
+//     if (removedParams == "") removedParams = Array(0);
+//     // else {
+//     //     removedParams = removedParams;
+//     // }
+//     let params = location.href.split('?');
+//     if (params.length <= 1) return;
+//     pars = params[1].split('&');
+//     console.log(pars);
+//     console.log(pars[find(param)]);
+//     console.log(removedParams);
+//     removedParams.push(pars[find(param)]);
+//     console.log(removedParams);
+//     pars.pop();
+//     console.log(pars);
+//     if (pars.length > 0) {
+//         pars = pars.join('&');
+//         params.push(pars);
+//     }
+//     console.log(pars);
+//     console.log(params);
+//     if (pars.length < 1) {
+//         params = Array(params[0]);
+//     } else {
+//         params = Array(params[0], pars).join('?');
+//     }
+//     console.log(params);
+//     console.log(removedParams);
+//     sessionStorage.setItem("removedParams", removedParams);
+//     console.log(sessionStorage.getItem('removedParams'));
+//     location.href = params;
+// }
+
+// function restoreAll() {
+//     let removedParams = sessionStorage.getItem("removedParams");
+//     console.log(removedParams);
+//     if (removedParams == "") removedParams = Array(0);
+//     else {
+//         removedParams = Array(removedParams);
+//     }
+//     console.log(removedParams);
+//     let addr = location.href.split('?');
+//     console.log(addr);
+//     if (removedParams.length == 0) return;
+//     if (addr.length > 1) {
+//         addr[1] = Array(addr[1], removedParams.join("&")).join('&');
+//     } else {
+//         addr.push(removedParams.join("&"));
+//     }
+//     console.log(addr);
+//     addr = addr.join('?');
+//     console.log(addr);
+//     sessionStorage.setItem("removedParams", Array(0));
+//     console.log(removedParams);
+//     location.href = addr;
+// }
+
 function generate_table(type, data) {
+    // if (isset("detail")) {
+    //     console.log("storing");
+    //     store("detail");
+    // }
     let scrollTop = 0;
     if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) {
         scrollTop = document.getElementById("table").getElementsByTagName("table").item(0).scrollTop;
@@ -167,7 +252,7 @@ function generate_table(type, data) {
         tr.appendChild(addProduct);
     }
     if (data != null) {
-        if (data[0] != "null") {
+        if (data[0] != "null" && data[0] != "") {
             let cmp1 = 6;
             let cmp2 = 0;
             if (type == "order_view") {
@@ -248,7 +333,9 @@ function generate_table(type, data) {
     if (table.children.length == 0 && tr.children.length == 0) {
         //no orders 
         let noOrder = document.createElement("p");
-        noOrder.textContent = "No orders!";
+        if (type == "order_view") noOrder.textContent = "No orders!";
+        if (type == "f") noOrder.textContent = "No orders!";
+        if (type == "order_view") noOrder.textContent = "No orders!";
         table.append(noOrder);
     } else {
         table.appendChild(tr);
@@ -259,20 +346,15 @@ function generate_table(type, data) {
 }
 
 let data = null;
-get_own('ownProducts', 'farmer_products.php');
-get_own('ownOrders', 'farmer_orders.php');
+// get_own('ownProducts', 'farmer_products.php');
+// get_own('ownOrders', 'farmer_orders.php');
+// get_own('user_cart', 'get_cart.php')
 
 
 function farmer_view() {
-    // if (sessionStorage.getItem('farmer_view') != "products") {
-    //     clearInterval(updateFarmer_view_pick);
-    //     clearInterval(get_prods);
-    //     console.log("should not be here");
-    //     return;
-    // }
     if (updateFarmer_view == null) {
         updateFarmer_view = setInterval(farmer_view_pick, 5000);
-        get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+        get_prods = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.php');
     }
     console.log("farmer_view");
     data = String(sessionStorage.getItem('ownProducts')).split(',');
@@ -282,7 +364,7 @@ function farmer_view() {
 function order_view() {
     if (updateFarmer_view == null) {
         updateFarmer_view = setInterval(farmer_view_pick, 5000);
-        get_prods = setInterval(get_own('ownOrders', 'farmer_orders.php'), 5000);
+        get_prods = setInterval(get_own, 5000, 'ownOrders', 'farmer_orders.php');
     }
     console.log("order view");
     data = String(sessionStorage.getItem('ownOrders')).split(',');
@@ -296,11 +378,22 @@ function farmer_view_pick() {
         farmer_view();
     } else if (sessionStorage.getItem('farmer_view') == "orders") {
         order_view();
+    } else if (sessionStorage.getItem('farmer_view') == "cart") {
+        cart_view();
+    } else if (sessionStorage.getItem('farmer_view') == "profile") {
+        profile_view();
     } else {
+        // restoreAll();
         clearInterval(updateFarmer_view);
         clearInterval(get_prods);
+        clearInterval(get_cart);
+        clearInterval(get_cart_items);
+        clearInterval(get_profile);
     }
 }
 
-let updateFarmer_view = setInterval(farmer_view_pick, 5000);
-let get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+let updateFarmer_view; // = setInterval(farmer_view_pick, 5000);
+let get_prods; // = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.php');
+let get_cart;
+let get_cart_items;
+let get_profile;
