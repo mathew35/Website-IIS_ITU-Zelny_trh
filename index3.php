@@ -13,6 +13,8 @@ require "services.php";
     <link rel="icon" href="VrablikWebIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css" type="text/css">
     <title>Document</title>
+    <script src="cart.js"></script>
+    <script src="profile.js"></script>
     <script src="farmer_view.js"></script>
 </head>
 
