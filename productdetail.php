@@ -18,7 +18,7 @@ class ProductDetail
     {
         $getname = $this->db->get("SPECIFIC_CROP", "CROP_NAME", "CROPID=" . $this->id);
         $name = $getname->fetch();
-        echo $name[0] . "<br>";
+        echo "<h2>" . $name[0] . "</h2>";
     }
 
     // pridat puvod
@@ -32,21 +32,21 @@ class ProductDetail
     {
         $gettext = $this->db->get("SPECIFIC_CROP", "FARMER", "CROPID=" . $this->id);
         $text = $gettext->fetch();
-        echo "Farma: " . $text[0] . "<br>";
+        echo "<p>Farma: " . $text[0] . "</p>";
     }
 
     public function getDescript()
     {
         $gettext = $this->db->get("SPECIFIC_CROP", "DESCRIPTION", "CROPID=" . $this->id);
         $text = $gettext->fetch();
-        echo "Popis: " . $text[0] . "<br>";
+        echo "<p>Popis: " . $text[0] . "</p>";
     }
 
     public function getPrice()
     {
         $getprice = $this->db->get("SPECIFIC_CROP", "PRICE", "CROPID=" . $this->id);
         $price = $getprice->fetch();
-        echo $price[0] . " Kč<br>";
+        echo "<p>"  . $price[0] . " Kč</p>";
     }
 
     public function getAvgRatings()
@@ -64,7 +64,7 @@ class ProductDetail
         if($count != 0){
             $avg = $sum / $count;
         }
-        echo "Průměr: " . round($avg, 0) . "/5 Hvězdiček <br>";
+        echo "<p>Průměr: " . round($avg, 0) . "/5 Hvězdiček </p>";
     }
 
     public function getRatings()
@@ -75,8 +75,12 @@ class ProductDetail
         $gettext = $this->db->get("RATING", "DESCRIPTION", "CROP=" . $this->id);
         $text = $gettext->fetch();
         for ($i = 0; $i < $getstars->rowCount(); $i++) {
-            echo $stars[0] . " Hvězdiček <br>";
-            echo "Hodnocení: " . $text[0] . " <br>";
+            echo '<div class="detail-column detail-left">';
+            echo "<p>" . "Hodnocení: " . $text[0] . "</p>";
+            echo '</div>';
+            echo '<div class="detail-column detail-right">';
+            echo "<p>" . $stars[0] . " Hvězdiček " . "</p>";
+            echo '</div>';
             $stars = $getstars->fetch();
             $text = $gettext->fetch();
         }
@@ -89,8 +93,6 @@ class ProductDetail
         $amount = 1;
         echo '<button type="submit" class="buythis" onclick="buyproduct(' . $amount . ',' . $crop . ')">Do košíku</button>';
 
-        //vlozit do cart_crop/shopping_cart ?
-        //$this->db->add("CART_CROP", "(" . 55 . $crop . $amount . ")");
     }
 
     public function harvest()
@@ -119,19 +121,8 @@ class ProductDetail
     
 
 }
-if(isset($_GET['detail'])){
-    $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID produktu 
-    $product->getName();
-    $product->getFarmer();
-    $product->getLocation();
-    $product->getDescript();
-    $product->getPrice();
 
-    $product->addAmount();
-
-    $product->getAvgRatings();
-    $product->getRatings();
-}
+$product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID produktu 
 
 ?>
 <head>
@@ -140,25 +131,63 @@ if(isset($_GET['detail'])){
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">
 </head>
-	
-		<button type="submit" class="harvest" onclick="openPopup()">Samosběr</button>
-		<div class="popup" id="popup">
-            <div class="popup-harvest">
-                <?php $product->harvest() ?>
+    <div class="detail-container">
+
+        <div class="detail">
+			<div class="detail-column detail-left">
+                <?php   
+                    $product->getName();
+                    $product->getFarmer();
+                    $product->getLocation();
+                    $product->getDescript();
+                ?>
+			</div>
+			<div class="detail-column detail-right">
+				<p>Tady pak napíšeš kolik</p>
+                <?php 
+                    $product->getPrice();
+                    $product->addAmount();?>
+			</div>
+
+            <div class="detail-column detail-left">
+                <?php $product->getAvgRatings(); ?>
+			    <button type="submit" class="harvest" onclick="openReview()">Recenze</button>
+		    </div>
+		    <div class="detail-column detail-right">
+			    <button type="submit" class="harvest" onclick="openHarvest()">Sběr</button>	
             </div>
-			<button type="button" onclick="closePopup()">Close</button>
+        </div>
+
+		<div class="detail-harvest" id="detail-harvest">
+            <div class="popup-harvest">
+                <?php $product->harvest(); ?>
+            </div>
+			<button type="button" onclick="closeHarvest()">Close</button>
 			
 		</div>
+
+        <div class="detail-review" id="detail-review">
+				<?php $product->getRatings();?>	   
+			<button type="button" onclick="closeReview()">Close</button>
+		</div>
+    </div>
 	
 
 <script> 			
-let popup = document.getElementById("popup");
+let harvest = document.getElementById("detail-harvest");
+let review = document.getElementById("detail-review");
 
-function openPopup(){
-	popup.classList.add("open-popup");	
+function openHarvest (){
+	harvest .classList.add("open-popup");	
 }
-function closePopup(){
-	popup.classList.remove("open-popup");
+function closeHarvest (){
+	harvest .classList.remove("open-popup");
+}
+function openReview(){
+	review.classList.add("open-popup");	
+}
+function closeReview(){
+	review.classList.remove("open-popup");
 }
 function joinharvest(eid){
     $.ajax({

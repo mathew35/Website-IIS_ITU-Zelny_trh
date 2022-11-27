@@ -1,8 +1,11 @@
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
+.detail-container{
+	background-color: transparent;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute; z-index: 2;
 }
 
 .harvest{
@@ -14,72 +17,102 @@
 	font-size: 22px;
 	font-weight: 500;
 	border-radius: 30px;
+	box-sizing: border-box;
+	display: block
 }
 
-.logharvest{
-	padding: 10px 60px;
-	background: rgb(206, 200, 200);
-	border: 0;
-	outline: none;
-	cursor: pointer;
-	font-size: 22px;
-	font-weight: 500;
-	border-radius: 10px;
-}
-
-.popup{
+.detail-harvest{
 	width: 600px;
-	background: #fff;
+	height: 500px;
+	background-color:#add8e6;
 	border-radius: 6px;
-	position: absolute;
+	position: absolute; z-index: 3;
 	margin: 0 auto;
 	text-align: center;
-	padding: 0 30px 30px;
-	color: #333;
+	padding: 30px 30px 30px;
+	color: #333;	
 	visibility: hidden;
+	box-sizing: border-box;
+	display: block
+}
+
+.detail-review{
+	width: 600px;
+	height: 500px;
+	background-color:#add8e6;
+	border-radius: 6px;
+	position: absolute; z-index: 3;
+	margin: 0 auto;
+	text-align: center;
+	padding: 30px 30px 30px;
+	color: #333;	
+	visibility: hidden;
+	box-sizing: border-box;
+	display: block
+}
+
+
+.detail{
+	width: 600px;
+	height: 500px;
+	background-color:#add8e6;
+	border-radius: 6px;
+	position: absolute; z-index: 3;
+	margin: 5px;
+	text-align: center;
+	padding: 30px 30px 30px;
+	color: #333;	
+	box-sizing: border-box;
+	display: block
+}
+
+.detail-column {
+	background-color:#add8e6;
+	width: 540px;
+  	float: left;
+	align-items: center;
+	justify-content: center;
+	display: block
+}
+
+.detail-left {
+	background-color: transparent;
+  	width: 40%;
+	margin: 5%;
+}
+
+.detail-right {
+	background-color: transparent;
+  	width: 40%;
+	margin: 5%;
 }
 
 .column {
+	background-color:#add8e6;
 	width: 540px;
   	float: left;
+	align-items: center;
+	justify-content: center;
+	display: block
 }
 
 .left {
-	background-color:#add8e6;
+	background-color: transparent;
   	width: 70%;
 	margin: 2.5%;
 }
 
 .right {
+	background-color: transparent;
   	width: 20%;
 	margin: 2.5%;
-
 }
 
-.popup-harvest h2{
-	text-align: center;
-}
 
-.open-popup{
-	visibility: visible;
-}
-
-.popup h2{
-	text-align: center;
-	font-size: 38px;
-	font-weight: 500;
-	margin: 30px 0 10px;
-}
-
-.popup p{
-	text-align: center;
-}
-
-.popup button{
+.detail-harvest button{
 	width: 100%;
-	margin-top: 50Px;
 	padding: 10px 0;
-	background: #84d16a;
+	background: #6fd649;
 	color: #fff;
 	border: 0;
 	outline: none;
@@ -87,4 +120,37 @@
 	border-radius: 4px;
 	cursor: pointer;
 	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.open-popup{
+	visibility: visible;
+}
+
+.detail-review button{
+	width: 100%;
+	padding: 10px 0;
+	background: #6fd649;
+	color: #fff;
+	border: 0;
+	outline: none;
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.detail button{
+	width: 50%;
+	padding: 10px 0;
+	margin: 15px;
+	background: #6fd649;
+	color: #fff;
+	border: 0;
+	outline: none;
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+	align-items: center;
+  	bottom: 0;
 }
