@@ -146,7 +146,7 @@ $product = new ProductDetail($_GET['detail']);
                 ?>
 			</div>
 			<div class="detail-column detail-right">
-                <input type="number" id="myText" value="0">
+                <input type="number" id="myText" min="1" value="0">
                 <?php 
                     $product->getPrice();
                     $product->addAmount();
@@ -174,7 +174,7 @@ $product = new ProductDetail($_GET['detail']);
         <div class="detail-review" id="detail-review">
             <button type="button" class="back" onclick="closeReview()">Close</button>
             Hodnocení: <input type="text" id="myRating">
-            <input type="number" id="myStars" value="0">
+            <input type="number" min="0" max="5" id="myStars" value="0">
             <?php $product->newrate(); ?>
 			<?php $product->getRatings();?>	   
 			

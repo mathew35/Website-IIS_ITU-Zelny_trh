@@ -3,15 +3,20 @@
     function buyitem($text, $stars, $crop){
         session_start();
         $db = new AccountService();
-        $user = $_SESSION['user'];
 
-        $getfarmer = $db->get("SPECIFIC_CROP", "FARMER", "CROPID='" . $crop . "'");
-        $farmer = $getfarmer->fetch();
+        if(isset($_SESSION['user'])){
+            $user = $_SESSION['user'];
 
-        echo "recenze byla přidána";
+            $getfarmer = $db->get("SPECIFIC_CROP", "FARMER", "CROPID='" . $crop . "'");
+            $farmer = $getfarmer->fetch();
 
-        $db->add("RATING", "(NULL,'".$stars."','".$text."','".$user."','".$farmer[0]."','".$crop."')");
-
+            $db->add("RATING", "(NULL,'".$stars."','".$text."','".$user."','".$farmer[0]."','".$crop."')");
+            echo "recenze byla přidána";
+        }
+        else{
+            echo "Je nutné se nejprve přihlásit.";
+        }
+        
     }
 
     if (isset($_POST['pstars'])) {
