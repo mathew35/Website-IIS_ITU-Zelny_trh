@@ -20,9 +20,7 @@ require "services.php";
     <nav>
         <div id='navbar'>
             <div id='logo'>
-                <!-- <?php
-                        include 'logo.php';
-                        ?> -->
+                <!-- logo.js -->
             </div>
         </div>
         <div id='navbar'>
@@ -34,13 +32,16 @@ require "services.php";
         </div>
         <div id='navbar'>
             <div id='credents'>
-                <!-- <?php
-                        include 'credents.php';
-                        ?> -->
-
+                <!-- credents.js -->
             </div>
         </div>
     </nav>
+    <div id='filter'>
+        <!-- filters.js-->
+        <?php
+        include 'filters.php';
+        ?>
+    </div>
     <div id="table">
         <?php
         include 'content.php';
@@ -48,8 +49,9 @@ require "services.php";
     </div>
     <footer>footer fooo</footer>
 </body>
-<script src="credents.js"></script>
 <script src="logo.js"></script>
+<script src="credents.js"></script>
+<script src="filters.js"></script>
 <!-- <script src="farmer_view.js"></script> -->
 
 </html>
