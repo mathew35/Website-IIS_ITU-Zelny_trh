@@ -4,20 +4,21 @@
         session_start();
         $db = new AccountService();
         $user = $_SESSION['user'];
-        //$cid = $_SESSION['cropid'];
+        $cid = $_SESSION['cartid'];
 
-        $getcid = $db->get("SHOPPING_CART", "CARTID", "USER='" . $user . "'");
-        $cid = $getcid->fetch();
+        // $getcid = $db->get("SHOPPING_CART", "CARTID", "USER='" . $user . "'");
+        // $cid = $getcid->fetch();
+        // $cid[0]
 
         $basketin = $db->get("CART_CROP", "AMOUNT", "CROPID='" . $pid . "'");
 
         if ($basketin->rowCount() != 0){
             $basket = $basketin->fetch();
             $amount = $amount + $basket[0];
-            $db->update("CART_CROP", "AMOUNT='".$amount. "'", "CROPID='".$pid."'"); 
+            $db->update("CART_CROP", "AMOUNT='".$amount. "'", "CARTID='".$cid."'"); 
         }
         else{
-            $db->add("CART_CROP", "('".$cid[0]."','".$pid."','".$amount."')"); 
+            $db->add("CART_CROP", "('".$cid."','".$pid."','".$amount."')"); 
         }
         echo "Uživatel " . $user . " má v košíku " . $amount . " kusů produktu " . $pid;
     }
