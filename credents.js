@@ -23,6 +23,7 @@ function form(type) {
     form.id = "loginForm";
     form.action = "javascript:formpost('login.php')";
     form.method = "POST";
+
     let labelLogin = document.createElement('label');
     labelLogin.htmlFor = "login";
     labelLogin.textContent = "Login";
@@ -63,6 +64,36 @@ function form(type) {
     if (type == 'register') {
         submit.textContent = "Register";
         form.action = "javascript:formpost('register.php')";
+
+        let labelName = document.createElement("label");
+        labelName.htmlFor = "fullname";
+        labelName.textContent = "Full Name";
+        form.appendChild(labelName);
+
+        let inputName = document.createElement("input");
+        inputName.type = "text";
+        inputName.id = "fullname";
+        inputName.name = "fullname";
+        form.appendChild(document.createElement("br"));
+        form.appendChild(inputName);
+        form.appendChild(document.createElement("br"));
+
+        let labelEmail = document.createElement("label");
+        labelEmail.htmlFor = "email";
+        labelEmail.textContent = "E-mail";
+        form.appendChild(labelEmail);
+
+        let inputEmail = document.createElement("input");
+        inputEmail.type = "text";
+        inputEmail.id = "email";
+        inputEmail.name = "email";
+        form.appendChild(document.createElement("br"));
+        form.appendChild(inputEmail);
+
+        //divider
+        let hr = document.createElement("hr");
+        hr.style.width = "40%";
+        form.appendChild(hr);
     }
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -74,30 +105,28 @@ function post(dest, form) {
     const request = new XMLHttpRequest();
     var data = null;
     if (form != null) {
-        data = new FormData(document.getElementById("loginForm"));
+        data = new FormData(form);
     }
-    console.log(dest);
     request.open("POST", dest);
     request.send(data);
     return request;
 }
 
 function formpost(dest) {
-    const form = new FormData(document.getElementById("loginForm"));
-    const request = post(dest, form);
+    const request = post(dest, document.getElementById("loginForm"));
     request.addEventListener("load", (event) => {
         if (request.status == 200)
             if (dest == "login.php") {
                 if (request.responseText != "" && request.responseText != "error") {
-                    document.getElementById("popupBackground").remove();
-                    document.getElementById("popupWin").remove();
+                    if (document.getElementById("popupBackground") != null) document.getElementById("popupBackground").remove();
+                    if (document.getElementById("popupWin") != null) document.getElementById("popupWin").remove();
                     sessionStorage.setItem('user', request.readyTest);
                     credents();
                 } else {
                     let form = document.getElementById("loginForm");
                     let error = document.createElement("p");
                     error.textContent = "Wrong login or password";
-                    form.appendChild(error);
+                    if (form != null) form.appendChild(error);
                 }
                 return;
             }
@@ -126,7 +155,6 @@ function formpost(dest) {
 function login() {
     overlay();
     form('login');
-    // console.log(document.getElementById("user").value);
 }
 
 function register() {
@@ -140,27 +168,51 @@ function logout() {
     request.send();
     request.addEventListener("load", (evenr) => {
         sessionStorage.removeItem('user');
+        sessionStorage.removeItem('farmer');
+        sessionStorage.removeItem('farmer_view');
         credents();
-    })
-}
-
-function farmer() {
-    console.log("farmer");
-    const request = new XMLHttpRequest();
-    request.open("POST", "farmer.php");
-    request.send();
-    request.addEventListener("load", (evenr) => {
-        if (request.responseText == false) {
-            if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
-        } else {
-            sessionStorage.setItem('farmer', 1);
-        }
         location.reload();
     })
 }
 
-function profile() {
-    console.log("profile");
+function farmer() {
+    if (sessionStorage.getItem('farmer') == null) {
+        const request = post("farmer.php", null);
+        request.addEventListener("load", (evenr) => {
+            if (request.responseText == false) {
+                if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+            } else {
+                sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
+                sessionStorage.setItem('farmer_view', "products");
+            }
+            farmer_view_pick();
+            location.reload();
+        })
+    } else {
+        if (sessionStorage.getItem('farmer_view') == "products") {
+            var req = post("farmer.php", null);
+            sessionStorage.removeItem('farmer_view');
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
+        } else if (sessionStorage.getItem('farmer_view') == "orders") {
+            sessionStorage.setItem('farmer_view', 'products');
+            farmer_view_pick();
+        } else if (sessionStorage.getItem('farmer_view') == null) {
+            var req = post("farmer.php", null);
+            sessionStorage.setItem('farmer_view', "products");
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
+        }
+    }
+}
+
+function become_farmer() {
+    overlay();
+    form("farmer");
 }
 
 function cart() {
@@ -168,8 +220,38 @@ function cart() {
 }
 
 function orders() {
-    console.log("orders");
+    if (sessionStorage.getItem('farmer') == null) {
+        const request = post("farmer.php", null);
+        request.addEventListener("load", (evenr) => {
+            if (request.responseText == false) {
+                if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
+                //
+            } else {
+                sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
+                sessionStorage.setItem('farmer_view', "orders");
+            }
+            farmer_view_pick();
+            location.reload();
+        })
+    } else {
+        if (sessionStorage.getItem('farmer_view') == "orders") {
+            var req = post("farmer.php", null);
+            sessionStorage.removeItem('farmer_view');
+            req.addEventListener("load", () => {
+                farmer_view_pick();
+                location.reload();
+            })
+        } else if (sessionStorage.getItem('farmer_view') == "products") {
+            sessionStorage.setItem('farmer_view', "orders");
+            farmer_view_pick();
+        } else {}
+    }
 }
+
+function profile() {
+    console.log("profile");
+}
+
 
 function credents() {
     let credents = document.getElementById("credents");
@@ -199,14 +281,19 @@ function credents() {
         cartButton.onclick = cart;
         cartButton.textContent = "Cart";
         cartButton.id = "cartButton";
-        if (sessionStorage.getItem('farmer') != null) {
+        if (sessionStorage.getItem('farmer_view') != null) {
             cartButton.onclick = orders;
             cartButton.textContent = "Orders";
         }
 
         let farmerButton = document.createElement('button');
-        farmerButton.onclick = farmer;
-        farmerButton.textContent = "Farmer";
+        if (sessionStorage.getItem('farmer') == null) {
+            farmerButton.onclick = become_farmer;
+            farmerButton.textContent = "Become farmer";
+        } else {
+            farmerButton.onclick = farmer;
+            farmerButton.textContent = "My products";
+        }
         farmerButton.id = "farmerButton";
         let logoutButton = document.createElement('button');
         logoutButton.onclick = logout;
@@ -217,3 +304,8 @@ function credents() {
     }
 }
 credents();
+if (sessionStorage.getItem('user') == null) formpost('login.php');
+
+//init farmer_view
+get_own('ownProducts', 'farmer_products.php');
+get_own('ownOrders', 'farmer_orders.php');
