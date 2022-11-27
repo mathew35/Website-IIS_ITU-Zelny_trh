@@ -3,11 +3,8 @@ function search() {
     input = document.getElementById("search_input");
     filter = input.value.toUpperCase();
 
-    // table = document.getElementById("main_content");
-    // td = table.getElementsByTagName("td");
     items = document.getElementsByClassName("tableItem");
     for (i = 0; i < items.length; i++){
-        // window.alert();
         if (items[i].id.toUpperCase().indexOf(filter) > -1) {
             items[i].style.display = "";
         }

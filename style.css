@@ -71,11 +71,12 @@ nav {
     padding: 5px 15px;
     border: 1px solid blue;
 }
-#filter_items>div{
-    display: inline-block;
-    padding: 5px 15px;
-    border: 1px solid red;
+
+ul li{
+    padding: 0 10px;
+    list-style-type: none;
 }
+
 
 footer {
     background-color: blue;
