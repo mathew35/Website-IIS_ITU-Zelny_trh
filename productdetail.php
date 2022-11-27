@@ -88,9 +88,8 @@ class ProductDetail
 
     public function addAmount()
     {
-        //ziskat amount od uzivatele
+        $amount = 0;
         $crop = $this->id; 
-        $amount = 1;
         echo '<button type="submit" class="buythis" onclick="buyproduct(' . $amount . ',' . $crop . ')">Do košíku</button>';
 
     }
@@ -143,10 +142,11 @@ $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID 
                 ?>
 			</div>
 			<div class="detail-column detail-right">
-				<p>Tady pak napíšeš kolik</p>
+                <input type="number" id="myText" value="0">
                 <?php 
                     $product->getPrice();
                     $product->addAmount();?>
+
 			</div>
 
             <div class="detail-column detail-left">
@@ -198,6 +198,7 @@ function joinharvest(eid){
     });
 }
 function buyproduct(amount, pid){
+    amount = document.getElementById("myText").value;
     $.ajax({
         url: 'buyproduct.php',
         type: 'post',

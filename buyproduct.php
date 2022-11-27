@@ -13,6 +13,9 @@
         echo "Uživatel " . $user . " přidal " . $amount . " kusů produktu " . $pid;
     }
 
+    if ($_POST['paramount'] == NULL){
+        echo "Není zadáno množství";
+    }
     if (isset($_POST['paramount'])) {
         buyitem($_POST['paramount'], $_POST['parpid']);
     }
