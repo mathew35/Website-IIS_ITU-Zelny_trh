@@ -30,7 +30,9 @@ class ProductDetail
     // pridat farmare 
     public function getFarmer()
     {
-        //nejdrive potreba propoji farmer a specific crop
+        $gettext = $this->db->get("SPECIFIC_CROP", "FARMER", "CROPID=" . $this->id);
+        $text = $gettext->fetch();
+        echo "Farma: " . $text[0] . "<br>";
     }
 
     public function getDescript()
@@ -83,8 +85,9 @@ class ProductDetail
     public function addAmount()
     {
         //ziskat amount od uzivatele
-        //$crop = $this->id; 
-        //$amount = 1;
+        $crop = $this->id; 
+        $amount = 1;
+        echo '<button type="submit" class="buythis" onclick="buyproduct(' . $amount . ',' . $crop . ')">Do košíku</button>';
 
         //vlozit do cart_crop/shopping_cart ?
         //$this->db->add("CART_CROP", "(" . 55 . $crop . $amount . ")");
@@ -119,21 +122,16 @@ class ProductDetail
 if(isset($_GET['detail'])){
     $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID produktu 
     $product->getName();
+    $product->getFarmer();
+    $product->getLocation();
+    $product->getDescript();
+    $product->getPrice();
+
+    $product->addAmount();
+
+    $product->getAvgRatings();
+    $product->getRatings();
 }
-else{
-    $product = new ProductDetail(1); // test
-}
-
-$product->getName();
-$product->getFarmer();
-$product->getLocation();
-$product->getDescript();
-$product->getPrice();
-
-$product->addAmount();
-
-$product->getAvgRatings();
-$product->getRatings();
 
 ?>
 <head>
@@ -167,6 +165,14 @@ function joinharvest(eid){
         url: 'joinharvest.php',
         type: 'post',
         data: { "param1": eid},
+        success: function(response) { alert(response); }
+    });
+}
+function buyproduct(amount, pid){
+    $.ajax({
+        url: 'buyproduct.php',
+        type: 'post',
+        data: { "paramount": amount, "parpid": pid},
         success: function(response) { alert(response); }
     });
 }
