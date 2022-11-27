@@ -10,7 +10,7 @@
         // $cid = $getcid->fetch();
         // $cid[0]
 
-        $basketin = $db->get("CART_CROP", "AMOUNT", "CROPID='" . $pid . "'");
+        $basketin = $db->get("CART_CROP", "AMOUNT", "CROPID='" . $pid . "' AND CARTID='" . $cid . "'");
 
         if ($basketin->rowCount() != 0){
             $basket = $basketin->fetch();
