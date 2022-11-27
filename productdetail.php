@@ -86,6 +86,10 @@ class ProductDetail
         }
     }
 
+    public function newrate(){
+        echo '<button onclick="myrate(' . $this->id . ')">Přidat hodnocení</button>';
+    }
+
     public function addAmount()
     {
         $amount = 0;
@@ -121,7 +125,7 @@ class ProductDetail
 
 }
 
-$product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID produktu 
+$product = new ProductDetail($_GET['detail']); 
 
 ?>
 <head>
@@ -154,7 +158,7 @@ $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID 
 			    <button type="submit" class="harvest" onclick="openReview()">Recenze</button>
 		    </div>
 		    <div class="detail-column detail-right">
-			    <button type="submit" class="harvest" onclick="openHarvest()">Sběr</button>	
+			    <button type="submit" class="harvest" onclick="openHarvest()">Samosběry</button>	
             </div>
         </div>
 
@@ -167,7 +171,10 @@ $product = new ProductDetail($_GET['detail']); // zde budeme volat prislusne ID 
 		</div>
 
         <div class="detail-review" id="detail-review">
-				<?php $product->getRatings();?>	   
+            Hodnocení: <input type="text" id="myRating">
+            <input type="number" id="myStars" value="0">
+            <?php $product->newrate(); ?>
+			<?php $product->getRatings();?>	   
 			<button type="button" onclick="closeReview()">Close</button>
 		</div>
     </div>
@@ -206,7 +213,16 @@ function buyproduct(amount, pid){
         success: function(response) { alert(response); }
     });
 }
-
+function myrate(cid){
+    text = document.getElementById("myRating").value;
+    stars = document.getElementById("myStars").value;
+    $.ajax({
+        url: 'rateproduct.php',
+        type: 'post',
+        data: { "ptext": text, "pstars": stars, "pcid": cid},
+        success: function(response) { alert(response); }
+    });
+}
 
 
 </script>
