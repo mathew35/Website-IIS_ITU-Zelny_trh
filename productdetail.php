@@ -134,7 +134,6 @@ $product = new ProductDetail($_GET['detail']);
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">
 </head>
-<table>
     <div class="detail-container">
         <div class="detail">
             <a href="index3.php"><button id="myBtn" class="back">Zpět</button></a>
@@ -181,7 +180,6 @@ $product = new ProductDetail($_GET['detail']);
 			
 		</div>
     </div>
-</table>
 <script> 			
 let harvest = document.getElementById("detail-harvest");
 let review = document.getElementById("detail-review");

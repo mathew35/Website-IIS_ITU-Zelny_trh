@@ -6,10 +6,6 @@
         $user = $_SESSION['user'];
         $cid = $_SESSION['cartid'];
 
-        // $getcid = $db->get("SHOPPING_CART", "CARTID", "USER='" . $user . "'");
-        // $cid = $getcid->fetch();
-        // $cid[0]
-
         $basketin = $db->get("CART_CROP", "AMOUNT", "CROPID='" . $pid . "' AND CARTID='" . $cid . "'");
 
         if ($basketin->rowCount() != 0){
