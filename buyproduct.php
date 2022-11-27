@@ -4,9 +4,11 @@
         session_start();
         $db = new AccountService();
         $user = $_SESSION['user'];
+        //$cid = $_SESSION['cropid'];
 
         $getcid = $db->get("SHOPPING_CART", "CARTID", "USER='" . $user . "'");
         $cid = $getcid->fetch();
+        
 
         $db->add("CART_CROP", "('".$cid[0]."','".$pid."','".$amount."')");
 

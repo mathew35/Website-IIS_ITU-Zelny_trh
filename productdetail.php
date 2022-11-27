@@ -134,9 +134,10 @@ $product = new ProductDetail($_GET['detail']);
 	<title>Product </title>
 	<link rel="stylesheet" href="productstyle.css">
 </head>
+<table>
     <div class="detail-container">
-
         <div class="detail">
+            <a href="index3.php"><button id="myBtn" class="back">Zpět</button></a>
 			<div class="detail-column detail-left">
                 <?php   
                     $product->getName();
@@ -149,8 +150,8 @@ $product = new ProductDetail($_GET['detail']);
                 <input type="number" id="myText" value="0">
                 <?php 
                     $product->getPrice();
-                    $product->addAmount();?>
-
+                    $product->addAmount();
+                    ?>
 			</div>
 
             <div class="detail-column detail-left">
@@ -163,23 +164,24 @@ $product = new ProductDetail($_GET['detail']);
         </div>
 
 		<div class="detail-harvest" id="detail-harvest">
+            <button type="button" class="back" onclick="closeHarvest()">Close</button>
             <div class="popup-harvest">
                 <?php $product->harvest(); ?>
             </div>
-			<button type="button" onclick="closeHarvest()">Close</button>
+			
 			
 		</div>
 
         <div class="detail-review" id="detail-review">
+            <button type="button" class="back" onclick="closeReview()">Close</button>
             Hodnocení: <input type="text" id="myRating">
             <input type="number" id="myStars" value="0">
             <?php $product->newrate(); ?>
 			<?php $product->getRatings();?>	   
-			<button type="button" onclick="closeReview()">Close</button>
+			
 		</div>
     </div>
-	
-
+</table>
 <script> 			
 let harvest = document.getElementById("detail-harvest");
 let review = document.getElementById("detail-review");
