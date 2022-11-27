@@ -2,6 +2,9 @@
 session_start();
 require "services.php";
 // header("refresh:1;");
+if($_SESSION['user']=="admin"){
+    echo '<p><a href="adminmode.php"><button>Admin mode</button></a></p>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
