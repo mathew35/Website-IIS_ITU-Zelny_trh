@@ -7,3 +7,4 @@ function cart_view() {
     console.log(sessionStorage.getItem('user_cart'));
     console.log(sessionStorage.getItem('user_cart_items'));
 }
+//

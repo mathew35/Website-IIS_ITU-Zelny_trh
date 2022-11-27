@@ -232,60 +232,55 @@ function generate_table(type, data) {
     //     store("detail");
     // }
     let scrollTop = 0;
-    if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) {
-        scrollTop = document.getElementById("table").getElementsByTagName("table").item(0).scrollTop;
-        document.getElementById("table").getElementsByTagName("table").item(0).remove();
+    if (document.getElementById("tableItems") != null) {
+        scrollTop = document.getElementById("tableItems").scrollTop;
+        document.getElementById("tableItems").remove();
     }
-    let content = document.getElementById("table");
-    let table = document.createElement("table");
-    let tr = document.createElement("tr");
+    let table = document.getElementById("table");
+    let content = document.getElementById("tableItems");
+    if (content == null) content = document.createElement("div");
+    content.id = "tableItems";
+    table.appendChild(content);
     if (type == "farmer_view") {
-        let addProduct = document.createElement("td");
+        let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
-        let div = document.createElement("div");
-        div.id = "tableItem";
-        div.textContent = "Pridaj novy produkt";
-        div.addEventListener("click", (event) => {
+        addProduct.className = "tableItem";
+        addProduct.textContent = "Pridaj novy produkt";
+        addProduct.addEventListener("click", (event) => {
             new_product();
         });
-        addProduct.appendChild(div);
-        tr.appendChild(addProduct);
+        content.appendChild(addProduct);
     }
     if (data != null) {
         if (data[0] != "null" && data[0] != "") {
-            let cmp1 = 6;
-            let cmp2 = 0;
             if (type == "order_view") {
+                //neako upravit stale
                 cmp1 = 2;
                 cmp2 = 1
             }
             for (let i = 0; i < data.length; i++) {
-                if (tr.childNodes.length % cmp1 == cmp2 && i != 0) {
-                    table.appendChild(tr);
-                    tr = document.createElement("tr");
-                }
-                let product = document.createElement("td");
-                let div = document.createElement("div");
-                div.id = "tableItem";
+                let product = document.createElement("div");
+                product.className = "tableItem";
                 if (type == "order_view") {
-                    div.style = "width:100%;color:black";
+                    product.style = "width:100%;color:black";
                     let spl = data[i].split(' ');
                     let res = "PROCESSED: " + spl[7] + " CROPID: " + spl[5] +
                         " FARMER: " +
                         spl[4] +
                         " AMOUNT: " + spl[6] +
                         " ID: " + spl[0];
-                    div.textContent = res;
+                    product.textContent = res;
+                    product.id = spl[0];
                     if (spl[7] == 2) {
-                        div.style = "width:100%;color:blue";
+                        product.style = "width:100%;color:blue";
                     }
                     if (spl[7] == 1) {
-                        div.style = "width:100%;color:green";
+                        product.style = "width:100%;color:green";
                     }
                 } else {
-                    div.textContent = data[i];
+                    product.textContent = data[i];
+                    product.id = data[i].split(" ")[0];
                 }
-                product.appendChild(div);
                 if (type == "order_view") {
                     product.style = 'width:100%';
                     let accButt = document.createElement("button");
@@ -295,53 +290,37 @@ function generate_table(type, data) {
                     accButt.style = "display:none";
                     decButt.style = "display:none";
                     accButt.addEventListener("click", () => {
-                        updateOnOrder(1, div.textContent.split('ID: ')[2]);
+                        updateOnOrder(1, product.textContent.split('ID: ')[2]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        div.style = "width:100%;color:green";
+                        product.style = "width:100%;color:green";
                     })
                     decButt.addEventListener("click", () => {
-                        updateOnOrder(2, div.textContent.split('ID: ')[2]);
+                        updateOnOrder(2, product.textContent.split('ID: ')[2]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        div.style = "width:100%;color:blue";
+                        product.style = "width:100%;color:blue";
                     })
-                    if (div.style.color != "green" && div.style.color != "blue") {
+                    if (product.style.color != "green" && product.style.color != "blue") {
                         accButt.style = "";
                         decButt.style = "";
                     }
                     product.append(accButt, decButt);
                     product.style = "display:inline-flex;width:100%";
                 }
-                tr.appendChild(product);
+                content.appendChild(product);
             }
         }
     }
-    if (tr.childNodes.length % 6 != 0 && type != "order_view") {
-        console.log("adding dummies");
-        let n = tr.childNodes.length % 6;
-        for (let i = 6; i > n; i--) {
-            let dummy = document.createElement("td");
-            let dummydiv = document.createElement("div");
-            dummydiv.id = "tableItem";
-            dummydiv.style = "visibility: hidden";
-            dummydiv.textContent = "Place holder";
-            dummy.appendChild(dummydiv);
-            tr.appendChild(dummy);
-        }
-    }
-    if (table.children.length == 0 && tr.children.length == 0) {
+    if (content.children.length == 0 && content.children.length == 0) {
         //no orders 
         let noOrder = document.createElement("p");
         if (type == "order_view") noOrder.textContent = "No orders!";
         if (type == "f") noOrder.textContent = "No orders!";
         if (type == "order_view") noOrder.textContent = "No orders!";
-        table.append(noOrder);
-    } else {
-        table.appendChild(tr);
+        content.append(noOrder);
     }
-    content.appendChild(table);
-    table.scrollTo(0, scrollTop);
+    content.scrollTo(0, scrollTop);
 
 }
 
