@@ -2,6 +2,9 @@
 session_start();
 require "services.php";
 // header("refresh:1;");
+if($_SESSION['user']=="admin"){
+    echo '<p><a href="adminmode.php"><button>Admin mode</button></a></p>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +16,8 @@ require "services.php";
     <link rel="icon" href="VrablikWebIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css" type="text/css">
     <title>Document</title>
+    <script src="cart.js"></script>
+    <script src="profile.js"></script>
     <script src="farmer_view.js"></script>
 </head>
 

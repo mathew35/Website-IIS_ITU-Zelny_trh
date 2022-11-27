@@ -1,22 +1,30 @@
 <?php 
     require "services.php";
+    session_start();
     function buyitem($amount, $pid){
-        session_start();
         $db = new AccountService();
         $user = $_SESSION['user'];
+        $cid = $_SESSION['cartid'];
 
-        $getcid = $db->get("SHOPPING_CART", "CARTID", "USER='" . $user . "'");
-        $cid = $getcid->fetch();
+        $basketin = $db->get("CART_CROP", "AMOUNT", "CROPID='" . $pid . "' AND CARTID='" . $cid . "'");
 
-        $db->add("CART_CROP", "('".$cid[0]."','".$pid."','".$amount."')");
-
-        echo "Uživatel " . $user . " přidal " . $amount . " kusů produktu " . $pid;
+        if ($basketin->rowCount() != 0){
+            $basket = $basketin->fetch();
+            $amount = $amount + $basket[0];
+            $db->update("CART_CROP", "AMOUNT='".$amount. "'", "CARTID='".$cid."'"); 
+        }
+        else{
+            $db->add("CART_CROP", "('".$cid."','".$pid."','".$amount."')"); 
+        }
+        echo "Uživatel " . $user . " má v košíku " . $amount . " kusů produktu " . $pid;
     }
 
-    if ($_POST['paramount'] == NULL){
-        echo "Není zadáno množství";
-    }
     if (isset($_POST['paramount'])) {
-        buyitem($_POST['paramount'], $_POST['parpid']);
+        if(isset($_SESSION['user'])){
+            buyitem($_POST['paramount'], $_POST['parpid']);
+        }
+        else{
+            echo "Je nutné se nejprve přihlásit.";
+        }
     }
 ?>

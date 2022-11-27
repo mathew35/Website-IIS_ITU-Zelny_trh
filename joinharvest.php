@@ -4,9 +4,15 @@
         session_start();
         $db = new AccountService();
         $eid = $data;
-        $user = $_SESSION['user'];
-        $db->add("HARVEST_EVENT_ATTENDANTS", "('".$eid."','".$user."')");
-        echo "Uživatel " . $user . " byl úspěšně přihlášen na samosběr " . $eid . ".";
+
+        if(isset($_SESSION['user'])){
+            $user = $_SESSION['user']; 
+            $db->add("HARVEST_EVENT_ATTENDANTS", "('".$eid."','".$user."')");
+            echo "Uživatel " . $user . " byl úspěšně přihlášen na samosběr " . $eid . ".";
+        }
+        else{
+            echo "Je nutné se nejprve přihlásit.";
+        }
     }
 
     if (isset($_POST['param1'])) {
