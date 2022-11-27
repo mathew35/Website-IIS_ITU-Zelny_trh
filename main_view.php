@@ -38,7 +38,8 @@
 
     for ($i = 0; $i < $crops->rowCount(); $i++) {
         echo "<div class='tableItem' id=\"{$arr['CROP_NAME']}\">";
-        echo "<p>{$arr['CROP_NAME']}</p>";
+        echo "<h2>{$arr['CROP_NAME']}</h2>";
+        echo "<p>{$arr['FARMER']}</p>";
         echo "<p>{$arr['PRICE']} Kč / {$arr['PER_UNIT']}</p>";
         echo "<p>{$arr['DESCRIPTION']}</p>";
         echo '<p><a href="index3.php?detail='. $arr['CROPID'] .'"><button id="myBtn">Detail</button></a></p>';
