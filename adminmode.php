@@ -19,8 +19,7 @@ class AdminMode
 
         for ($i = 0; $i < $getname->rowCount(); $i++) {
 
-            echo '<p>' . $name[1] . '<a href="edituser.php"><button>Uprafit informace</button></a>' . 
-            ' <button onclick="deleteuser(' . $name[0] . ')">Smazat účet</button>';
+            echo '<p>' . $name[1] . '<a href="edituser.php"><button>Upravit</button></a>';
             if($name[5]==0){
                 echo ' <button onclick="addmoder(' . $name[0] .','. $name[5] . ')">Přidat uživateli roli moderátora</button>'.'</p>';
             } 
