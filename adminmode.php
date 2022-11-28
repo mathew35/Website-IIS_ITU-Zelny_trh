@@ -1,5 +1,6 @@
 <?php
 
+
 require "services.php";
 class AdminMode
 {
@@ -41,11 +42,11 @@ $amode = new AdminMode();
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Product </title>
     <link rel="stylesheet" href="adminstyle.css">
 </head>
 <body>
-    <p><a href="index3.php"><button type="submit" class="harvest">User mode</button></a></p>
+    <p><a href="index3.php"><button>User mode</button></a>
+    <a href="moderator.php"><button>Moderator mode</button></a></p>
     <div class="admin-container">
         <div class="admin-informations-container">
             <div class="admin-informations-header">
@@ -67,7 +68,7 @@ $amode = new AdminMode();
         url: 'deleteuser.php',
         type: 'post',
         data: { "param": userid},
-        success: function(response) { alert(response); }
+        success: function(response) { }
     });
     }
     function addmoder(userid, adddel){
@@ -75,7 +76,10 @@ $amode = new AdminMode();
         url: 'adddelmod.php',
         type: 'post',
         data: { "param": userid, "param2": adddel},
-        success: function(response) { alert(response); }
-    });
+        success: function(response) { }
+        });
+        setTimeout(() => {
+        document.location.reload();
+        }, 700);
     }
 </script>
