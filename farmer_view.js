@@ -260,29 +260,33 @@ function generate_table(type, data) {
             }
             for (let i = 0; i < data.length; i++) {
                 let product = document.createElement("div");
+                let id = null;
                 product.className = "tableItem";
                 if (type == "order_view") {
-                    product.style = "width:100%;color:black";
+                    product.style.width = "calc(100% - 40px)";
+                    product.style.color = "black";
+                    console.log(data[i]);
                     let spl = data[i].split(' ');
                     let res = "PROCESSED: " + spl[7] + " CROPID: " + spl[5] +
                         " FARMER: " +
                         spl[4] +
                         " AMOUNT: " + spl[6] +
                         " ID: " + spl[0];
+                    id = spl[0];
                     product.textContent = res;
                     product.id = spl[0];
+                    console.log(spl[7]);
                     if (spl[7] == 2) {
-                        product.style = "width:100%;color:blue";
+                        product.style.color = "blue";
                     }
                     if (spl[7] == 1) {
-                        product.style = "width:100%;color:green";
+                        product.style.color = "green";
                     }
                 } else {
                     product.textContent = data[i];
                     product.id = data[i].split(" ")[0];
                 }
                 if (type == "order_view") {
-                    product.style = 'width:100%';
                     let accButt = document.createElement("button");
                     let decButt = document.createElement("button");
                     accButt.textContent = "Potvrdit";
@@ -290,23 +294,23 @@ function generate_table(type, data) {
                     accButt.style = "display:none";
                     decButt.style = "display:none";
                     accButt.addEventListener("click", () => {
-                        updateOnOrder(1, product.textContent.split('ID: ')[2]);
+                        updateOnOrder(1, id);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        product.style = "width:100%;color:green";
+                        product.style.color = "green";
                     })
                     decButt.addEventListener("click", () => {
-                        updateOnOrder(2, product.textContent.split('ID: ')[2]);
+                        updateOnOrder(2, id);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        product.style = "width:100%;color:blue";
+                        product.style.color = "blue";
                     })
                     if (product.style.color != "green" && product.style.color != "blue") {
                         accButt.style = "";
                         decButt.style = "";
                     }
                     product.append(accButt, decButt);
-                    product.style = "display:inline-flex;width:100%";
+                    product.style.display = "inline-flex";
                 }
                 content.appendChild(product);
             }
