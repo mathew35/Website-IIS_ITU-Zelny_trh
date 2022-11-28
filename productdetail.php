@@ -21,13 +21,13 @@ class ProductDetail
         echo "<h2>" . $name[0] . "</h2>";
     }
 
-    // pridat puvod
     public function getLocation()
     {
-        //nejdrive potreba pridat lokaci
+        $getlocation = $this->db->get("SPECIFIC_CROP", "CROPLOCATION", "CROPID=" . $this->id);
+        $location = $getlocation->fetch();
+        echo "<p>Lokace: " . $location[0] . "</p>";
     }
 
-    // pridat farmare 
     public function getFarmer()
     {
         $gettext = $this->db->get("SPECIFIC_CROP", "FARMER", "CROPID=" . $this->id);
@@ -46,7 +46,20 @@ class ProductDetail
     {
         $getprice = $this->db->get("SPECIFIC_CROP", "PRICE", "CROPID=" . $this->id);
         $price = $getprice->fetch();
-        echo "<p>"  . $price[0] . " Kč</p>";
+        $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
+        $unit = $getunit->fetch();
+        echo "<p>"  . $price[0] . " Kč / " . $unit[0] ."</p>";
+    }
+
+    public function getavailable()
+    {
+        $getamount = $this->db->get("SPECIFIC_CROP", "AMOUNT", "CROPID=" . $this->id);
+        $amount = $getamount->fetch();
+
+        $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
+        $unit = $getunit->fetch();
+
+        echo "<p>Skladem: "  . $amount[0] . " " . $unit[0] ."</p>";
     }
 
     public function getAvgRatings()
@@ -149,6 +162,7 @@ $product = new ProductDetail($_GET['detail']);
                 <input type="number" id="myText" min="1" value="0">
                 <?php 
                     $product->getPrice();
+                    $product->getavailable();
                     $product->addAmount();
                     ?>
 			</div>
