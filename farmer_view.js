@@ -429,7 +429,7 @@ function edit_product(product) {
     inputLocation.type = "text";
     inputLocation.id = "location";
     inputLocation.name = "location";
-    // inputLocation.value = product[8];
+    inputLocation.value = product[9];
     form.appendChild(inputLocation);
     form.appendChild(document.createElement("br"));
 
@@ -472,7 +472,7 @@ function edit_product(product) {
         document.getElementById("popupBackground").remove();
         document.getElementById("popupWin").remove();
         edit_product(product);
-    })
+    });
     popup.style.overflow = "scroll";
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -492,7 +492,8 @@ function updateOnOrder(status, id) {
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send("status=" + status + "&id=" + id + "");
     request.addEventListener("load", () => {
-        get_own()
+        console.log(request.responseText);
+        get_own('ownOrders', 'farmer_orders.php');
     })
 }
 
@@ -670,13 +671,13 @@ function generate_table(type, data) {
                     accButt.style = "display:none";
                     decButt.style = "display:none";
                     accButt.addEventListener("click", () => {
-                        updateOnOrder(1, data[i].split(';')[0]);
+                        updateOnOrder(1, data[i].split(';')[0].split(' ')[0]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
                         product.style.color = "green";
                     })
                     decButt.addEventListener("click", () => {
-                        updateOnOrder(2, data[i].split(';')[0]);
+                        updateOnOrder(2, data[i].split(';')[0].split(' ')[0]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
                         product.style.color = "blue";
@@ -705,9 +706,10 @@ function generate_table(type, data) {
 }
 
 let data = null;
-get_own('ownProducts', 'farmer_products.php');
-get_own('ownOrders', 'farmer_orders.php');
-get_own('user_cart', 'get_cart.php')
+// get_own('ownProducts', 'farmer_products.php');
+// get_own('ownOrders', 'farmer_orders.php');
+// get_own('user_cart', 'get_cart.php');
+// get_own('user_cart_items', 'get_cart_items.php');
 
 
 function farmer_view() {
