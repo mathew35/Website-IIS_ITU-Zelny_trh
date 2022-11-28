@@ -121,7 +121,7 @@ tr {
     height: max(80%, 20%);
     overflow-y: scroll;
     overflow-x: hidden;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     background-color: lightsteelblue;
 }
 
@@ -166,6 +166,11 @@ margin: 2.5% 0;
     overflow: hidden;
     width: 77vw;
 }
+
+.item_col {
+    display: block;
+}
+
 
 tbody {
     width: 100%;
