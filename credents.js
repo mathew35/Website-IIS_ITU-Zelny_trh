@@ -255,6 +255,7 @@ function logout() {
     request.open("POST", "logout.php");
     request.send();
     request.addEventListener("load", (evenr) => {
+        empty_cart();
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('farmer');
         sessionStorage.removeItem('farmer_view');
