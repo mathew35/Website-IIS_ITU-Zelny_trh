@@ -4,12 +4,35 @@
     <div>
             <label for="text">Chýba ti kategória?</label>
     </div><div>
-            <input placeholder="Zadaj požadovanú kategoriu..." type="text" name="text" id="text"><br>
-    </div><div>
+        <ul>
+            <li>
+                <input type="radio" name="category" value="ovocie">
+                <label for="ovocie">Ovocie</label><br>
+            </li>
+            <li>
+                <input type="radio" name="category" value="zelenina">
+                <label for="zelenina">Zelenina</label><br>
+            </li>
+        </ul>
+            <input placeholder="Zadaj požadovanú kategóriu..." type="text" name="text" id="text"><br>
             <input type="submit" value="Navrhni">
+    </div><div>
+           
     </div>
     </form> 
 </div>
+
+<?php
+    $db = new AccountService();
+
+    if(isset($_POST["text"]) && !empty($_POST["text"]) && isset($_POST["category"]))
+    {   
+        $crop_type = ucfirst(strtolower($_POST['text']));
+        $db->add("SUGGESTED_CROP","(\"{$crop_type}\",\"{$_POST['category']}\")");
+    }
+        
+
+?>
 
 
 <!-- Crop_type filter -->
@@ -28,8 +51,8 @@
         <ul>
 
 <?php
-    $serv = new AccountService();
-    $crop_type = $serv->get("CROP","CROPTYPE","");
+    $db = new AccountService();
+    $crop_type = $db->get("CROP","CROPTYPE","");
     $arr = $crop_type->fetch();
 
     for ($i = 0; $i < $crop_type->rowCount(); $i++) {

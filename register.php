@@ -8,5 +8,5 @@ if ($user->rowCount() != 0) {
     return;
 }
 $pwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
-$db->add('ACCOUNTS', "(NULL,'" . $_POST['login'] . "','" . $pwd . "','" . $_POST['fullname'] . "','" . $_POST['email'] . "')");
+$db->add('ACCOUNTS', "(NULL,'" . $_POST['login'] . "','" . $pwd . "','" . $_POST['fullname'] . "','" . $_POST['email'] . "',NULL)");
 echo "ok";

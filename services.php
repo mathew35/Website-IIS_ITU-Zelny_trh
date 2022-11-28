@@ -55,7 +55,6 @@ class AccountService
             $item = $cols->fetch();
         }
         $res = $res . ")";
-        echo ("INSERT INTO " . $table . " " . $res . " VALUES " . $values . ";");
         $query = $this->pdo->prepare("INSERT INTO " . $table . " " . $res . " VALUES " . $values . ";");
         $query->execute(NULL);
     }

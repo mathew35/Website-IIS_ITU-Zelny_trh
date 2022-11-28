@@ -21,13 +21,13 @@ class ProductDetail
         echo "<h2>" . $name[0] . "</h2>";
     }
 
-    // pridat puvod
     public function getLocation()
     {
-        //nejdrive potreba pridat lokaci
+        $getlocation = $this->db->get("SPECIFIC_CROP", "CROPLOCATION", "CROPID=" . $this->id);
+        $location = $getlocation->fetch();
+        echo "<p>Lokace: " . $location[0] . "</p>";
     }
 
-    // pridat farmare 
     public function getFarmer()
     {
         $gettext = $this->db->get("SPECIFIC_CROP", "FARMER", "CROPID=" . $this->id);
@@ -46,7 +46,20 @@ class ProductDetail
     {
         $getprice = $this->db->get("SPECIFIC_CROP", "PRICE", "CROPID=" . $this->id);
         $price = $getprice->fetch();
-        echo "<p>"  . $price[0] . " Kč</p>";
+        $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
+        $unit = $getunit->fetch();
+        echo "<p>"  . $price[0] . " Kč / " . $unit[0] ."</p>";
+    }
+
+    public function getavailable()
+    {
+        $getamount = $this->db->get("SPECIFIC_CROP", "AMOUNT", "CROPID=" . $this->id);
+        $amount = $getamount->fetch();
+
+        $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
+        $unit = $getunit->fetch();
+
+        echo "<p>Skladem: "  . $amount[0] . " " . $unit[0] ."</p>";
     }
 
     public function getAvgRatings()
@@ -135,8 +148,8 @@ $product = new ProductDetail($_GET['detail']);
 	<link rel="stylesheet" href="productstyle.css">
 </head>
     <div class="detail-container">
-
         <div class="detail">
+            <a href="index3.php"><button id="myBtn" class="back">Zpět</button></a>
 			<div class="detail-column detail-left">
                 <?php   
                     $product->getName();
@@ -146,11 +159,12 @@ $product = new ProductDetail($_GET['detail']);
                 ?>
 			</div>
 			<div class="detail-column detail-right">
-                <input type="number" id="myText" value="0">
+                <input type="number" id="myText" min="1" value="0">
                 <?php 
                     $product->getPrice();
-                    $product->addAmount();?>
-
+                    $product->getavailable();
+                    $product->addAmount();
+                    ?>
 			</div>
 
             <div class="detail-column detail-left">
@@ -163,23 +177,23 @@ $product = new ProductDetail($_GET['detail']);
         </div>
 
 		<div class="detail-harvest" id="detail-harvest">
+            <button type="button" class="back" onclick="closeHarvest()">Close</button>
             <div class="popup-harvest">
                 <?php $product->harvest(); ?>
             </div>
-			<button type="button" onclick="closeHarvest()">Close</button>
+			
 			
 		</div>
 
         <div class="detail-review" id="detail-review">
+            <button type="button" class="back" onclick="closeReview()">Close</button>
             Hodnocení: <input type="text" id="myRating">
-            <input type="number" id="myStars" value="0">
+            <input type="number" min="0" max="5" id="myStars" value="0">
             <?php $product->newrate(); ?>
 			<?php $product->getRatings();?>	   
-			<button type="button" onclick="closeReview()">Close</button>
+			
 		</div>
     </div>
-	
-
 <script> 			
 let harvest = document.getElementById("detail-harvest");
 let review = document.getElementById("detail-review");

@@ -71,11 +71,12 @@ nav {
     padding: 5px 15px;
     border: 1px solid blue;
 }
-#filter_items>div{
-    display: inline-block;
-    padding: 5px 15px;
-    border: 1px solid red;
+
+ul li{
+    padding: 0 10px;
+    list-style-type: none;
 }
+
 
 footer {
     background-color: blue;
@@ -119,7 +120,8 @@ tr {
     width: 80%;
     height: max(80%, 20%);
     overflow-y: scroll;
-    border-collapse: collapse;
+    overflow-x: hidden;
+    /* border-collapse: collapse; */
     background-color: lightsteelblue;
 }
 
@@ -136,6 +138,37 @@ tr {
     margin: 10px;
     padding: 0 10px;
     overflow: hidden;
+}
+
+.tableItem span .price{
+    background-color: transparent;
+    font-size:20px;
+    font-weight: bold;
+}
+
+.tableItem p,.tableItem h2{
+margin: 2.5% 0;
+}
+
+.tableItem span{
+    background-color: rgba(255, 255, 255, 0.5);;
+    display: inline;
+
+}
+
+.tableItemFarmer {
+    background-color: azure;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 0 10px;
+    overflow: hidden;
+    width: 77vw;
+}
+
+.item_col {
+    display: block;
 }
 
 
