@@ -15,10 +15,12 @@ class AdminMode
         $name = $getname->fetch();
 
 
+
         for ($i = 0; $i < $getname->rowCount(); $i++) {
             echo '<p>' . $name[1] . ' <button onclick="edituser(' . $name[0] . ')">Upravit účet</button>' . 
             ' <button onclick="deleteuser(' . $name[0] . ')">Smazat účet</button>'. 
             ' <button onclick="addmoder(' . $name[0] . ')">Přidat uživateli roli moderátora</button>'.'</p>';
+            ' <button onclick="addmoder(' . $name[0] . ')">Odebrat uživateli roli moderátora</button>'.'</p>';
             $name = $getname->fetch();
         }
     }
@@ -59,7 +61,12 @@ $amode = new AdminMode();
         success: function(response) { alert(response); }
     });
     }
-    function addmoder(id){
-        alert("add moderatoru tu");
+    function addmoder(userid, adddel){
+        $.ajax({
+        url: 'adddelmod.php',
+        type: 'post',
+        data: { "param": userid, "param2": adddel},
+        success: function(response) { alert(response); }
+    });
     }
 </script>
