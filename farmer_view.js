@@ -84,6 +84,7 @@ function form_add() {
     addNew.textContent = "Pridaj novú";
     addNew.value = "addNew";
     selectCrop.appendChild(addNew);
+
     let crops = post('crops.php', null);
     crops.addEventListener("load", () => {
         var item = crops.responseText;
