@@ -3,13 +3,14 @@
     function addmoderator($userid){
         $db = new AccountService();
         $db->update("ACCOUNTS", "MODERATE='". 2 . "'", "ID='" . $userid . "'");
-        echo "Uživatel byl jmenován moderátorem";
+        header("Refresh:1");
+
     }
 
     function deletemod($userid){
         $db = new AccountService();
         $db->update("ACCOUNTS", "MODERATE='". 0 . "'", "ID='" . $userid . "'");
-        echo "Uživatel už není moderátorem";
+        header("Refresh:1");
     }
 
     if ($_POST['param2']==0) {
@@ -18,7 +19,5 @@
     else if($_POST['param2']==2){
         deletemod($_POST['param']);
     }
-    else{
-        echo "Adminovi nelze upravovat roli";
-    }
 ?>
+
