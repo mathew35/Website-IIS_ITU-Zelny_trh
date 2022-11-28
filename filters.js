@@ -43,3 +43,5 @@ function do_filter_bar() {
 
 do_filter_bar() 
 
+let filter_bar = document.getElementById('button#farmers');
+search_button.onclick = search;

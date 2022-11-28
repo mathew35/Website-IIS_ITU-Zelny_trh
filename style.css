@@ -120,6 +120,7 @@ tr {
     width: 80%;
     height: max(80%, 20%);
     overflow-y: scroll;
+    overflow-x: hidden;
     border-collapse: collapse;
     background-color: lightsteelblue;
 }
@@ -139,6 +140,32 @@ tr {
     overflow: hidden;
 }
 
+.tableItem span .price{
+    background-color: transparent;
+    font-size:20px;
+    font-weight: bold;
+}
+
+.tableItem p,.tableItem h2{
+margin: 2.5% 0;
+}
+
+.tableItem span{
+    background-color: rgba(255, 255, 255, 0.5);;
+    display: inline;
+
+}
+
+.tableItemFarmer {
+    background-color: azure;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 0 10px;
+    overflow: hidden;
+    width: 77vw;
+}
 
 tbody {
     width: 100%;

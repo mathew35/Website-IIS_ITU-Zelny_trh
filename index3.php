@@ -30,9 +30,7 @@ if($_SESSION['user']=="admin"){
         </div>
         <div id='navbar'>
             <div id='category'>
-                <?php
-                include 'category.php';
-                ?>
+                <?php include 'category.php'; ?>
             </div>
         </div>
         <div id='navbar'>
@@ -41,16 +39,16 @@ if($_SESSION['user']=="admin"){
             </div>
         </div>
     </nav>
-    <div id='filter'>
+    <?php
+    if($_GET["category"] == "farmers" || $_GET["category"] == "events"){ echo "<div id='filter' style=\"display: none;\"";}
+    else { echo "<div id='filter' style=\"display: ;\"";}
+    ?>
+    <!-- <div id='filter' style="display: ;"> -->
         <!-- filters.js-->
-        <?php
-        include 'filters.php';
-        ?>
+        <?php include 'filters.php'; ?>
     </div>
     <div id="table">
-        <?php
-        include 'content.php';
-        ?>
+        <?php include 'content.php'; ?>
     </div>
     <footer>footer fooo</footer>
 </body>
