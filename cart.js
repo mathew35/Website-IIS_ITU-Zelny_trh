@@ -18,12 +18,31 @@ function update_cart_item(cropid, ammount) {
     request.open("POST", 'update_cart_item.php');
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send("cropid=" + cropid + "&ammount=" + ammount + "");
+    console.log("updating cart item");
+    return request;
+}
+
+function place_order() {
+    var request = new XMLHttpRequest();
+    request.open("POST", 'place_order.php');
+    request.send();
     request.addEventListener("load", () => {
         console.log(request.responseText);
+        cart_display();
+    })
+    console.log("creating order");
+    return request;
+}
+
+function empty_cart() {
+    var request = new XMLHttpRequest();
+    request.open("POST", 'empty_cart.php');
+    request.send();
+    request.addEventListener("load", () => {
         get_own('user_cart_items', 'get_cart_items.php');
         cart_display();
     })
-    console.log("updating cart item");
+    console.log("emptying cart");
 }
 
 function cart_display() {
@@ -48,13 +67,36 @@ function cart_display() {
         plusButton.textContent = "+";
         plusButton.addEventListener("click", () => {
             data[i] = data[i].split(' ');
-            update_cart_item(data[i][1], Number(data[i][0]) + 1);
+            let ret = update_cart_item(data[i][1], Number(data[i][0]) + 1);
+            console.log(ret);
+            ret.addEventListener("load", () => {
+                console.log(ret.responseText);
+                if (ret.responseText == "fail") {
+                    let err = document.createElement("p");
+                    err.style.color = "red";
+                    err.textContent = "Nedostatok produktu na sklade";
+                    content.appendChild(err);
+                } else {
+                    get_own('user_cart_items', 'get_cart_items.php');
+                    cart_display();
+                }
+            })
             data[i] = data[i].join(' ');
         })
         minusButton.textContent = "-";
         minusButton.addEventListener("click", () => {
             data[i] = data[i].split(' ');
-            update_cart_item(data[i][1], Number(data[i][0]) - 1);
+            let ret = update_cart_item(data[i][1], Number(data[i][0]) - 1);
+            ret.addEventListener("load", () => {
+                console.log(ret.responseText);
+                if (ret.responseText == "fail") {
+                    console.log("returning fail");
+                    return "fail";
+                }
+                get_own('user_cart_items', 'get_cart_items.php');
+                cart_display();
+            })
+
             data[i] = data[i].join(' ');
         })
         content.append(plusButton, minusButton);
@@ -64,7 +106,13 @@ function cart_display() {
     let sendButton = document.createElement('button');
     let cancelButton = document.createElement('button');
     sendButton.textContent = "Objednať";
+    sendButton.addEventListener("click", () => {
+        place_order();
+    });
     cancelButton.textContent = "Vyprázdniť košík";
+    cancelButton.addEventListener("click", () => {
+        empty_cart();
+    });
     content.appendChild(document.createElement('hr'));
     content.append(sendButton, cancelButton);
 }

@@ -15,7 +15,7 @@ function profile_view() {
 }
 
 
-function generateLableInput(parent, name, data) {
+function generateLableInput(parent, name, data, limit) {
     let label = document.createElement("label");
     label.htmlFor = name;
     parent.appendChild(label);
@@ -31,15 +31,26 @@ function generateLableInput(parent, name, data) {
     input.value = data;
     parent.appendChild(input);
     parent.appendChild(document.createElement("br"));
+    input.size = 20;
+    if (limit != null) {
+        input.maxLength = limit;
+        input.size = limit;
+    }
 }
 
 function update_profile() {
     const request = new XMLHttpRequest();
     request.open("POST", "update_acc.php");
-    request.send();
+    var form = document.getElementById("profileForm")
+    var data = null;
+    if (form != null) {
+        data = new FormData(form);
+    }
+    request.send(data);
     request.addEventListener("load", () => {
+        console.log(request.responseText);
         newData = request.responseText.split(',');
-        profile_form();
+        profile_view();
     })
     console.log("updating profile");
 }
@@ -54,6 +65,7 @@ function profile_form() {
     let table = document.getElementById("table");
     table.appendChild(content);
     let form = document.createElement("form");
+    form.id = "profileForm";
     form.action = "javascript:update_profile()";
     let div = document.createElement("div");
     div.style.width = "100%";
@@ -62,16 +74,16 @@ function profile_form() {
     content.appendChild(div);
 
     // generateLableInput(form, "login", sessionStorage.getItem('user'));
-    generateLableInput(form, "fullname", newData[0]);
-    generateLableInput(form, "email", newData[1]);
+    generateLableInput(form, "fullname", newData[0], 32);
+    generateLableInput(form, "email", newData[1], 32);
     if (sessionStorage.getItem('farmer') != null) {
         let hr = document.createElement("hr");
         // hr.style.width = "40%";
         form.appendChild(hr);
-        generateLableInput(form, "address", newData[2]);
-        generateLableInput(form, "ICO", newData[3]);
-        generateLableInput(form, "phone", newData[4]);
-        generateLableInput(form, "IBAN", newData[5]);
+        generateLableInput(form, "address", newData[2], 32);
+        generateLableInput(form, "ICO", newData[3], 8);
+        generateLableInput(form, "phone", newData[4], 13);
+        generateLableInput(form, "IBAN", newData[5], 32);
 
     }
     let hr = document.createElement("hr");
@@ -84,7 +96,7 @@ function profile_form() {
     update.type = "submit";
     restore.textContent = "Restore";
     restore.addEventListener("click", (evt) => {
-        profile_form();
+        profile_view();
     })
     form.appendChild(update);
     form.appendChild(restore);

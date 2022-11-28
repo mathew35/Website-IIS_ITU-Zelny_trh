@@ -1,6 +1,6 @@
 <?php
-require "services.php";
 session_start();
+require "services.php";
 $db = new AccountService();
 $items = $db->get('CART_CROP', '*', "(CARTID='" . $_SESSION['cartid'] . "')");
 $arr = $items->fetch();
