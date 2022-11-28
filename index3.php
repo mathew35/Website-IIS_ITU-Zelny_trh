@@ -2,10 +2,24 @@
 session_start();
 require "services.php";
 // header("refresh:1;");
-if($_SESSION['user']=="admin"){
-    echo '<p><a href="adminmode.php"><button>Admin mode</button></a></p>';
+
+// ADMIN 1 / MODERATOR 2
+if(isset($_SESSION['user']))
+{
+    $database = new AccountService();
+    $getrole = $database->get("ACCOUNTS", "MODERATE", "LOGIN=\"" . $_SESSION['user'] . "\"");
+    $role = $getrole->fetch();
+
+    if($role[0] == 1){
+        echo '<p><a href="adminmode.php"><button>Admin mode</button></a></p>';
+    }
+    else if($role[0] == 2){
+        echo '<p><a href="moderator.php"><button>Moderate mode</button></a></p>';
+    }
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
