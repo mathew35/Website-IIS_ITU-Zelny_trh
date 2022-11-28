@@ -33,7 +33,8 @@ CREATE TABLE ACCOUNTS (
     LOGIN VARCHAR(64) NOT NULL UNIQUE KEY,
     PASSWORD VARCHAR(128) NOT NULL,
     FULLNAME VARCHAR(64) NOT NULL,
-    EMAIL VARCHAR(64) NOT NULL
+    EMAIL VARCHAR(64) NOT NULL,
+    MODERATE INT(1) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE FARMERS (
@@ -94,6 +95,7 @@ CREATE TABLE SPECIFIC_CROP(
     CATEGORY VARCHAR(64) NOT NULL,
     AMOUNT INT(64) DEFAULT 0,
     PRICE FLOAT(10) DEFAULT 0,
+    CROPLOCATION VARCHAR(64) NOT NULL,
     PER_UNIT VARCHAR(2) NOT NULL DEFAULT "kg",
     PHOTO_URL VARCHAR(128),
     DESCRIPTION VARCHAR(128),
@@ -155,214 +157,24 @@ CREATE TABLE ORDERS(
     FOREIGN KEY (CROPID) REFERENCES CART_CROP(CROPID)
 );
 
-INSERT INTO `CATEGORY` (
-    `CATEGORY`
-) VALUES (
-    'Ovocie'
-);
+INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`, `FULLNAME`, `EMAIL`, `MODERATE`) VALUES (NULL, 'admin', '$2y$10$4s5KYVpsgRKmMNMbdo6zOOev4UrLTmp5ocq4B0j4VCZ0BaYNrxCMi', '', '', '1');
 
-INSERT INTO `CATEGORY` (
-    `CATEGORY`
-) VALUES (
-    'Zelenina'
-);
 
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Jablko',
-    'Ovocie'
-);
+INSERT INTO `CATEGORY` (`CATEGORY`) VALUES ('Ovocie');
+INSERT INTO `CATEGORY` (`CATEGORY`) VALUES ('Zelenina');
 
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Slivka',
-    'Ovocie'
-);
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Jablko', 'Ovocie');
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Slivka', 'Ovocie');
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Ostružina', 'Ovocie');
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Kukurica', 'Zelenina');
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Uhorka', 'Zelenina');
+INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Mrkva', 'Zelenina');
 
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Ostružina',
-    'Ovocie'
-);
-
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Kukurica',
-    'Zelenina'
-);
-
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Uhorka',
-    'Zelenina'
-);
-
-INSERT INTO `CROP` (
-    `CROPTYPE`,
-    `CATEGORY`
-) VALUES (
-    'Mrkva',
-    'Zelenina'
-);
-
-INSERT INTO `ACCOUNTS` (
-    `ID`,
-    `LOGIN`,
-    `PASSWORD`,
-    `FULLNAME`,
-    `EMAIL`
-) VALUES (
-    1,
-    'Farmár_Ferko',
-    '$2y$10$.p9UWiZXNWLJ1rJVRDELXOG77MUsqNO7Oa0b1xo8DXmhS4lTpqpRW',
-    '',
-    ''
-);
-
-INSERT INTO `ACCOUNTS` (
-    `ID`,
-    `LOGIN`,
-    `PASSWORD`,
-    `FULLNAME`,
-    `EMAIL`
-) VALUES (
-    2,
-    'Farmárka_Anička',
-    '$2y$10$PT.SfOS.oxFCCLDU2anlDut2Gm9B1gYrUp/gAny40/h9ZvHNv50HC',
-    '',
-    ''
-);
-
-INSERT INTO `FARMERS` (
-    `LOGIN`,
-    `ADDRESS`,
-    `ICO`,
-    `PHONE`,
-    `IBAN`
-) VALUES (
-    'Farmár_Ferko',
-    'Nerudova 33, 602 00 Brno-střed',
-    '58734261',
-    '+421401520363',
-    'CZ36 0100 0000 0001 2345 6789'
-);
-
-INSERT INTO `FARMERS` (
-    `LOGIN`,
-    `ADDRESS`,
-    `ICO`,
-    `PHONE`,
-    `IBAN`
-) VALUES (
-    'Farmárka_Anička',
-    'Schodová 305/2, 602 00 Brno-střed',
-    '32165487',
-    '+420903503505',
-    'CZ36 0100 0000 0002 3333 6789'
-);
-
-INSERT INTO `SPECIFIC_CROP` (
-    `CROPID`,
-    `CROP_NAME`,
-    `CROP`,
-    `CATEGORY`,
-    `AMOUNT`,
-    `PRICE`,
-    `PER_UNIT`,
-    `PHOTO_URL`,
-    `DESCRIPTION`,
-    `FARMER`
-) VALUES (
-    NULL,
-    'Granny Smith',
-    'Jablko',
-    'Ovocie',
-    '45',
-    '22',
-    'kg',
-    'https://publish.purewow.net/wp-content/uploads/sites/2/2021/03/types-of-apples-mutsu.jpg?fit=400%2C400',
-    'Sladká odroda zeleného jabĺčka.',
-    'Farmár_Ferko'
-);
-
-INSERT INTO `SPECIFIC_CROP` (
-    `CROPID`,
-    `CROP_NAME`,
-    `CROP`,
-    `CATEGORY`,
-    `AMOUNT`,
-    `PRICE`,
-    `PER_UNIT`,
-    `PHOTO_URL`,
-    `DESCRIPTION`,
-    `FARMER`
-) VALUES (
-    NULL,
-    'Golden Delicious',
-    'Jablko',
-    'Ovocie',
-    '25',
-    '26',
-    'kg',
-    'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg?w=400&h=200&c=crop',
-    'Nestriekané, priamo zo záhrady.',
-    'Farmár_Ferko'
-);
-
-INSERT INTO `SPECIFIC_CROP` (
-    `CROPID`,
-    `CROP_NAME`,
-    `CROP`,
-    `CATEGORY`,
-    `AMOUNT`,
-    `PRICE`,
-    `PER_UNIT`,
-    `PHOTO_URL`,
-    `DESCRIPTION`,
-    `FARMER`
-) VALUES (
-    NULL,
-    'Lesné Maliny',
-    'Ostružina',
-    'Ovocie',
-    '8',
-    '63',
-    'kg',
-    'https://i1.wp.com/ceskozdrave.cz/wp-content/uploads/2015/12/maliny.png?resize=400%2C255&ssl=1',
-    'Nazbierané v miestnom lesíku.',
-    'Farmárka_Anička'
-);
-
-INSERT INTO `SPECIFIC_CROP` (
-    `CROPID`,
-    `CROP_NAME`,
-    `CROP`,
-    `CATEGORY`,
-    `AMOUNT`,
-    `PRICE`,
-    `PER_UNIT`,
-    `PHOTO_URL`,
-    `DESCRIPTION`,
-    `FARMER`
-) VALUES (
-    NULL,
-    'Baby mrkvičky',
-    'Mrkva',
-    'Zelenina',
-    '88',
-    '15',
-    'ks',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Baby_Carrots_2.jpg/400px-Baby_Carrots_2.jpg',
-    '...',
-    'Farmárka_Anička'
-);
+INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`) VALUES (1, 'Farmár_Ferko', '$2y$10$.p9UWiZXNWLJ1rJVRDELXOG77MUsqNO7Oa0b1xo8DXmhS4lTpqpRW', '', '');
+INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`) VALUES (NULL, 'Farmárka_Anička', '$2y$10$PT.SfOS.oxFCCLDU2anlDut2Gm9B1gYrUp/gAny40/h9ZvHNv50HC', '', '');
+INSERT INTO `FARMERS` (`LOGIN`, `ADDRESS`, `ICO`, `PHONE`, `IBAN`) VALUES ('Farmár_Ferko', 'Nerudova 33, 602 00 Brno-střed', '58734261', '+421401520363', 'CZ36 0100 0000 0001 2345 6789');
+INSERT INTO `FARMERS` (`LOGIN`, `ADDRESS`, `ICO`, `PHONE`, `IBAN`) VALUES ('Farmárka_Anička', 'Schodová 305/2, 602 00 Brno-střed', '32165487', '+420903503505', 'CZ36 0100 0000 0002 3333 6789');
+INSERT INTO `SPECIFIC_CROP` (`CROPID`, `CROP_NAME`, `CROP`, `CATEGORY`, `AMOUNT`, `PRICE`, `PER_UNIT`, `PHOTO_URL`, `DESCRIPTION`, `FARMER`) VALUES (NULL, 'Granny Smith', 'Jablko', 'Ovocie', '45', '22', 'kg', 'https://publish.purewow.net/wp-content/uploads/sites/2/2021/03/types-of-apples-mutsu.jpg?fit=400%2C400', 'Sladká odroda zeleného jabĺčka.', 'Farmár_Ferko');
+INSERT INTO `SPECIFIC_CROP` (`CROPID`, `CROP_NAME`, `CROP`, `CATEGORY`, `AMOUNT`, `PRICE`, `PER_UNIT`, `PHOTO_URL`, `DESCRIPTION`, `FARMER`) VALUES (NULL, 'Golden Delicious', 'Jablko', 'Ovocie', '25', '26', 'kg', 'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg?w=400&h=200&c=crop', 'Nestriekané, priamo zo záhrady.', 'Farmár_Ferko');
+INSERT INTO `SPECIFIC_CROP` (`CROPID`, `CROP_NAME`, `CROP`, `CATEGORY`, `AMOUNT`, `PRICE`, `PER_UNIT`, `PHOTO_URL`, `DESCRIPTION`, `FARMER`) VALUES (NULL, 'Lesné Maliny', 'Ostružina', 'Ovocie', '8', '63', 'kg', 'https://i1.wp.com/ceskozdrave.cz/wp-content/uploads/2015/12/maliny.png?resize=400%2C255&ssl=1', 'Nazbierané v miestnom lesíku.', 'Farmárka_Anička');
+INSERT INTO `SPECIFIC_CROP` (`CROPID`, `CROP_NAME`, `CROP`, `CATEGORY`, `AMOUNT`, `PRICE`, `PER_UNIT`, `PHOTO_URL`, `DESCRIPTION`, `FARMER`) VALUES (NULL, 'Baby mrkvičky', 'Mrkva', 'Zelenina', '88', '15', 'ks', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Baby_Carrots_2.jpg/400px-Baby_Carrots_2.jpg', '...', 'Farmárka_Anička');

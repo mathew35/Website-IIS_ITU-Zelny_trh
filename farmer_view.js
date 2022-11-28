@@ -145,64 +145,148 @@ function updateOnOrder(status, id) {
     })
 }
 
+// function find(param) {
+//     let params = location.href.split('?');
+//     if (params.length <= 1) return null;
+//     params = params[1].split('&');
+//     for (let i = 0; i < params.length; i++) {
+//         let actual = params[i].split("=");
+//         if (actual[0] == param) return i;
+//     }
+//     return null;
+// }
+
+// function isset(parameter) {
+//     if (find(parameter) != null) return true;
+//     // let params = location.href.split('?');
+//     // for (let i = 1; i < params.length; i++) {
+//     //     if (params[i].split("=")[0] == parameter) return true;
+//     // }
+//     return false;
+// }
+
+// if (sessionStorage.getItem('removedParams') == "") sessionStorage.setItem('removedParams', Array(0));
+// else console.log(sessionStorage.getItem('removedParams'));
+
+// function store(param) {
+//     let removedParams = sessionStorage.getItem("removedParams").split(',');
+//     if (removedParams == "") removedParams = Array(0);
+//     // else {
+//     //     removedParams = removedParams;
+//     // }
+//     let params = location.href.split('?');
+//     if (params.length <= 1) return;
+//     pars = params[1].split('&');
+//     console.log(pars);
+//     console.log(pars[find(param)]);
+//     console.log(removedParams);
+//     removedParams.push(pars[find(param)]);
+//     console.log(removedParams);
+//     pars.pop();
+//     console.log(pars);
+//     if (pars.length > 0) {
+//         pars = pars.join('&');
+//         params.push(pars);
+//     }
+//     console.log(pars);
+//     console.log(params);
+//     if (pars.length < 1) {
+//         params = Array(params[0]);
+//     } else {
+//         params = Array(params[0], pars).join('?');
+//     }
+//     console.log(params);
+//     console.log(removedParams);
+//     sessionStorage.setItem("removedParams", removedParams);
+//     console.log(sessionStorage.getItem('removedParams'));
+//     location.href = params;
+// }
+
+// function restoreAll() {
+//     let removedParams = sessionStorage.getItem("removedParams");
+//     console.log(removedParams);
+//     if (removedParams == "") removedParams = Array(0);
+//     else {
+//         removedParams = Array(removedParams);
+//     }
+//     console.log(removedParams);
+//     let addr = location.href.split('?');
+//     console.log(addr);
+//     if (removedParams.length == 0) return;
+//     if (addr.length > 1) {
+//         addr[1] = Array(addr[1], removedParams.join("&")).join('&');
+//     } else {
+//         addr.push(removedParams.join("&"));
+//     }
+//     console.log(addr);
+//     addr = addr.join('?');
+//     console.log(addr);
+//     sessionStorage.setItem("removedParams", Array(0));
+//     console.log(removedParams);
+//     location.href = addr;
+// }
+
 function generate_table(type, data) {
+    // if (isset("detail")) {
+    //     console.log("storing");
+    //     store("detail");
+    // }
     let scrollTop = 0;
-    if (document.getElementById("table") != null && document.getElementById("table").getElementsByTagName("table") != null && document.getElementById("table").getElementsByTagName("table").item(0) != null) {
-        scrollTop = document.getElementById("table").getElementsByTagName("table").item(0).scrollTop;
-        document.getElementById("table").getElementsByTagName("table").item(0).remove();
+    if (document.getElementById("tableItems") != null) {
+        scrollTop = document.getElementById("tableItems").scrollTop;
+        document.getElementById("tableItems").remove();
     }
-    let content = document.getElementById("table");
-    let table = document.createElement("table");
-    let tr = document.createElement("tr");
+    let table = document.getElementById("table");
+    let content = document.getElementById("tableItems");
+    if (content == null) content = document.createElement("div");
+    content.id = "tableItems";
+    table.appendChild(content);
     if (type == "farmer_view") {
-        let addProduct = document.createElement("td");
+        let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
-        let div = document.createElement("div");
-        div.id = "tableItem";
-        div.textContent = "Pridaj novy produkt";
-        div.addEventListener("click", (event) => {
+        addProduct.className = "tableItem";
+        addProduct.textContent = "Pridaj novy produkt";
+        addProduct.addEventListener("click", (event) => {
             new_product();
         });
-        addProduct.appendChild(div);
-        tr.appendChild(addProduct);
+        content.appendChild(addProduct);
     }
     if (data != null) {
-        if (data[0] != "null") {
-            let cmp1 = 6;
-            let cmp2 = 0;
+        if (data[0] != "null" && data[0] != "") {
             if (type == "order_view") {
+                //neako upravit stale
                 cmp1 = 2;
                 cmp2 = 1
             }
             for (let i = 0; i < data.length; i++) {
-                if (tr.childNodes.length % cmp1 == cmp2 && i != 0) {
-                    table.appendChild(tr);
-                    tr = document.createElement("tr");
-                }
-                let product = document.createElement("td");
-                let div = document.createElement("div");
-                div.id = "tableItem";
+                let product = document.createElement("div");
+                let id = null;
+                product.className = "tableItem";
                 if (type == "order_view") {
-                    div.style = "width:100%;color:black";
+                    product.style.width = "calc(100% - 40px)";
+                    product.style.color = "black";
+                    console.log(data[i]);
                     let spl = data[i].split(' ');
                     let res = "PROCESSED: " + spl[7] + " CROPID: " + spl[5] +
                         " FARMER: " +
                         spl[4] +
                         " AMOUNT: " + spl[6] +
                         " ID: " + spl[0];
-                    div.textContent = res;
+                    id = spl[0];
+                    product.textContent = res;
+                    product.id = spl[0];
+                    console.log(spl[7]);
                     if (spl[7] == 2) {
-                        div.style = "width:100%;color:blue";
+                        product.style.color = "blue";
                     }
                     if (spl[7] == 1) {
-                        div.style = "width:100%;color:green";
+                        product.style.color = "green";
                     }
                 } else {
-                    div.textContent = data[i];
+                    product.textContent = data[i];
+                    product.id = data[i].split(" ")[0];
                 }
-                product.appendChild(div);
                 if (type == "order_view") {
-                    product.style = 'width:100%';
                     let accButt = document.createElement("button");
                     let decButt = document.createElement("button");
                     accButt.textContent = "Potvrdit";
@@ -210,69 +294,50 @@ function generate_table(type, data) {
                     accButt.style = "display:none";
                     decButt.style = "display:none";
                     accButt.addEventListener("click", () => {
-                        updateOnOrder(1, div.textContent.split('ID: ')[2]);
+                        updateOnOrder(1, id);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        div.style = "width:100%;color:green";
+                        product.style.color = "green";
                     })
                     decButt.addEventListener("click", () => {
-                        updateOnOrder(2, div.textContent.split('ID: ')[2]);
+                        updateOnOrder(2, id);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        div.style = "width:100%;color:blue";
+                        product.style.color = "blue";
                     })
-                    if (div.style.color != "green" && div.style.color != "blue") {
+                    if (product.style.color != "green" && product.style.color != "blue") {
                         accButt.style = "";
                         decButt.style = "";
                     }
                     product.append(accButt, decButt);
-                    product.style = "display:inline-flex;width:100%";
+                    product.style.display = "inline-flex";
                 }
-                tr.appendChild(product);
+                content.appendChild(product);
             }
         }
     }
-    if (tr.childNodes.length % 6 != 0 && type != "order_view") {
-        console.log("adding dummies");
-        let n = tr.childNodes.length % 6;
-        for (let i = 6; i > n; i--) {
-            let dummy = document.createElement("td");
-            let dummydiv = document.createElement("div");
-            dummydiv.id = "tableItem";
-            dummydiv.style = "visibility: hidden";
-            dummydiv.textContent = "Place holder";
-            dummy.appendChild(dummydiv);
-            tr.appendChild(dummy);
-        }
-    }
-    if (table.children.length == 0 && tr.children.length == 0) {
+    if (content.children.length == 0 && content.children.length == 0) {
         //no orders 
         let noOrder = document.createElement("p");
-        noOrder.textContent = "No orders!";
-        table.append(noOrder);
-    } else {
-        table.appendChild(tr);
+        if (type == "order_view") noOrder.textContent = "No orders!";
+        if (type == "f") noOrder.textContent = "No orders!";
+        if (type == "order_view") noOrder.textContent = "No orders!";
+        content.append(noOrder);
     }
-    content.appendChild(table);
-    table.scrollTo(0, scrollTop);
+    content.scrollTo(0, scrollTop);
 
 }
 
 let data = null;
-get_own('ownProducts', 'farmer_products.php');
-get_own('ownOrders', 'farmer_orders.php');
+// get_own('ownProducts', 'farmer_products.php');
+// get_own('ownOrders', 'farmer_orders.php');
+// get_own('user_cart', 'get_cart.php')
 
 
 function farmer_view() {
-    // if (sessionStorage.getItem('farmer_view') != "products") {
-    //     clearInterval(updateFarmer_view_pick);
-    //     clearInterval(get_prods);
-    //     console.log("should not be here");
-    //     return;
-    // }
     if (updateFarmer_view == null) {
         updateFarmer_view = setInterval(farmer_view_pick, 5000);
-        get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+        get_prods = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.php');
     }
     console.log("farmer_view");
     data = String(sessionStorage.getItem('ownProducts')).split(',');
@@ -282,7 +347,7 @@ function farmer_view() {
 function order_view() {
     if (updateFarmer_view == null) {
         updateFarmer_view = setInterval(farmer_view_pick, 5000);
-        get_prods = setInterval(get_own('ownOrders', 'farmer_orders.php'), 5000);
+        get_prods = setInterval(get_own, 5000, 'ownOrders', 'farmer_orders.php');
     }
     console.log("order view");
     data = String(sessionStorage.getItem('ownOrders')).split(',');
@@ -296,11 +361,22 @@ function farmer_view_pick() {
         farmer_view();
     } else if (sessionStorage.getItem('farmer_view') == "orders") {
         order_view();
+    } else if (sessionStorage.getItem('farmer_view') == "cart") {
+        cart_view();
+    } else if (sessionStorage.getItem('farmer_view') == "profile") {
+        profile_view();
     } else {
+        // restoreAll();
         clearInterval(updateFarmer_view);
         clearInterval(get_prods);
+        clearInterval(get_cart);
+        clearInterval(get_cart_items);
+        clearInterval(get_profile);
     }
 }
 
-let updateFarmer_view = setInterval(farmer_view_pick, 5000);
-let get_prods = setInterval(get_own('ownProducts', 'farmer_products.php'), 5000);
+let updateFarmer_view; // = setInterval(farmer_view_pick, 5000);
+let get_prods; // = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.php');
+let get_cart;
+let get_cart_items;
+let get_profile;

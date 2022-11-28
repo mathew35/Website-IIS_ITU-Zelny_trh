@@ -83,7 +83,6 @@ class AccountService
     function update($table, $what, $condition)
     {
         $query = $this->pdo->prepare("UPDATE " . $table . " SET " . $what . " WHERE " . $condition . ";");
-        echo ("UPDATE " . $table . " SET " . $what . " WHERE " . $condition . ";");
         $query->execute();
         return $query;
     }
