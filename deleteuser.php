@@ -1,6 +1,9 @@
 <?php 
+    require "services.php";
     function deleteuser($userid){
-        echo $userid . " bude vymazán tu";
+        // $db = new AccountService();
+        // $db->remove("ACCOUNTS", "ID='" . $userid . "'");
+        // echo $userid . " byl odstraněn";
     }
 
     if (isset($_POST['param'])) {

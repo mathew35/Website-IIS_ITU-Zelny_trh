@@ -36,7 +36,7 @@ $amode = new AdminMode();
     <link rel="stylesheet" href="adminstyle.css">
 </head>
 <body>
-    <p><a href="index3.php"><button>Admin mode</button></a></p>
+    <p><a href="index3.php"><button>User mode</button></a></p>
     <div>
 
         <h1>Spravovat uživatele</h1>
