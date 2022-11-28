@@ -42,9 +42,25 @@
         $db->update("SHOPPING_CART", "CART_VALUE='".$totalprice. "'", "CARTID='" . $cid . "'");
     }
 
+    function available($amount, $pid){
+        $db = new AccountService();
+        $getcount=$db->get("SPECIFIC_CROP", "AMOUNT", "CROPID='" . $pid . "'");
+        $count=$getcount->fetch();
+        if ($count[0]<$amount) {
+            echo "Takové množství není na skladě";
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
+    }
+
     if (isset($_POST['paramount'])) {
         if(isset($_SESSION['user'])){
-            buyitem($_POST['paramount'], $_POST['parpid']);
+            if(available($_POST['paramount'], $_POST['parpid'])==0){
+                buyitem($_POST['paramount'], $_POST['parpid']);
+            }
         }
         else{
             echo "Je nutné se nejprve přihlásit.";
