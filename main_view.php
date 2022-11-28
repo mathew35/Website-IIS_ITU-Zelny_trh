@@ -1,3 +1,7 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>    
+</head> 
+
 <div id="tableItems">
     <?php
     $serv = new AccountService();
@@ -5,6 +9,8 @@
 
     if($_GET["category"]=="farmers")
     {
+        echo "<h1>FARMÁRI</h1>";
+
         // SELECT A.LOGIN, A.FULLNAME, A.EMAIL, F.LOGIN, F.ADDRESS, F.ICO, F.PHONE, F.IBAN
         // FROM ACCOUNTS A, FARMERS F
         // WHERE A.LOGIN = F.LOGIN;
@@ -27,20 +33,37 @@
     }
     elseif($_GET["category"]=="events")
     {
+        echo "<h1>SAMOZBERY</h1>";
 
-        $crops = $serv->get("HARVEST_EVENT","*","");
+        // // SELECT E.EVENTID, E.DATE_FROM, E.DATE_TO, E.PLACE, E.DESCRIPTION, E.POSTEDBY,C.EVENTID, C.CROPID, S.CROPID, S.CROP_NAME
+        // // FROM HARVEST_EVENT E, HARVEST_CROP C, SPECIFIC_CROP S
+        // // WHERE E.EVENTID = C.EVENTID AND C.CROPID = S.CROPID
+        // // GROUP BY C.CROPID
+        // // ORDER BY C.EVENTID ASC;
+        $crops = $serv->get("HARVEST_EVENT E, HARVEST_CROP C, SPECIFIC_CROP S","E.EVENTID, E.DATE_FROM, E.DATE_TO, E.PLACE, E.DESCRIPTION, E.POSTEDBY, C.EVENTID, C.CROPID, S.CROPID, S.CROP_NAME","E.EVENTID = C.EVENTID AND C.CROPID = S.CROPID GROUP BY C.CROPID ORDER BY C.EVENTID ASC");
         $arr = $crops->fetch();
 
+        $crop_sum = "{$arr['CROP_NAME']}";
         for ($i = 0; $i < $crops->rowCount(); $i++) {
-            echo "<div class='tableItemFarmer' id=\"{$arr['CROP_NAME']}\">";
-            echo "<p>{$arr['DATE_FROM']}</p>";
-            echo "<p>{$arr['DATE_TO']}</p>";
-            echo "<p>{$arr['PLACE']}</p>";
-            echo "<p>{$arr['POSTEDBY']}</p>";
-            echo "<p>{$arr['DESCRIPTION']}</p>";
-            echo "</div>";
-            $arr = $crops->fetch();
+            $tmp_arr = $arr;
+            $tmp_id = $arr['EVENTID'];
+                $arr = $crops->fetch();
+
+            if($tmp_id == $arr['EVENTID'])
+                $crop_sum = "{$crop_sum}" . ", " . "{$arr['CROP_NAME']}";
+            else{
+                echo "<div class='tableItemFarmer'>";
+                echo "<div class='item_col'><p><span>Zberané plodiny:</span> {$crop_sum}</p>";
+                echo "<p><span>Organizátor samozberu:</span> {$tmp_arr['POSTEDBY']}</p></div>";
+                echo "<div class='item_col'><p><span>Kedy?</span> od {$tmp_arr['DATE_FROM']} do {$tmp_arr['DATE_TO']}</p>";
+                echo "<p><span>Kde?</span> {$tmp_arr['PLACE']}</p></div>";
+                echo "<div class='item_col'><p><span>Popis:</span></p><p>{$tmp_arr['DESCRIPTION']}</p></div>";
+                echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $tmp_arr['EVENTID'] . ')">Zúčastnit se</button>';
+                echo "</div>";
+                $crop_sum =  "{$arr['CROP_NAME']}";
+            }
         }
+
     }
     else
     {
@@ -97,3 +120,15 @@
 
 
 
+ 
+<script>
+function joinharvest(eid){
+    $.ajax({
+        url: 'joinharvest.php',
+        type: 'post',
+        data: { "param1": eid},
+        success: function(response) { alert(response); }
+    });
+}
+</script>
+  
