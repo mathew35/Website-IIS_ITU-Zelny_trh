@@ -32,7 +32,6 @@ function form(type) {
         document.getElementById("popupBackground").remove();
         document.getElementById("popupWin").remove();
     })
-
     if (type == "farmer") {
         submit.textContent = "Stať sa farmárom";
         form.action = "javascript:formpost('become_farmer.php')";

@@ -55,7 +55,7 @@ class AccountService
             $item = $cols->fetch();
         }
         $res = $res . ")";
-        $query = $this->pdo->prepare("INSERT IGNORE INTO " . $table . " " . $res . " VALUES " . $values . ";");
+        $query = $this->pdo->prepare("INSERT INTO " . $table . " " . $res . " VALUES " . $values . ";");
         $query->execute(NULL);
     }
     // how to use remove()
@@ -82,6 +82,7 @@ class AccountService
 
     function update($table, $what, $condition)
     {
+        echo ("UPDATE " . $table . " SET " . $what . " WHERE " . $condition . ";");
         $query = $this->pdo->prepare("UPDATE " . $table . " SET " . $what . " WHERE " . $condition . ";");
         $query->execute();
         return $query;
