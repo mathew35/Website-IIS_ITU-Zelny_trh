@@ -1,3 +1,45 @@
+<?php
+
+require_once "services.php";
+class ModMode
+{
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = new AccountService();
+    }
+
+    public function getCrop()
+    {
+
+        $getscrop = $this->db->get("CROP", "*", "");
+        $crop = $getscrop->fetch();
+        
+        for ($i = 0; $i < $getscrop->rowCount(); $i++) {
+            echo "<p>" . $crop[1] . " : " . $crop[0] . "</p>";
+ 
+            $crop = $getscrop->fetch();
+        }
+    }
+    public function getNewCrop()
+    {
+
+        $getncrop = $this->db->get("SUGGESTED_CROP", "*", "");
+        $ncrop = $getncrop->fetch();
+        
+        for ($i = 0; $i < $getncrop->rowCount(); $i++) {
+            echo "<p>" . $ncrop[1] . " : " . $ncrop[0];
+            echo ' <button onclick="suggested(\'' . $ncrop[1] . '\',\'' . $ncrop[0] . '\', 1 )">Přijmout</button>';
+            echo ' <button onclick="suggested(\'' . $ncrop[1] . '\',\'' . $ncrop[0] . '\', 0 )">Odmítnout</button>'.'</p>';
+            $ncrop = $getncrop->fetch();
+        }
+    }
+    
+}
+$moder = new ModMode();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +52,32 @@
     <div class="admin-container">
         <div class="admin-informations-container">
             <div class="admin-informations-header">
+                <h2> Správa kategorií </h2>
             </div>
-        
             <div class="admin-informations-content"> 
+                <h1> Existující kategorie </h1>
+                <?php $moder->getCrop();?>
+            </div>
+            <div class="admin-informations-content"> 
+                <h1> Navrhované kategorie </h1>
+                <?php $moder->getNewCrop();?>
             </div>
         </div>
     </div>
 
 </body>
 </html> 
+
+<script>
+    function suggested(ctype, cname, par01){
+        $.ajax({
+        url: 'suggested.php',
+        type: 'post',
+        data: { "ctype": ctype, "cname": cname, "par": par01},
+        success: function(response) { }
+        });
+        setTimeout(() => {
+        document.location.reload();
+        }, 600);
+    }
+</script>
