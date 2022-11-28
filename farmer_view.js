@@ -24,7 +24,14 @@ function edit_prod_post() {
     const request = post('update_prod.php', document.getElementById("editForm"));
     request.addEventListener("load", (event) => {
         console.log(request.responseText);
-        get_own('ownProducts', 'farmer_products.php')
+        get_own('ownProducts', 'farmer_products.php');
+    });
+}
+
+function event_post() {
+    const request = post('create_event.php', document.getElementById("eventForm"));
+    request.addEventListener("load", (event) => {
+        console.log(request.responseText);
     })
 }
 
@@ -241,6 +248,89 @@ function form_add() {
     form.appendChild(cancel);
 
     popup.appendChild(form);
+}
+
+function generateEventForm(form, id) {
+    form.id = "eventForm";
+    form.action = "javascript:event_post()";
+    form.method = "POST";
+
+    let labelId2 = document.createElement('label');
+    labelId2.htmlFor = "id2";
+    labelId2.textContent = "ID2";
+    labelId2.style.display = "none";
+    form.appendChild(labelId2);
+
+    let inputId2 = document.createElement('input');
+    inputId2.type = "text";
+    inputId2.id = "id2";
+    inputId2.name = "id2";
+    inputId2.value = id;
+    inputId2.style.display = "none";
+    form.appendChild(inputId2);
+
+    let labelDateFrom = document.createElement('label');
+    labelDateFrom.htmlFor = "datefrom";
+    labelDateFrom.textContent = "Dátum začiatku";
+    form.appendChild(labelDateFrom);
+    form.appendChild(document.createElement("br"));
+
+    let inputDateFrom = document.createElement("input");
+    inputDateFrom.type = "date";
+    inputDateFrom.id = "datefrom";
+    inputDateFrom.name = "datefrom";
+    inputDateFrom.value = new Date().toJSON().slice(0, 10).replace(/-/g, '-');;
+    form.appendChild(inputDateFrom);
+    form.appendChild(document.createElement("br"));
+
+    let labelDateTo = document.createElement('label');
+    labelDateTo.htmlFor = "dateto";
+    labelDateTo.textContent = "Dátum ukončenia";
+    form.appendChild(labelDateTo);
+    form.appendChild(document.createElement("br"));
+
+    let inputDateTo = document.createElement("input");
+    inputDateTo.type = "date";
+    inputDateTo.id = "dateto";
+    inputDateTo.name = "dateto";
+    inputDateTo.value = new Date().toJSON().slice(0, 10).replace(/-/g, '-');;
+    form.appendChild(inputDateTo);
+    form.appendChild(document.createElement("br"));
+
+    let labelPlace = document.createElement('label');
+    labelPlace.htmlFor = "place";
+    labelPlace.textContent = "Miesto konania";
+    form.appendChild(labelPlace);
+    form.appendChild(document.createElement("br"));
+
+    let inputPlace = document.createElement("input");
+    inputPlace.type = "text";
+    inputPlace.id = "place";
+    inputPlace.name = "place";
+    form.appendChild(inputPlace);
+    form.appendChild(document.createElement("br"));
+
+    let labelDescription2 = document.createElement('label');
+    labelDescription2.htmlFor = "description2";
+    labelDescription2.textContent = "Popis";
+    form.appendChild(labelDescription2);
+    form.appendChild(document.createElement("br"));
+
+    let inputDescription2 = document.createElement("input");
+    inputDescription2.type = "text";
+    inputDescription2.id = "description2";
+    inputDescription2.name = "description2";
+    form.appendChild(inputDescription2);
+    form.appendChild(document.createElement("br"));
+
+
+    let hr = document.createElement("hr");
+    hr.style.width = "120%";
+    hr.style.translate = "-8.5%";
+    form.appendChild(hr);
+    let createEventButton = document.createElement('button');
+    createEventButton.textContent = "Pridať samozber";
+    form.appendChild(createEventButton);
 }
 
 function edit_product(product) {
@@ -462,7 +552,7 @@ function edit_product(product) {
     form.appendChild(document.createElement("br"));
 
     let hr = document.createElement("hr");
-    hr.style.width = "40%";
+    hr.style.width = "30%";
     form.appendChild(hr);
     let submit = document.createElement("button");
     let cancel = document.createElement("button");
@@ -479,6 +569,14 @@ function edit_product(product) {
 
     popup.appendChild(form);
 
+
+    let form2 = document.createElement('form');
+    form2.style.top = "10%";
+    form2.style.left = "10%";
+    form2.style.position = "absolute";
+    form2.style.display = "block";
+    generateEventForm(form2, product[0]);
+    popup.appendChild(form2);
 }
 
 function new_product() {
