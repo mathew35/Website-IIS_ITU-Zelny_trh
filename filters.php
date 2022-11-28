@@ -28,7 +28,7 @@
     if(isset($_POST["text"]) && !empty($_POST["text"]) && isset($_POST["category"]))
     {   
         $crop_type = ucfirst(strtolower($_POST['text']));
-        $db->add("CROP","(\"{$crop_type}\",\"{$_POST['category']}\")");
+        $db->add("SUGGESTED_CROP","(\"{$crop_type}\",\"{$_POST['category']}\")");
     }
         
 
