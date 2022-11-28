@@ -11,7 +11,6 @@
         session_start();
         $db = new AccountService();
         $db->add('CROP', "('" . $_POST['cname'] . "','" . $_POST['ctype'] . "')");
-
     }
 
     if ($_POST['par'] == 0) {
