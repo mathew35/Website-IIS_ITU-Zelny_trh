@@ -492,8 +492,7 @@ function updateOnOrder(status, id) {
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send("status=" + status + "&id=" + id + "");
     request.addEventListener("load", () => {
-        console.log("status " + status + " changed " + id);
-        console.log(request.responseText);
+        get_own()
     })
 }
 
@@ -671,13 +670,13 @@ function generate_table(type, data) {
                     accButt.style = "display:none";
                     decButt.style = "display:none";
                     accButt.addEventListener("click", () => {
-                        updateOnOrder(1, id);
+                        updateOnOrder(1, data[i].split(';')[0]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
                         product.style.color = "green";
                     })
                     decButt.addEventListener("click", () => {
-                        updateOnOrder(2, id);
+                        updateOnOrder(2, data[i].split(';')[0]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
                         product.style.color = "blue";
@@ -706,9 +705,9 @@ function generate_table(type, data) {
 }
 
 let data = null;
-// get_own('ownProducts', 'farmer_products.php');
-// get_own('ownOrders', 'farmer_orders.php');
-// get_own('user_cart', 'get_cart.php')
+get_own('ownProducts', 'farmer_products.php');
+get_own('ownOrders', 'farmer_orders.php');
+get_own('user_cart', 'get_cart.php')
 
 
 function farmer_view() {
