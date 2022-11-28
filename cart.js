@@ -13,6 +13,19 @@ function interpret(data) {
     return data;
 }
 
+function update_cart_item(cropid, ammount) {
+    var request = new XMLHttpRequest();
+    request.open("POST", 'update_cart_item.php');
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send("cropid=" + cropid + "&ammount=" + ammount + "");
+    request.addEventListener("load", () => {
+        console.log(request.responseText);
+        get_own('user_cart_items', 'get_cart_items.php');
+        cart_display();
+    })
+    console.log("updating cart item");
+}
+
 function cart_display() {
     let data = sessionStorage.getItem('user_cart_items');
     let content = document.getElementById("tableItems");
@@ -30,11 +43,21 @@ function cart_display() {
         let p = document.createElement('p');
         p.textContent = interpret(data[i]);
         content.appendChild(p);
-        let sendButton = document.createElement('button');
-        let cancelButton = document.createElement('button');
-        sendButton.textContent = "+";
-        cancelButton.textContent = "-";
-        content.append(sendButton, cancelButton);
+        let plusButton = document.createElement('button');
+        let minusButton = document.createElement('button');
+        plusButton.textContent = "+";
+        plusButton.addEventListener("click", () => {
+            data[i] = data[i].split(' ');
+            update_cart_item(data[i][1], Number(data[i][0]) + 1);
+            data[i] = data[i].join(' ');
+        })
+        minusButton.textContent = "-";
+        minusButton.addEventListener("click", () => {
+            data[i] = data[i].split(' ');
+            update_cart_item(data[i][1], Number(data[i][0]) - 1);
+            data[i] = data[i].join(' ');
+        })
+        content.append(plusButton, minusButton);
         content.appendChild(document.createElement('br'));
     }
 

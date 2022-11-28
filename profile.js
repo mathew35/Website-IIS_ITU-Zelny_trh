@@ -6,7 +6,7 @@ function profile_view() {
     request.open("POST", "get_acc.php");
     request.send();
     request.addEventListener("load", () => {
-        newData = request.responseText.split(',');
+        newData = request.responseText;
         sessionStorage.setItem('profile_data', newData);
         console.log("profile");
         profile_form();
@@ -45,7 +45,8 @@ function update_profile() {
 }
 
 function profile_form() {
-    let newData = sessionStorage.getItem('profile_data').split(',');
+    let newData = sessionStorage.getItem('profile_data').split(';');
+    console.log(newData);
     let content = document.getElementById("tableItems");
     if (content != null) content.remove();
     content = document.createElement("div");
