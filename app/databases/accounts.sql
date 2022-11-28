@@ -170,8 +170,8 @@ INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Kukurica', 'Zelenina');
 INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Uhorka', 'Zelenina');
 INSERT INTO `CROP` (`CROPTYPE`, `CATEGORY`) VALUES ('Mrkva', 'Zelenina');
 
-INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`) VALUES (1, 'Farmár_Ferko', '$2y$10$.p9UWiZXNWLJ1rJVRDELXOG77MUsqNO7Oa0b1xo8DXmhS4lTpqpRW', '', '');
-INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`) VALUES (NULL, 'Farmárka_Anička', '$2y$10$PT.SfOS.oxFCCLDU2anlDut2Gm9B1gYrUp/gAny40/h9ZvHNv50HC', '', '');
+INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`, `FULLNAME`,`EMAIL` , `MODERATE`) VALUES (NULL, 'Farmár_Ferko', '$2y$10$.p9UWiZXNWLJ1rJVRDELXOG77MUsqNO7Oa0b1xo8DXmhS4lTpqpRW', 'Ferko Vyšný', 'fero@gmail.com', 0);
+INSERT INTO `ACCOUNTS` (`ID`, `LOGIN`, `PASSWORD`, `FULLNAME`,`EMAIL` , `MODERATE`) VALUES (NULL, 'Farmárka_Anička', '$2y$10$PT.SfOS.oxFCCLDU2anlDut2Gm9B1gYrUp/gAny40/h9ZvHNv50HC', 'Anča Turanová', 'xx@gmail.com', 0);
 INSERT INTO `FARMERS` (`LOGIN`, `ADDRESS`, `ICO`, `PHONE`, `IBAN`) VALUES ('Farmár_Ferko', 'Nerudova 33, 602 00 Brno-střed', '58734261', '+421401520363', 'CZ36 0100 0000 0001 2345 6789');
 INSERT INTO `FARMERS` (`LOGIN`, `ADDRESS`, `ICO`, `PHONE`, `IBAN`) VALUES ('Farmárka_Anička', 'Schodová 305/2, 602 00 Brno-střed', '32165487', '+420903503505', 'CZ36 0100 0000 0002 3333 6789');
 INSERT INTO `SPECIFIC_CROP` (`CROPID`, `CROP_NAME`, `CROP`, `CATEGORY`, `AMOUNT`, `PRICE`, `PER_UNIT`, `PHOTO_URL`, `DESCRIPTION`, `FARMER`) VALUES (NULL, 'Granny Smith', 'Jablko', 'Ovocie', '45', '22', 'kg', 'https://publish.purewow.net/wp-content/uploads/sites/2/2021/03/types-of-apples-mutsu.jpg?fit=400%2C400', 'Sladká odroda zeleného jabĺčka.', 'Farmár_Ferko');
