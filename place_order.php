@@ -23,10 +23,11 @@ for ($i = 0; $i < $cartCrops->rowCount(); $i++) {
 
 unset($_SESSION['cartid']);
 
-$cart = $db->get('SHOPPING_CART', '*', "(USER='" . $_SESSION['user'] . "' AND ITEM_COUNT=0)");
+$db->update('SHOPPING_CART', 'IN_USE=0', 'USER=\'' . $_SESSION['user'] . '\'');
+$cart = $db->get('SHOPPING_CART', '*', "(USER='" . $_SESSION['user'] . "' AND IN_USE=1)");
 if ($cart->rowCount() == 0) {
-    $db->add('SHOPPING_CART', "(NULL,'" . $_SESSION['user'] . "',0,0)");
-    $cart = $db->get('SHOPPING_CART', '*', "(USER='" . $_SESSION['user'] . "' AND ITEM_COUNT=0)");
+    $db->add('SHOPPING_CART', "(NULL,'" . $_SESSION['user'] . "',0,0,1)");
+    $cart = $db->get('SHOPPING_CART', '*', "(USER='" . $_SESSION['user'] . "' AND IN_USE=1)");
 }
 $arr = $cart->fetch();
 echo $arr[0];
