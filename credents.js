@@ -271,6 +271,7 @@ function farmer() {
             if (request.responseText == false) {
                 if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
             } else {
+                get_own('ownProducts', 'farmer_products.php');
                 sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
                 sessionStorage.setItem('farmer_view', "products");
             }
@@ -287,19 +288,23 @@ function farmer() {
             })
         } else if (sessionStorage.getItem('farmer_view') == "orders") {
             sessionStorage.setItem('farmer_view', 'products');
+            get_own('ownProducts', 'farmer_products.php');
             credents();
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "profile") {
             sessionStorage.setItem('farmer_view', 'products');
+            get_own('ownProducts', 'farmer_products.php');
             credents();
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "cart") {
             sessionStorage.setItem('farmer_view', 'products');
+            get_own('ownProducts', 'farmer_products.php');
             credents();
             farmer_view_pick();
         } else {
             var req = post("farmer.php", null);
             sessionStorage.setItem('farmer_view', "products");
+            get_own('ownProducts', 'farmer_products.php');
             req.addEventListener("load", () => {
                 farmer_view_pick();
                 credents();
@@ -318,12 +323,18 @@ function cart() {
     if (sessionStorage.getItem('user') == null) logout();
     if (sessionStorage.getItem('farmer_view') == "orders") {
         sessionStorage.setItem('farmer_view', "cart");
+        get_own('user_cart', 'get_cart.php');
+        get_own('user_cart_items', 'get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "products") {
         sessionStorage.setItem('farmer_view', "cart");
+        get_own('user_cart', 'get_cart.php');
+        get_own('user_cart_items', 'get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "profile") {
         sessionStorage.setItem('farmer_view', "cart");
+        get_own('user_cart', 'get_cart.php');
+        get_own('user_cart_items', 'get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "cart") {
         var req = post("farmer.php", null);
@@ -334,6 +345,8 @@ function cart() {
         })
     } else {
         var req = post("farmer.php", null);
+        get_own('user_cart', 'get_cart.php');
+        get_own('user_cart_items', 'get_cart_items.php');
         req.addEventListener("load", () => {
             sessionStorage.setItem('farmer_view', "cart");
             farmer_view_pick();
@@ -352,6 +365,7 @@ function orders() {
             } else {
                 sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
                 sessionStorage.setItem('farmer_view', "orders");
+                get_own('ownOrders', 'farmer_orders.php');
             }
             farmer_view_pick();
             location.reload();
@@ -366,12 +380,15 @@ function orders() {
             })
         } else if (sessionStorage.getItem('farmer_view') == "products") {
             sessionStorage.setItem('farmer_view', "orders");
+            get_own('ownOrders', 'farmer_orders.php');
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "profile") {
             sessionStorage.setItem('farmer_view', "orders");
+            get_own('ownOrders', 'farmer_orders.php');
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "cart") {
             sessionStorage.setItem('farmer_view', "orders");
+            get_own('ownOrders', 'farmer_orders.php');
             farmer_view_pick();
         } else {
             console.log("order fallthrough");
