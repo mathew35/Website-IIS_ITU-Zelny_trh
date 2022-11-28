@@ -727,7 +727,7 @@ function generate_table(type, data) {
                     product.id = spl[0];
                     console.log(spl[7]);
                     if (spl[7] == 2) {
-                        product.style.color = "blue";
+                        product.style.color = "red";
                     }
                     if (spl[7] == 1) {
                         product.style.color = "green";
@@ -778,9 +778,9 @@ function generate_table(type, data) {
                         updateOnOrder(2, data[i].split(';')[0].split(' ')[0]);
                         accButt.style = "display:none";
                         decButt.style = "display:none";
-                        product.style.color = "blue";
+                        product.style.color = "red";
                     })
-                    if (product.style.color != "green" && product.style.color != "blue") {
+                    if (product.style.color != "green" && product.style.color != "red") {
                         accButt.style = "";
                         decButt.style = "";
                     }
