@@ -4,17 +4,22 @@
 
 
     if($_GET["category"]=="farmers")
-    { 
-        $crops = $serv->get("FARMERS","*","");
+    {
+        // SELECT A.LOGIN, A.FULLNAME, A.EMAIL, F.LOGIN, F.ADDRESS, F.ICO, F.PHONE, F.IBAN
+        // FROM ACCOUNTS A, FARMERS F
+        // WHERE A.LOGIN = F.LOGIN;
+        $crops = $serv->get("ACCOUNTS A, FARMERS F","A.LOGIN, A.FULLNAME, A.EMAIL, F.LOGIN, F.ADDRESS, F.ICO, F.PHONE, F.IBAN","A.LOGIN = F.LOGIN");
         $arr = $crops->fetch();
 
         for ($i = 0; $i < $crops->rowCount(); $i++) {
             echo "<div class='tableItemFarmer' id=\"{$arr['CROP_NAME']}\">";
-            echo "<h2>{$arr['LOGIN']}</h2>";
-            echo "<p>{$arr['PHONE']}</p>";
-            echo "<p>{$arr['ADDRESS']}</p>";
-            echo "<p>{$arr['ICO']}</p>";
-            echo "<p>{$arr['IBAN']}</p>";
+            echo "<div class='item_col'><h2>{$arr['LOGIN']}</h2>";
+            echo "<p>{$arr['FULLNAME']}</p></div>";
+            echo "<div class='item_col'><p>E-mail: {$arr['EMAIL']}</p>";
+            echo "<p>Tel.Číslo: {$arr['PHONE']}</p>";
+            echo "<p>Adresa: {$arr['ADDRESS']}</p></div>";
+            echo "<div class='item_col'><p>IČO: {$arr['ICO']}</p>";
+            echo "<p>IBAN: {$arr['IBAN']}</p></div>";
             echo "</div>";
             $arr = $crops->fetch();
         }
@@ -22,6 +27,7 @@
     }
     elseif($_GET["category"]=="events")
     {
+
         $crops = $serv->get("HARVEST_EVENT","*","");
         $arr = $crops->fetch();
 
