@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="adminstyle.css">
 </head>
 <body>
-    <p><a href="index3.php"><button>User mode</button></a>
+    <p><a href="adminmode.php"><button>Admin mode</button></a>
+    <a href="index3.php"><button>User mode</button></a></p>
     <div class="admin-container">
         <div class="admin-informations-container">
             <div class="admin-informations-header">
