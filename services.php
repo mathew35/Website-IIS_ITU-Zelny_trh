@@ -66,6 +66,7 @@ class AccountService
         if ($condition == NULL) $condition = 0;
         $query = $this->pdo->prepare("DELETE FROM " . $table . " WHERE " . $condition);
         $query->execute(NULL);
+        
     }
     // how to use get()
     // $db = new AccountService();

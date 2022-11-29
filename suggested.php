@@ -14,6 +14,9 @@
     if ($_POST['par'] == 0) {
         deletesugg();
     }
+    else if($_POST['par'] == 10){
+        createnew();
+    }
     else{
         deletesugg();
         createnew();
