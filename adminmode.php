@@ -14,12 +14,13 @@ class AdminMode
     public function getusers(){
         $getname = $this->db->get("ACCOUNTS", "*", "");
         $name = $getname->fetch();
+        $name = $getname->fetch();
         
 
 
-        for ($i = 0; $i < $getname->rowCount(); $i++) {
+        for ($i = 0; $i < ($getname->rowCount()-1); $i++) {
 
-            echo '<p>' . $name[1] . '<a href="edituser.php"><button>Upravit</button></a>';
+            echo '<p>' . $name[1];
             if($name[5]==0){
                 echo ' <button onclick="addmoder(' . $name[0] .','. $name[5] . ')">Přidat uživateli roli moderátora</button>'.'</p>';
             } 
@@ -75,10 +76,8 @@ $amode = new AdminMode();
         url: 'adddelmod.php',
         type: 'post',
         data: { "param": userid, "param2": adddel},
-        success: function(response) { }
+        success: function(response) {document.location.reload();}
         });
-        setTimeout(() => {
-        document.location.reload();
-        }, 700);
+
     }
 </script>

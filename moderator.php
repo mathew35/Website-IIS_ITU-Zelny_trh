@@ -86,22 +86,16 @@ $moder = new ModMode();
         url: 'suggested.php',
         type: 'post',
         data: { "ctype": ctype, "cname": cname, "par": par01},
-        success: function(response) { }
+        success: function(response) {document.location.reload();}
         });
-        setTimeout(() => {
-        document.location.reload();
-        }, 600);
     }
     function suggested(ctype, cname, par01){
         $.ajax({
         url: 'suggested.php',
         type: 'post',
         data: { "ctype": ctype, "cname": cname, "par": par01},
-        success: function(response) { }
+        success: function(response) {document.location.reload();}
         });
-        setTimeout(() => {
-        document.location.reload();
-        }, 600);
     }
     function editcrop(ctype, cname, pos){
         newname = document.getElementById("xrename"+pos).value;
@@ -109,11 +103,8 @@ $moder = new ModMode();
         $.ajax({
         url: 'editcrop.php',
         type: 'post',
-        data: { "cold": cname, "cnew": newname},
-        success: function(response) { alert(response); }
+        data: { "cold": cname, "cnew": newname, "ctype": ctype},
+        success: function(response) {document.location.reload();}
         });
-        setTimeout(() => {
-        document.location.reload();
-        }, 600);
     }
 </script>
