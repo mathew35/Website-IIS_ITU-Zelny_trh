@@ -171,6 +171,16 @@ margin: 2.5% 0;
     display: block;
 }
 
+.item_col span {
+    font-weight: bold;
+    margin-right: 10px
+}
+.item_col p {
+    font-size: 17px;
+}
+
+
+
 
 tbody {
     width: 100%;
