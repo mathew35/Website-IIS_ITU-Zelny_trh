@@ -184,11 +184,43 @@ INSERT INTO `ACCOUNTS` (
     `MODERATE`
 ) VALUES (
     NULL,
-    'moderate',
+    'mod',
     '$2y$10$qqvyUvnQOg9Ev8bSOml6LePFcNUeq2IDZZnnrjDm8zafCKG9J3gVa',
     '',
     '',
     '2'
+);
+
+INSERT INTO `ACCOUNTS` (
+    `ID`,
+    `LOGIN`,
+    `PASSWORD`,
+    `FULLNAME`,
+    `EMAIL`,
+    `MODERATE`
+) VALUES (
+    NULL,
+    'user',
+    '$2y$10$Et0ElHSK17Na6UqahpgGHucwjPsRJFheNhETcrDyfjQmnyILiJubq',
+    '',
+    '',
+    '0'
+);
+
+INSERT INTO `ACCOUNTS` (
+    `ID`,
+    `LOGIN`,
+    `PASSWORD`,
+    `FULLNAME`,
+    `EMAIL`,
+    `MODERATE`
+) VALUES (
+    NULL,
+    'farmer',
+    '$2y$10$88A2nX4m6eI8L0Kau22BVunPB2.w8wzkXddLc50xwwgeO3/b79jhe',
+    '',
+    '',
+    '0'
 );
 
 INSERT INTO `CATEGORY` (
@@ -320,6 +352,20 @@ INSERT INTO `FARMERS` (
     `PHONE`,
     `IBAN`
 ) VALUES (
+    'farmer',
+    'Koledivá 33, 602 00 Brno',
+    '68934261',
+    '+420773520363',
+    'CZ36 0111 1111 0001 2345 6789'
+);
+
+INSERT INTO `FARMERS` (
+    `LOGIN`,
+    `ADDRESS`,
+    `ICO`,
+    `PHONE`,
+    `IBAN`
+) VALUES (
     'Farmárka_Anička',
     'Schodová 305/2, 602 00 Brno-střed',
     '32165487',
@@ -430,3 +476,56 @@ INSERT INTO `SPECIFIC_CROP` (
     'Morava',
     'Farmárka_Anička'
 );
+
+INSERT INTO `RATING` (
+    `RATINGID`,
+    `STARS`,
+    `DESCRIPTION`,
+    `USER`,
+    `FARMER`,
+    `CROP`
+) VALUES (
+    NULL,
+    '5',
+    'Nejlepší mrkev na světě',
+    'admin',
+    'Farmárka_Anička',
+    '3'
+);
+
+INSERT INTO `RATING` (
+    `RATINGID`,
+    `STARS`,
+    `DESCRIPTION`,
+    `USER`,
+    `FARMER`,
+    `CROP`
+) VALUES (
+    NULL,
+    '4',
+    'Nejlepší, dobré, lahodné',
+    'admin',
+    'Farmárka_Anička',
+    '4'
+);
+
+INSERT INTO `HARVEST_EVENT` (
+    `EVENTID`,
+    `DATE_FROM`,
+    `DATE_TO`,
+    `PLACE`,
+    `DESCRIPTION`,
+    `POSTEDBY`
+) VALUES (
+    NULL,
+    '2022-11-23',
+    '2022-12-29',
+    'Ořechov',
+    'Za deště se nekoná',
+    'Farmárka_Anička'
+);
+
+INSERT INTO `HARVEST_CROP` (
+    `CROPID`, 
+    `EVENTID`
+) VALUES ('4', '1');
