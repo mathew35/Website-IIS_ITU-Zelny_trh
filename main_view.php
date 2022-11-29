@@ -40,7 +40,7 @@
         // // WHERE E.EVENTID = C.EVENTID AND C.CROPID = S.CROPID
         // // GROUP BY C.CROPID
         // // ORDER BY C.EVENTID ASC;
-        $crops = $serv->get("HARVEST_EVENT E, HARVEST_CROP C, SPECIFIC_CROP S","E.EVENTID, E.DATE_FROM, E.DATE_TO, E.PLACE, E.DESCRIPTION, E.POSTEDBY, C.EVENTID, C.CROPID, S.CROPID, S.CROP_NAME","E.EVENTID = C.EVENTID AND C.CROPID = S.CROPID GROUP BY C.CROPID ORDER BY C.EVENTID ASC");
+        $crops = $serv->get("HARVEST_EVENT E, HARVEST_CROP C, SPECIFIC_CROP S","E.EVENTID, E.DATE_FROM, E.DATE_TO, E.PLACE, E.DESCRIPTION, E.POSTEDBY, C.EVENTID, C.CROPID, S.CROPID, S.CROP_NAME","E.EVENTID = C.EVENTID AND C.CROPID = S.CROPID ORDER BY C.EVENTID ASC");
         $arr = $crops->fetch();
 
         $crop_sum = "{$arr['CROP_NAME']}";
@@ -58,12 +58,19 @@
                 echo "<div class='item_col'><p><span>Kedy?</span> od {$tmp_arr['DATE_FROM']} do {$tmp_arr['DATE_TO']}</p>";
                 echo "<p><span>Kde?</span> {$tmp_arr['PLACE']}</p></div>";
                 echo "<div class='item_col'><p><span>Popis:</span></p><p>{$tmp_arr['DESCRIPTION']}</p></div>";
-                echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $tmp_arr['EVENTID'] . ')">Zúčastnit se</button>';
+                if(isset($_SESSION['user']))
+                {
+                    if ($serv->get("HARVEST_EVENT_ATTENDANTS", "*", "LOGIN = \"{$_SESSION['user']}\" AND EVENTID = \"{$tmp_arr['EVENTID']}\"")->fetch()[0] == NULL)
+                        echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $tmp_arr['EVENTID'] . ')">Zúčastnit se</button>';
+                    else{
+                        echo "<h4>MÁM ZÁUJEM</h4>";
+                        echo '<button type="submit" class="logharvest2" onclick="leaveharvest(' . $tmp_arr['EVENTID'] . ')">Zrušiť záujem</button>';
+                    }
+                }
                 echo "</div>";
                 $crop_sum =  "{$arr['CROP_NAME']}";
             }
         }
-
     }
     else
     {
@@ -107,7 +114,6 @@
             echo "<h2><span>{$arr['CROP_NAME']}</span></h2>";
             echo "<p><span>{$arr['FARMER']}</span></p>";
             echo "<p><span><span class='price'>{$arr['PRICE']} Kč</span> / {$arr['PER_UNIT']}</span></p>";
-            // echo "<p><span>{$arr['DESCRIPTION']}</span></p>";
             echo '<p><a href="index3.php?detail='. $arr['CROPID'] .'"><button id="myBtn">Detail</button></a></p>';
             echo "</div>";
             $arr = $crops->fetch();
@@ -130,5 +136,15 @@ function joinharvest(eid){
         success: function(response) { alert(response); }
     });
 }
+
+function leaveharvest(eid){
+    $.ajax({
+        url: 'joinharvest.php',
+        type: 'post',
+        data: { "param2": eid},
+        success: function(response) { alert(response); }
+    });
+}
+
 </script>
   
