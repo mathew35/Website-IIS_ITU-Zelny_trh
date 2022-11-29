@@ -857,3 +857,4 @@ let get_prods; // = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.p
 let get_cart;
 let get_cart_items;
 let get_profile;
+s
