@@ -55,7 +55,7 @@ class AccountService
             $item = $cols->fetch();
         }
         $res = $res . ")";
-        $query = $this->pdo->prepare("INSERT IGNORE INTO " . $table . " " . $res . " VALUES " . $values . ";");
+        $query = $this->pdo->prepare("INSERT INTO " . $table . " " . $res . " VALUES " . $values . ";");
         $query->execute(NULL);
     }
     // how to use remove()
@@ -66,6 +66,7 @@ class AccountService
         if ($condition == NULL) $condition = 0;
         $query = $this->pdo->prepare("DELETE FROM " . $table . " WHERE " . $condition);
         $query->execute(NULL);
+        
     }
     // how to use get()
     // $db = new AccountService();

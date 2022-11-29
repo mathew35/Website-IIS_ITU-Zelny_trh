@@ -236,6 +236,7 @@ function myrate(cid){
         data: { "ptext": text, "pstars": stars, "pcid": cid},
         success: function(response) { alert(response); }
     });
+
 }
 
 
