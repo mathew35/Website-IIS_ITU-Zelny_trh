@@ -1,5 +1,3 @@
-/* CSS Reset */
-
 * {
     box-sizing: border-box;
 }
@@ -420,3 +418,5 @@ h6 {
 ul {
     list-style: none;
 }
+
+/* Source: https://codepen.io/ivorpad/pen/eKbJeb */
