@@ -1,7 +1,7 @@
 <?php 
 // Author: Alena Klimecká
 
-    require "services.php";
+    require "../php_ajax/services.php";
     function buyitem($text, $stars, $crop){
         session_start();
         $db = new AccountService();

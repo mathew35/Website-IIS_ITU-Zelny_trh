@@ -1,7 +1,7 @@
 <?php 
 // Author: Alena Klimecká
 
-    require "services.php";
+    require "../php_ajax/services.php";
     function deletesugg(){
         $db = new AccountService();
         $db->remove("SUGGESTED_CROP", "S_CROPTYPE=\"" . $_POST['cname'] . "\"");
@@ -23,4 +23,3 @@
         deletesugg();
         createnew();
     }
-?>

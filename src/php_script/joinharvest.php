@@ -1,7 +1,7 @@
 <?php 
 // Author: Alena Klimecká
 
-    require "services.php";
+    require "../php_ajax/services.php";
     
     function joinharv($data){
         session_start();
@@ -45,8 +45,3 @@
     elseif(isset($_POST['param2'])) {
         leaveharv($_POST['param2']);
     }
-
-    
-
-
-?>

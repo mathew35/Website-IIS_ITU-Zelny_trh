@@ -683,19 +683,19 @@ function generate_table(type, data) {
     //     store("detail");
     // }
     let scrollTop = 0;
-    if (document.getElementById("tableItems") != null) {
-        scrollTop = document.getElementById("tableItems").scrollTop;
-        document.getElementById("tableItems").remove();
-    }
-    let table = document.getElementById("table");
-    let content = document.getElementById("tableItems");
-    if (content == null) content = document.createElement("div");
-    content.id = "tableItems";
-    table.appendChild(content);
+    // if (document.getElementById("tableItems") != null) {
+    //     scrollTop = document.getElementById("tableItems").scrollTop;
+    //     document.getElementById("tableItems").remove();
+    // }
+    // let table = document.getElementById("table");
+    let content = document.getElementById("table");
+    // if (content == null) content = document.createElement("div");
+    // content.id = "tableItems";
+    // table.appendChild(content);
     if (type == "farmer_view") {
         let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
-        addProduct.className = "tableItem";
+        addProduct.className = "shop-item";
         addProduct.textContent = "Pridaj nový produkt";
         addProduct.addEventListener("click", (event) => {
             new_product();
@@ -712,7 +712,7 @@ function generate_table(type, data) {
             for (let i = 0; i < data.length; i++) {
                 let product = document.createElement("div");
                 let id = null;
-                product.className = "tableItem";
+                product.className = "shop-item";
                 if (type == "order_view") {
                     product.style.width = "calc(100% - 40px)";
                     product.style.color = "black";

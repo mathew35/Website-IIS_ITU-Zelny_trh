@@ -1,155 +1,160 @@
 /* CSS Reset */
+
 * {
     box-sizing: border-box;
-  }
-  
-  html {
+}
+
+html {
     font-size: 62.5%;
-  }
-  
-  body {
+}
+
+body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
     margin: 0;
-  }
-  
-  a {
+}
+
+a {
     color: #161616;
     text-decoration: none;
     cursor: pointer;
-  }
-  p {
+}
+
+p {
     line-height: 1.5;
-  }
-  h1 {
+}
+
+h1 {
     font-size: 2.4rem;
-  }
-  h2 {
+}
+
+h2 {
     font-size: 2.2rem;
-  }
-  h3 {
+}
+
+h3 {
     font-size: 1.8rem;
-  }
-  h4 {
+}
+
+h4 {
     font-size: 1.6rem;
-  }
-  h5 {
+}
+
+h5 {
     font-size: 1.2rem;
-  }
-  h6 {
+}
+
+h6 {
     font-size: 1rem;
-  }
-  
-  /* Start */
-  
-  .container {
+}
+
+
+/* Start */
+
+.container {
     padding: 0 10rem;
-  }
-  
-  .header {
+}
+
+.header {
     background: white;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     padding: 3rem 10rem;
-  }
-  
-  .nav-container {
+}
+
+.nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     a.icon {
-      background: url(https://cdn.rawgit.com/ivorpad/b9adce880f800f53195041a4ed8546c9/raw/a905a3b479ab7880340856a3d15369a932f7b24c/ham.svg)
-        center center no-repeat;
-      background-size: 20px 20px;
-      width: 20px;
-      height: 20px;
-      display: none;
+        background: url(https://cdn.rawgit.com/ivorpad/b9adce880f800f53195041a4ed8546c9/raw/a905a3b479ab7880340856a3d15369a932f7b24c/ham.svg) center center no-repeat;
+        background-size: 20px 20px;
+        width: 20px;
+        height: 20px;
+        display: none;
     }
-  }
-  
-  .nav-container nav a {
+}
+
+.nav-container nav a {
     transition: border .1s ease-in-out;
     padding: 5pt;
     &:hover {
-      border-bottom: 1px solid #161616;
+        border-bottom: 1px solid #161616;
     }
-  }
-  
-  .nav-container nav a,
-  .shop-item--container .meta > span {
+}
+
+.nav-container nav a,
+.shop-item--container .meta>span {
     text-transform: uppercase;
-  }
-  
-  .nav-container nav a.active {
+}
+
+.nav-container nav a.active {
     color: grey;
     border-bottom: 1px solid grey;
-  }
-  
-  .nav-container .logo {
+}
+
+.nav-container .logo {
     font-size: 1.8rem;
     font-weight: bold;
     letter-spacing: 1.5px;
-  }
-  
-  .nav-container nav:not(.logo) a,
-  .shop-item--container .meta span {
+}
+
+.nav-container nav:not(.logo) a,
+.shop-item--container .meta span {
     font-size: 1.15rem;
     letter-spacing: 1px;
-  }
-  
-  .nav-container nav:first-child a {
-    margin-right: 1.5rem;
-  }
-  
-  .nav-container nav:nth-last-child(2) a {
-    margin-left: 1.5rem;
-  }
+}
 
-.nav-container .credents a
-{
+.nav-container nav:first-child a {
+    margin-right: 1.5rem;
+}
+
+.nav-container nav:nth-last-child(2) a {
+    margin-left: 1.5rem;
+}
+
+.nav-container .credents a {
     margin: 5pt;
 }
 
-
-  .filter-section {
+.filter-section {
     background: #f1f1f1;
     padding: 5rem;
     margin-top: 8rem;
-  
     .filter-slide {
-      display: flex;
-      justify-content: space-around;
+        display: flex;
+        justify-content: space-around;
     }
-  }
-  
-  .filter-section h1 {
+}
+
+.filter-section h1 {
     text-transform: uppercase;
     font-weight: 300;
     letter-spacing: 1.5px;
     font-size: 3rem;
     margin-bottom: 0.5rem;
-  }
-  
-  .filter-section p {
+}
+
+.filter-section p {
     color: grey;
-  }
-  
-  .filter-slide img {
+}
+
+.filter-slide img {
     width: 30%;
     height: 30%;
     align-self: center;
-  }
-  
-  .filter-slide .filters {
+}
+
+.filter-slide .filters {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     width: 50%;
-  }
-  
-  .shop-items {
+}
+
+.shop-items {
     margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -157,14 +162,14 @@
     gap: 3rem;
     grid-gap: 3rem;
     grid-auto-rows: 360px;
-  }
-  
-  .shop-item {
+}
+
+.shop-item {
     display: flex;
     flex-direction: column;
-  }
-  
-  .shop-item--container {
+}
+
+.shop-item--container {
     background: #f1f1f1;
     padding: 2rem;
     flex-grow: 1;
@@ -172,165 +177,159 @@
     flex-direction: column;
     margin-bottom: 1rem;
     transition: all 0.15s ease-in-out;
-  }
-  
-  .shop-item--container:hover {
+}
+
+.shop-item--container:hover {
     background: #f6f6f6;
-  }
-  
-  .shop-item--container .meta {
+}
+
+.shop-item--container .meta {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .shop-item--container .meta > span {
+}
+
+.shop-item--container .meta>span {
     font-weight: bold;
-  }
-  
-  .shop-item h3 {
+}
+
+.shop-item h3 {
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 1.5px;
     font-size: 1.1rem;
     margin: 0.8rem;
     a:hover {
-      color: grey
+        color: grey
     }
-  }
-  
-  .shop-item .price {
+}
+
+.shop-item .price {
     text-align: center;
-  }
-  
-  .shop-item .title > a {
+}
+
+.shop-item .title>a {
     display: block;
-  }
-  
-  .shop-item .price span {
+}
+
+.shop-item .price span {
     margin-top: 1rem;
     text-align: center;
     color: grey;
     font-size: 1.3rem;
-  }
-  
-  .shop-item--container img {
+}
+
+.shop-item--container img {
     align-self: center;
     margin: auto 0;
-  }
-  
-  .main-footer {
+}
+
+.main-footer {
     margin: 7rem 0;
     padding-top: 5rem;
     border-top: 1px solid #f1f1f1;
     display: flex;
     justify-content: space-between;
-  }
-  
-  .main-footer > nav ul {
+}
+
+.main-footer>nav ul {
     padding-left: 0;
     list-style: none;
-  }
-  
-  .main-footer > nav ul li {
+}
+
+.main-footer>nav ul li {
     margin-bottom: 1rem;
-  }
-  
-  .main-footer > nav ul li a {
+}
+
+.main-footer>nav ul li a {
     color: grey;
     font-size: 1.2rem;
     &:hover {
-      color: darken(grey, 50%);
+        color: darken(grey, 50%);
     }
-  }
-  
-  .main-footer h3 {
+}
+
+.main-footer h3 {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-size: 1.3rem;
-  }
-  
-  /**
+}
+
+
+/**
    * Media Queries
    */
-  
-  @media (min-width: 1350px) {
+
+@media (min-width: 1350px) {
     .shop-items {
-      grid-template-columns: repeat(4, minmax(250px, 1fr));
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
     }
-  }
-  
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
     .container {
-      padding: 0 2rem;
+        padding: 0 2rem;
     }
-  
     .header {
-      padding-left: 2rem;
-      padding-right: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
-  
     nav.menu,
     .credents {
-      display: none;
+        display: none;
     }
-  
     .nav-container {
-      a.icon {
-        display: block;
-      }
+        a.icon {
+            display: block;
+        }
     }
-  }
-  
-  @media (max-width: 895px) {
+}
+
+@media (max-width: 895px) {
     .main-footer {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(200px, 1fr));
+        display: grid;
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
     }
-  }
-  
-  @media (max-width: 425px) {
+}
+
+@media (max-width: 425px) {
     .filter-slide img {
-      display: none;
+        display: none;
     }
     .filter-slide .left {
-      width: 100%;
+        width: 100%;
     }
     .main-footer {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
     .shop-item .title h3 {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
-  
     .shop-item .price span {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
-  
-    .main-footer > nav ul li a {
-      background: #f1f1f1;
-      display: block;
-      padding: 1.5rem;
-      color: grey;
-      font-size: 1.5rem;
-      &:hover {
+    .main-footer>nav ul li a {
+        background: #f1f1f1;
+        display: block;
+        padding: 1.5rem;
         color: grey;
-      }
+        font-size: 1.5rem;
+        &:hover {
+            color: grey;
+        }
     }
-  
     .main-footer h3 {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
     .filter-slide .filters {
-      width: 100%
+        width: 100%
     }
-  }
-  
-
-  /* orig */
+}
 
 
-  #tableItems {
+/* orig */
+
+#tableItems {
     overflow-y: scroll;
     overflow-x: hidden;
     /* border-collapse: collapse; */
@@ -352,20 +351,21 @@
     overflow: hidden;
 }
 
-.tableItem span .price{
+.tableItem span .price {
     background-color: transparent;
-    font-size:20px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-.tableItem p,.tableItem h2{
-margin: 2.5% 0;
+.tableItem p,
+.tableItem h2 {
+    margin: 2.5% 0;
 }
 
-.tableItem span{
-    background-color: rgba(255, 255, 255, 0.5);;
+.tableItem span {
+    background-color: rgba(255, 255, 255, 0.5);
+    ;
     display: inline;
-
 }
 
 .tableItemFarmer {
@@ -387,7 +387,30 @@ margin: 2.5% 0;
     font-weight: bold;
     margin-right: 10px
 }
+
 .item_col p {
     font-size: 17px;
 }
 
+#popupBackground {
+    background-color: lightblue;
+    opacity: .4;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+#popupWin {
+    position: absolute;
+    width: 60vw;
+    height: 80vh;
+    top: 10vh;
+    left: 20vw;
+    background-color: aqua;
+    z-index: 1;
+    color: red;
+    justify-content: center;
+}

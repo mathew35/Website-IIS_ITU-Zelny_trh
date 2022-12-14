@@ -1,7 +1,7 @@
 <?php
 // Author: Alena Klimecká
 
-require_once "services.php";
+require_once "../php_ajax/services.php";
 class ModMode
 {
     private $db;

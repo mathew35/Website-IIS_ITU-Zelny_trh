@@ -70,7 +70,7 @@ if (isset($_SESSION['user'])) {
         </div>
     </section>
 
-    <section class="tableItems" id="table">
+    <section class="shop-items" id="table">
             <?php
                 if (isset($_GET['detail'])) {
                     include 'productdetail.php';
