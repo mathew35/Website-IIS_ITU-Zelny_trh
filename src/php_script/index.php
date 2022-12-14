@@ -33,48 +33,62 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <body>
-    <nav>
-        <div id='navbar'>
-            <div id='logo'>
-            </div>
+<div class="container">
+    <header class="header">
+        <div class="nav-container">
+            <nav class="menu">
+                <a class="active" role='button' href='?category=ovocie'>Ovocie</a>
+                <a role='button' href='?category=zelenina'>Zelenina</a>
+
+                <a role='button' href='?category=farmers'>Farmári</a>
+                <a role='button' href='?category=events'>Samozbery</a>
+            </nav>
+
+            <nav class="logo" id="logo">
+                <!-- logo -->
+            </nav>
+
+            <nav class="credents" id='credents'>
+                <!-- credents buttons -->
+            </nav>
         </div>
-        <div id='navbar'>
-            <div id='category'>
-                <?php include 'category.php'; ?>
-            </div>
-        </div>
-        <div id='navbar'>
-            <div id='credents'>
-            </div>
-        </div>
-    </nav>
-    <?php
-    if ($_GET["category"] == "farmers" || $_GET["category"] == "events") {
-        echo "<div id='filter' style=\"display: none;\"";
-    } else {
-        echo "<div id='filter' style=\"display: ;\"";
-    }
-    ?>
-    <?php include 'filters.php'; ?>
-    </div>
-    <div id="table">
+    </header>
+
+
+    <section class="filter-section">
+        <div class="filter-slide">
+            <div class="filters" id="filters">
+                
         <?php
-        if (isset($_GET['detail'])) {
-            include 'productdetail.php';
-        }
-        if (isset($_SESSION['farmer'])) {
+        if($_GET["category"] == "farmers" || $_GET["category"] == "events"){ echo "<div id='filter' style=\"display: none;\"";}
+        else { echo "<div id='filter' style=\"display: ;\"";}
         ?>
+        <?php include 'filters.php'; ?>
+    
+            </div>
+        <img src="https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png" width="350" height="350">
+        </div>
+    </section>
+
+    <section class="tableItems" id="table">
+            <?php
+                if (isset($_GET['detail'])) {
+                    include 'productdetail.php';
+                }
+                if (isset($_SESSION['farmer'])) {
+            ?>
             <script>
                 farmer_view_pick()
             </script>
-        <?php
-        } else {
-            include 'main_view.php';
-        }
-        ?>
+            <?php
+                } else {
+                    include 'main_view.php';
+                }
+            ?>
+    </section>
 
-    </div>
-    <footer>footer fooo</footer>
+    <!-- <footer>footer fooo</footer> -->
+</div>
 </body>
 <script src="../js/logo.js"></script>
 <script src="../js/credents.js"></script>

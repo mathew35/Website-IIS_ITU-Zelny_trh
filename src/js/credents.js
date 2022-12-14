@@ -432,8 +432,8 @@ function credents() {
         if (document.getElementById("cartButton") != null) document.getElementById("cartButton").remove();
         if (document.getElementById("farmerButton") != null) document.getElementById("farmerButton").remove();
         if (document.getElementById("logoutButton") != null) document.getElementById("logoutButton").remove();
-        let loginButton = document.createElement('button');
-        let registerButton = document.createElement('button');
+        let loginButton = document.createElement('a');
+        let registerButton = document.createElement('a');
         loginButton.onclick = login;
         registerButton.onclick = register;
         loginButton.textContent = 'Prihlásiť sa';
@@ -449,11 +449,11 @@ function credents() {
         if (document.getElementById("cartButton") != null) document.getElementById("cartButton").remove();
         if (document.getElementById("farmerButton") != null) document.getElementById("farmerButton").remove();
         if (document.getElementById("logoutButton") != null) document.getElementById("logoutButton").remove();
-        let profileButton = document.createElement('button');
+        let profileButton = document.createElement('a');
         profileButton.onclick = profile;
         profileButton.textContent = "Profil";
         profileButton.id = "profileButton";
-        let cartButton = document.createElement('button');
+        let cartButton = document.createElement('a');
         cartButton.onclick = cart;
         cartButton.textContent = "Košík";
         cartButton.id = "cartButton";
@@ -462,7 +462,7 @@ function credents() {
             cartButton.textContent = "Objednávky";
         }
 
-        let farmerButton = document.createElement('button');
+        let farmerButton = document.createElement('a');
         if (sessionStorage.getItem('farmer') == null) {
             farmerButton.onclick = become_farmer;
             farmerButton.textContent = "Staň sa farmárom";
@@ -471,7 +471,7 @@ function credents() {
             farmerButton.textContent = "Moje produkty";
         }
         farmerButton.id = "farmerButton";
-        let logoutButton = document.createElement('button');
+        let logoutButton = document.createElement('a');
         logoutButton.onclick = logout;
         logoutButton.textContent = "Odhlásiť sa";
         logoutButton.id = "logoutButton";

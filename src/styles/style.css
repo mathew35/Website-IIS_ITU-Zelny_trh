@@ -1,124 +1,336 @@
-body {
-    padding: 0;
+/* CSS Reset */
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 62.5%;
+  }
+  
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.4rem;
     margin: 0;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    background-color: cadetblue;
-}
-
-div {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-#credents {
-    height: 100%;
-    background-color: green;
-}
-
-#category {
-    background-color: yellowgreen;
-    justify-content: space-evenly;
-    vertical-align: middle;
-    height: 100%;
-    text-align: center;
-}
-
-#logo {
-    background-color: antiquewhite;
-    height: 100%;
-}
-
-#logoText {
-    background-color: inherit;
-    font-size: large;
-    font-weight: 800;
-}
-
-nav {
-    padding: 0;
-    margin: 0;
+  }
+  
+  a {
+    color: #161616;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  p {
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 2.4rem;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+  h3 {
+    font-size: 1.8rem;
+  }
+  h4 {
+    font-size: 1.6rem;
+  }
+  h5 {
+    font-size: 1.2rem;
+  }
+  h6 {
+    font-size: 1rem;
+  }
+  
+  /* Start */
+  
+  .container {
+    padding: 0 10rem;
+  }
+  
+  .header {
+    background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 3rem 10rem;
+  }
+  
+  .nav-container {
     display: flex;
     justify-content: space-between;
-    background-color: aqua;
-    width: 100%;
-    min-height: 50px;
-    height: 7%;
+    align-items: center;
+    a.icon {
+      background: url(https://cdn.rawgit.com/ivorpad/b9adce880f800f53195041a4ed8546c9/raw/a905a3b479ab7880340856a3d15369a932f7b24c/ham.svg)
+        center center no-repeat;
+      background-size: 20px 20px;
+      width: 20px;
+      height: 20px;
+      display: none;
+    }
+  }
+  
+  .nav-container nav a {
+    transition: border .1s ease-in-out;
+    padding: 5pt;
+    &:hover {
+      border-bottom: 1px solid #161616;
+    }
+  }
+  
+  .nav-container nav a,
+  .shop-item--container .meta > span {
+    text-transform: uppercase;
+  }
+  
+  .nav-container nav a.active {
+    color: grey;
+    border-bottom: 1px solid grey;
+  }
+  
+  .nav-container .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+  
+  .nav-container nav:not(.logo) a,
+  .shop-item--container .meta span {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+  }
+  
+  .nav-container nav:first-child a {
+    margin-right: 1.5rem;
+  }
+  
+  .nav-container nav:nth-last-child(2) a {
+    margin-left: 1.5rem;
+  }
+
+.nav-container .credents a
+{
+    margin: 5pt;
 }
 
-#filter {
-    background-color: lightblue;
-    min-height: 25px;
-    height: 10%;
-}
 
-#filter_items {
-    background-color: mediumseagreen;
-    min-height: 25px;
-    width: 200vw;
-    height: 100%;
-    float: left;
-    overflow-y: scroll;
-}
-
-#filter_items ul li{
-    display: inline-block;
-    padding: 5px 15px;
-    border: 1px solid blue;
-}
-
-ul li{
-    padding: 0 10px;
-    list-style-type: none;
-}
-
-
-footer {
-    background-color: blue;
-    display: sticky;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    height: 5%;
-}
-
-
-#table {
+  .filter-section {
+    background: #f1f1f1;
+    padding: 5rem;
+    margin-top: 8rem;
+  
+    .filter-slide {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+  
+  .filter-section h1 {
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .filter-section p {
+    color: grey;
+  }
+  
+  .filter-slide img {
+    width: 30%;
+    height: 30%;
+    align-self: center;
+  }
+  
+  .filter-slide .filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 50%;
+  }
+  
+  .shop-items {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: repeat(2, minmax(360px, 1fr));
+    gap: 3rem;
+    grid-gap: 3rem;
+    grid-auto-rows: 360px;
+  }
+  
+  .shop-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .shop-item--container {
+    background: #f1f1f1;
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    transition: all 0.15s ease-in-out;
+  }
+  
+  .shop-item--container:hover {
+    background: #f6f6f6;
+  }
+  
+  .shop-item--container .meta {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .shop-item--container .meta > span {
+    font-weight: bold;
+  }
+  
+  .shop-item h3 {
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1.5px;
+    font-size: 1.1rem;
+    margin: 0.8rem;
+    a:hover {
+      color: grey
+    }
+  }
+  
+  .shop-item .price {
+    text-align: center;
+  }
+  
+  .shop-item .title > a {
     display: block;
-    width: 100vw;
-    height: 75%;
-    padding: 10vh;
-    padding-inline: 10vw;
-    margin: 0;
-}
-tr {
-    display: block;
-    
-    justify-content: space-evenly;
-    width: 100%;
-    margin: 0;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    border-collapse: collapse;
-}
+  }
+  
+  .shop-item .price span {
+    margin-top: 1rem;
+    text-align: center;
+    color: grey;
+    font-size: 1.3rem;
+  }
+  
+  .shop-item--container img {
+    align-self: center;
+    margin: auto 0;
+  }
+  
+  .main-footer {
+    margin: 7rem 0;
+    padding-top: 5rem;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .main-footer > nav ul {
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .main-footer > nav ul li {
+    margin-bottom: 1rem;
+  }
+  
+  .main-footer > nav ul li a {
+    color: grey;
+    font-size: 1.2rem;
+    &:hover {
+      color: darken(grey, 50%);
+    }
+  }
+  
+  .main-footer h3 {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 1.3rem;
+  }
+  
+  /**
+   * Media Queries
+   */
+  
+  @media (min-width: 1350px) {
+    .shop-items {
+      grid-template-columns: repeat(4, minmax(250px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 2rem;
+    }
+  
+    .header {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  
+    nav.menu,
+    .credents {
+      display: none;
+    }
+  
+    .nav-container {
+      a.icon {
+        display: block;
+      }
+    }
+  }
+  
+  @media (max-width: 895px) {
+    .main-footer {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+  }
+  
+  @media (max-width: 425px) {
+    .filter-slide img {
+      display: none;
+    }
+    .filter-slide .left {
+      width: 100%;
+    }
+    .main-footer {
+      display: flex;
+      flex-direction: column;
+    }
+    .shop-item .title h3 {
+      font-size: 1.5rem;
+    }
+  
+    .shop-item .price span {
+      font-size: 1.5rem;
+    }
+  
+    .main-footer > nav ul li a {
+      background: #f1f1f1;
+      display: block;
+      padding: 1.5rem;
+      color: grey;
+      font-size: 1.5rem;
+      &:hover {
+        color: grey;
+      }
+    }
+  
+    .main-footer h3 {
+      font-size: 1.5rem;
+    }
+    .filter-slide .filters {
+      width: 100%
+    }
+  }
+  
 
-#navbar {
-    margin: 0;
-    padding: 0;
-    display: inline-flex;
-}
+  /* orig */
 
 
-#tableItems {
-    padding: 20px;
-    display: block;
-    width: 80%;
-    height: max(80%, 20%);
+  #tableItems {
     overflow-y: scroll;
     overflow-x: hidden;
     /* border-collapse: collapse; */
@@ -179,72 +391,3 @@ margin: 2.5% 0;
     font-size: 17px;
 }
 
-
-
-
-tbody {
-    width: 100%;
-    display: block;
-}
-
-button {
-    font-size: larger;
-}
-
-#loginTable {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    font-size: small;
-    border-collapse: collapse;
-    background-color: inherit;
-}
-
-#loginTable button {
-    font-size: smaller;
-}
-
-#loginTable tr {
-    width: 100%;
-    height: 20%;
-    border-collapse: collapse;
-    background-color: inherit;
-}
-
-#loginTable td {
-    border-collapse: collapse;
-    justify-content: left;
-    width: 100%;
-}
-
-#loginTable input {
-    width: 90%;
-    height: 50%;
-}
-
-.popup {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
-
-#popupBackground {
-    background-color: lightblue;
-    opacity: .4;
-    z-index: 1;
-}
-
-#popupWin {
-    width: 60vw;
-    height: 80vh;
-    top: 10vh;
-    left: 20vw;
-    background-color: aqua;
-    z-index: 1;
-    color: red;
-    justify-content: center;
-    text-align: center;
-}
