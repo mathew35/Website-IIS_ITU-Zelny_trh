@@ -6,7 +6,7 @@ if (isset($_SESSION['user'])) {
     echo $_SESSION['user'];
     return;
 }
-require "services.php";
+require "../php_ajax/services.php";
 $db = new AccountService();
 $user = $db->get('ACCOUNTS', '*', "(LOGIN='" . $_POST['login'] . "')");
 if ($user->rowCount() == 0) {

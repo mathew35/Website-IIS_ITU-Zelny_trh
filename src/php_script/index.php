@@ -1,18 +1,16 @@
 <?php
 session_start();
-require "services.php";
+require "../php_ajax/services.php";
 
 // ADMIN 1 / MODERATOR 2
-if(isset($_SESSION['user']))
-{
+if (isset($_SESSION['user'])) {
     $database = new AccountService();
     $getrole = $database->get("ACCOUNTS", "MODERATE", "LOGIN=\"" . $_SESSION['user'] . "\"");
     $role = $getrole->fetch();
 
-    if($role[0] == 1){
+    if ($role[0] == 1) {
         echo '<p><a href="adminmode.php"><button>Admin mode</button></a></p>';
-    }
-    else if($role[0] == 2){
+    } else if ($role[0] == 2) {
         echo '<p><a href="moderator.php"><button>Moderate mode</button></a></p>';
     }
 }
@@ -51,10 +49,13 @@ if(isset($_SESSION['user']))
         </div>
     </nav>
     <?php
-    if($_GET["category"] == "farmers" || $_GET["category"] == "events"){ echo "<div id='filter' style=\"display: none;\"";}
-    else { echo "<div id='filter' style=\"display: ;\"";}
+    if ($_GET["category"] == "farmers" || $_GET["category"] == "events") {
+        echo "<div id='filter' style=\"display: none;\"";
+    } else {
+        echo "<div id='filter' style=\"display: ;\"";
+    }
     ?>
-        <?php include 'filters.php'; ?>
+    <?php include 'filters.php'; ?>
     </div>
     <div id="table">
         <?php
@@ -63,9 +64,9 @@ if(isset($_SESSION['user']))
         }
         if (isset($_SESSION['farmer'])) {
         ?>
-        <script>
-            farmer_view_pick()
-        </script>
+            <script>
+                farmer_view_pick()
+            </script>
         <?php
         } else {
             include 'main_view.php';

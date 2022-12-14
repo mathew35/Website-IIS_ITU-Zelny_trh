@@ -21,7 +21,7 @@ function form(type) {
     let credents = document.getElementById("popupWin");
     let form = document.createElement("form");
     form.id = "loginForm";
-    form.action = "javascript:formpost('login.php')";
+    form.action = "javascript:formpost('../php_script/login.php')";
     form.method = "POST";
 
     let submit = document.createElement("button");
@@ -34,7 +34,7 @@ function form(type) {
     })
     if (type == "farmer") {
         submit.textContent = "Stať sa farmárom";
-        form.action = "javascript:formpost('become_farmer.php')";
+        form.action = "javascript:formpost('../php_ajax/become_farmer.php')";
 
         let labelAddress = document.createElement('label');
         labelAddress.htmlFor = "address";
@@ -120,7 +120,7 @@ function form(type) {
 
         if (type == 'register') {
             submit.textContent = "Registrovať";
-            form.action = "javascript:formpost('register.php')";
+            form.action = "javascript:formpost('../php_ajax/register.php')";
 
             let labelName = document.createElement("label");
             labelName.htmlFor = "fullname";
@@ -172,18 +172,18 @@ function post(dest, form) {
 function formpost(dest) {
     const request = post(dest, document.getElementById("loginForm"));
     request.addEventListener("load", (event) => {
-        if (dest == "login.php") {
+        if (dest == "../php_script/login.php") {
             if (request.responseText != "" && request.responseText != "error") {
-                get_own('ownProducts', 'farmer_products.php');
-                get_own('ownOrders', 'farmer_orders.php');
-                get_own('user_cart', 'get_cart.php');
-                get_own('user_cart_items', 'get_cart_items.php');
+                get_own('ownProducts', '../php_ajax/farmer_products.php');
+                get_own('ownOrders', '../php_ajax/farmer_orders.php');
+                get_own('user_cart', '../php_ajax/get_cart.php');
+                get_own('user_cart_items', '../php_ajax/get_cart_items.php');
                 if (document.getElementById("popupBackground") != null) document.getElementById("popupBackground").remove();
                 if (document.getElementById("popupWin") != null) document.getElementById("popupWin").remove();
                 sessionStorage.setItem('user', request.responseText);
                 credents();
-                const request2 = post("farmer.php", null);
-                post("farmer.php", null);
+                const request2 = post("../php_ajax/farmer.php", null);
+                post("../php_ajax/farmer.php", null);
                 request2.addEventListener("load", (evenr) => {
                         if (request2.responseText == false) {
                             // if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
@@ -210,7 +210,7 @@ function formpost(dest) {
             }
             return;
         }
-        if (dest == "register.php") {
+        if (dest == "../php_ajax/register.php") {
             if (request.responseText == "ok") {
                 document.getElementById("loginForm").remove();
                 let popup = document.getElementById("popupWin");
@@ -226,7 +226,7 @@ function formpost(dest) {
                 console.log(request.responseText);
             }
         }
-        if (dest == "become_farmer.php") {
+        if (dest == "../php_ajax/become_farmer.php") {
             if (request.responseText != "" && request.responseText != "USER NOT FOUND") {
                 if (document.getElementById("popupBackground") != null) document.getElementById("popupBackground").remove();
                 if (document.getElementById("popupWin") != null) document.getElementById("popupWin").remove();
@@ -251,7 +251,7 @@ function register() {
 
 function logout() {
     const request = new XMLHttpRequest();
-    request.open("POST", "logout.php");
+    request.open("POST", "../php_script/logout.php");
     request.send();
     request.addEventListener("load", (evenr) => {
         empty_cart();
@@ -266,12 +266,12 @@ function logout() {
 
 function farmer() {
     if (sessionStorage.getItem('farmer') == null) {
-        const request = post("farmer.php", null);
+        const request = post("../php_ajax/farmer.php", null);
         request.addEventListener("load", (evenr) => {
             if (request.responseText == false) {
                 if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
             } else {
-                get_own('ownProducts', 'farmer_products.php');
+                get_own('ownProducts', '../php_ajax/farmer_products.php');
                 sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
                 sessionStorage.setItem('farmer_view', "products");
             }
@@ -280,7 +280,7 @@ function farmer() {
         })
     } else {
         if (sessionStorage.getItem('farmer_view') == "products") {
-            var req = post("farmer.php", null);
+            var req = post("../php_ajax/farmer.php", null);
             sessionStorage.removeItem('farmer_view');
             req.addEventListener("load", () => {
                 farmer_view_pick();
@@ -288,23 +288,23 @@ function farmer() {
             })
         } else if (sessionStorage.getItem('farmer_view') == "orders") {
             sessionStorage.setItem('farmer_view', 'products');
-            get_own('ownProducts', 'farmer_products.php');
+            get_own('ownProducts', '../php_ajax/farmer_products.php');
             credents();
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "profile") {
             sessionStorage.setItem('farmer_view', 'products');
-            get_own('ownProducts', 'farmer_products.php');
+            get_own('ownProducts', '../php_ajax/farmer_products.php');
             credents();
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "cart") {
             sessionStorage.setItem('farmer_view', 'products');
-            get_own('ownProducts', 'farmer_products.php');
+            get_own('ownProducts', '../php_ajax/farmer_products.php');
             credents();
             farmer_view_pick();
         } else {
-            var req = post("farmer.php", null);
+            var req = post("../php_ajax/farmer.php", null);
             sessionStorage.setItem('farmer_view', "products");
-            get_own('ownProducts', 'farmer_products.php');
+            get_own('ownProducts', '../php_ajax/farmer_products.php');
             req.addEventListener("load", () => {
                 farmer_view_pick();
                 credents();
@@ -323,18 +323,18 @@ function cart() {
     if (sessionStorage.getItem('user') == null) logout();
     if (sessionStorage.getItem('farmer_view') == "orders") {
         sessionStorage.setItem('farmer_view', "cart");
-        get_own('user_cart', 'get_cart.php');
-        get_own('user_cart_items', 'get_cart_items.php');
+        get_own('user_cart', '../php_ajax/get_cart.php');
+        get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "products") {
         sessionStorage.setItem('farmer_view', "cart");
-        get_own('user_cart', 'get_cart.php');
-        get_own('user_cart_items', 'get_cart_items.php');
+        get_own('user_cart', '../php_ajax/get_cart.php');
+        get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "profile") {
         sessionStorage.setItem('farmer_view', "cart");
-        get_own('user_cart', 'get_cart.php');
-        get_own('user_cart_items', 'get_cart_items.php');
+        get_own('user_cart', '../php_ajax/get_cart.php');
+        get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "cart") {
         var req = post("farmer.php", null);
@@ -344,9 +344,9 @@ function cart() {
             location.reload();
         })
     } else {
-        var req = post("farmer.php", null);
-        get_own('user_cart', 'get_cart.php');
-        get_own('user_cart_items', 'get_cart_items.php');
+        var req = post("../php_ajax/farmer.php", null);
+        get_own('user_cart', '../php_ajax/get_cart.php');
+        get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         req.addEventListener("load", () => {
             sessionStorage.setItem('farmer_view', "cart");
             farmer_view_pick();
@@ -358,21 +358,21 @@ function cart() {
 
 function orders() {
     if (sessionStorage.getItem('farmer') == null) {
-        const request = post("farmer.php", null);
+        const request = post("../php_ajax/farmer.php", null);
         request.addEventListener("load", (evenr) => {
             if (request.responseText == false) {
                 if (sessionStorage.getItem('farmer') != null) sessionStorage.removeItem('farmer');
             } else {
                 sessionStorage.setItem('farmer', sessionStorage.getItem('user'));
                 sessionStorage.setItem('farmer_view', "orders");
-                get_own('ownOrders', 'farmer_orders.php');
+                get_own('ownOrders', '../php_ajax/farmer_orders.php');
             }
             farmer_view_pick();
             location.reload();
         })
     } else {
         if (sessionStorage.getItem('farmer_view') == "orders") {
-            var req = post("farmer.php", null);
+            var req = post("../php_ajax/farmer.php", null);
             sessionStorage.removeItem('farmer_view');
             req.addEventListener("load", () => {
                 farmer_view_pick();
@@ -380,15 +380,15 @@ function orders() {
             })
         } else if (sessionStorage.getItem('farmer_view') == "products") {
             sessionStorage.setItem('farmer_view', "orders");
-            get_own('ownOrders', 'farmer_orders.php');
+            get_own('ownOrders', '../php_ajax/farmer_orders.php');
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "profile") {
             sessionStorage.setItem('farmer_view', "orders");
-            get_own('ownOrders', 'farmer_orders.php');
+            get_own('ownOrders', '../php_ajax/farmer_orders.php');
             farmer_view_pick();
         } else if (sessionStorage.getItem('farmer_view') == "cart") {
             sessionStorage.setItem('farmer_view', "orders");
-            get_own('ownOrders', 'farmer_orders.php');
+            get_own('ownOrders', '../php_ajax/farmer_orders.php');
             farmer_view_pick();
         } else {
             console.log("order fallthrough");
@@ -405,7 +405,7 @@ function profile() {
         sessionStorage.setItem('farmer_view', "profile");
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "profile") {
-        var req = post("farmer.php", null);
+        var req = post("../php_ajax/farmer.php", null);
         req.addEventListener("load", () => {
             sessionStorage.removeItem('farmer_view');
             farmer_view_pick();
@@ -415,7 +415,7 @@ function profile() {
         sessionStorage.setItem('farmer_view', "profile");
         farmer_view_pick();
     } else {
-        var req = post("farmer.php", null);
+        var req = post("../php_ajax/farmer.php", null);
         req.addEventListener("load", () => {
             sessionStorage.setItem('farmer_view', "profile");
             farmer_view_pick();
@@ -480,6 +480,6 @@ function credents() {
     }
 }
 credents();
-if (sessionStorage.getItem('user') == null) formpost('login.php');
+if (sessionStorage.getItem('user') == null) formpost('../php_script/login.php');
 
 //init farmer_view

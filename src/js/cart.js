@@ -1,7 +1,7 @@
 function cart_view() {
     if (get_cart == null) {
-        get_cart = setInterval(get_own, 5000, 'user_cart', 'get_cart.php');
-        get_cart_items = setInterval(get_own, 5000, 'user_cart_items', 'get_cart_items.php');
+        get_cart = setInterval(get_own, 5000, 'user_cart', '../php_ajax/get_cart.php');
+        get_cart_items = setInterval(get_own, 5000, 'user_cart_items', '../php_ajax/get_cart_items.php');
     }
     cart_display();
     console.log("cart");
@@ -15,7 +15,7 @@ function interpret(data) {
 
 function update_cart_item(cropid, ammount) {
     var request = new XMLHttpRequest();
-    request.open("POST", 'update_cart_item.php');
+    request.open("POST", '../php_ajax/update_cart_item.php');
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send("cropid=" + cropid + "&ammount=" + ammount + "");
     console.log("updating cart item");
@@ -24,7 +24,7 @@ function update_cart_item(cropid, ammount) {
 
 function place_order() {
     var request = new XMLHttpRequest();
-    request.open("POST", 'place_order.php');
+    request.open("POST", '../php_ajax/place_order.php');
     request.send();
     request.addEventListener("load", () => {
         console.log(request.responseText);
@@ -36,10 +36,10 @@ function place_order() {
 
 function empty_cart() {
     var request = new XMLHttpRequest();
-    request.open("POST", 'empty_cart.php');
+    request.open("POST", '../php_ajax/empty_cart.php');
     request.send();
     request.addEventListener("load", () => {
-        get_own('user_cart_items', 'get_cart_items.php');
+        get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         cart_display();
     })
     console.log("emptying cart");
@@ -77,7 +77,7 @@ function cart_display() {
                     err.textContent = "Nedostatok produktu na sklade";
                     content.appendChild(err);
                 } else {
-                    get_own('user_cart_items', 'get_cart_items.php');
+                    get_own('user_cart_items', '../php_ajax/get_cart_items.php');
                     cart_display();
                 }
             })
@@ -93,7 +93,7 @@ function cart_display() {
                     console.log("returning fail");
                     return "fail";
                 }
-                get_own('user_cart_items', 'get_cart_items.php');
+                get_own('user_cart_items', '../php_ajax/get_cart_items.php');
                 cart_display();
             })
 

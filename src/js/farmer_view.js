@@ -24,7 +24,7 @@ function edit_prod_post() {
     const request = post('../php_ajax/update_prod.php', document.getElementById("editForm"));
     request.addEventListener("load", (event) => {
         console.log(request.responseText);
-        get_own('ownProducts', 'farmer_products.php');
+        get_own('ownProducts', '../php_ajax/farmer_products.php');
     });
 }
 
@@ -857,4 +857,3 @@ let get_prods; // = setInterval(get_own, 5000, 'ownProducts', 'farmer_products.p
 let get_cart;
 let get_cart_items;
 let get_profile;
-s
