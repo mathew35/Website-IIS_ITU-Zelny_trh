@@ -337,7 +337,7 @@ function cart() {
         get_own('user_cart_items', '../php_ajax/get_cart_items.php');
         farmer_view_pick();
     } else if (sessionStorage.getItem('farmer_view') == "cart") {
-        var req = post("farmer.php", null);
+        var req = post("../php_ajax/farmer.php", null);
         sessionStorage.removeItem('farmer_view');
         req.addEventListener("load", () => {
             farmer_view_pick();
