@@ -33,62 +33,66 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <body>
-<div class="container">
-    <header class="header">
-        <div class="nav-container">
-            <nav class="menu">
-                <a class="active" role='button' href='?category=ovocie'>Ovocie</a>
-                <a role='button' href='?category=zelenina'>Zelenina</a>
+    <div class="container">
+        <header class="header">
+            <div class="nav-container">
+                <nav class="menu">
+                    <a class="active" role='button' href='?category=ovocie'>Ovocie</a>
+                    <a role='button' href='?category=zelenina'>Zelenina</a>
 
-                <a role='button' href='?category=farmers'>Farmári</a>
-                <a role='button' href='?category=events'>Samozbery</a>
-            </nav>
+                    <a role='button' href='?category=farmers'>Farmári</a>
+                    <a role='button' href='?category=events'>Samozbery</a>
+                </nav>
 
-            <nav class="logo" id="logo">
-                <!-- logo -->
-            </nav>
+                <nav class="logo" id="logo">
+                    <!-- logo -->
+                </nav>
 
-            <nav class="credents" id='credents'>
-                <!-- credents buttons -->
-            </nav>
-        </div>
-    </header>
-
-
-    <section class="filter-section">
-        <div class="filter-slide">
-            <div class="filters" id="filters">
-                
-        <?php
-        if($_GET["category"] == "farmers" || $_GET["category"] == "events"){ echo "<div id='filter' style=\"display: none;\"";}
-        else { echo "<div id='filter' style=\"display: ;\"";}
-        ?>
-        <?php include 'filters.php'; ?>
-    
+                <nav class="credents" id='credents'>
+                    <!-- credents buttons -->
+                </nav>
             </div>
-        <img src="https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png" width="350" height="350">
-        </div>
-    </section>
+        </header>
 
-    <section class="shop-items" id="table">
-            <?php
-                if (isset($_GET['detail'])) {
-                    include 'productdetail.php';
-                }
-                if (isset($_SESSION['farmer'])) {
-            ?>
-            <script>
-                farmer_view_pick()
-            </script>
-            <?php
-                } else {
-                    include 'main_view.php';
-                }
-            ?>
-    </section>
+        <?php
+        if (isset($_GET['detail'])) {
+            include 'productdetail.php';
+        }
+        ?>
 
-    <!-- <footer>footer fooo</footer> -->
-</div>
+        <section class="filter-section">
+            <div class="filter-slide">
+                <div class="filters" id="filters">
+
+                    <?php
+                    if ($_GET["category"] == "farmers" || $_GET["category"] == "events") {
+                        echo "<div id='filter' style=\"display: none;\"";
+                    } else {
+                        echo "<div id='filter' style=\"display: ;\"";
+                    }
+                    ?>
+                    <?php include 'filters.php'; ?>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="shop-items" id="table">
+            <?php
+            if (isset($_SESSION['farmer'])) {
+            ?>
+                <script>
+                    farmer_view_pick()
+                </script>
+            <?php
+            } else {
+                include 'main_view.php';
+            }
+            ?>
+        </section>
+
+        <!-- <footer>footer fooo</footer> -->
+    </div>
 </body>
 <script src="../js/logo.js"></script>
 <script src="../js/credents.js"></script>
