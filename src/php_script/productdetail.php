@@ -2,7 +2,7 @@
 // Author: Alena Klimecká
 
 include "harvestdetail.php";
-require_once "services.php";
+require_once "../php_ajax/services.php";
 class ProductDetail
 {
     private $id;
@@ -49,7 +49,7 @@ class ProductDetail
         $price = $getprice->fetch();
         $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
         $unit = $getunit->fetch();
-        echo "<p>"  . $price[0] . " Kč / " . $unit[0] ."</p>";
+        echo "<p>"  . $price[0] . " Kč / " . $unit[0] . "</p>";
     }
 
     public function getavailable()
@@ -60,7 +60,7 @@ class ProductDetail
         $getunit = $this->db->get("SPECIFIC_CROP", "PER_UNIT", "CROPID=" . $this->id);
         $unit = $getunit->fetch();
 
-        echo "<p>Skladem: "  . $amount[0] . " " . $unit[0] ."</p>";
+        echo "<p>Skladem: "  . $amount[0] . " " . $unit[0] . "</p>";
     }
 
     public function getAvgRatings()
@@ -75,7 +75,7 @@ class ProductDetail
             $sum += $stars[0];
             $stars = $getstars->fetch();
         }
-        if($count != 0){
+        if ($count != 0) {
             $avg = $sum / $count;
         }
         echo "<p>Průměr: " . round($avg, 0) . "/5 Hvězdiček </p>";
@@ -100,16 +100,16 @@ class ProductDetail
         }
     }
 
-    public function newrate(){
+    public function newrate()
+    {
         echo '<button onclick="myrate(' . $this->id . ')">Přidat hodnocení</button>';
     }
 
     public function addAmount()
     {
         $amount = 0;
-        $crop = $this->id; 
+        $crop = $this->id;
         echo '<button type="submit" class="buythis" onclick="buyproduct(' . $amount . ',' . $crop . ')">Do košíku</button>';
-
     }
 
     public function harvest()
@@ -133,112 +133,129 @@ class ProductDetail
 
             $place = $getplace->fetch();
         }
-
     }
-    
-
 }
 
-$product = new ProductDetail($_GET['detail']); 
+$product = new ProductDetail($_GET['detail']);
 
 ?>
+
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Product </title>
-	<link rel="stylesheet" href="../styles/productstyle.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Product </title>
+    <link rel="stylesheet" href="../styles/productstyle.css">
 </head>
-    <div class="detail-container">
-        <div class="detail">
-            <a href="index3.php"><button id="myBtn" class="back">Zpět</button></a>
-			<div class="detail-column detail-left">
-                <?php   
-                    $product->getName();
-                    $product->getFarmer();
-                    $product->getLocation();
-                    $product->getDescript();
-                ?>
-			</div>
-			<div class="detail-column detail-right">
-                <input type="number" id="myText" min="1" value="0">
-                <?php 
-                    $product->getPrice();
-                    $product->getavailable();
-                    $product->addAmount();
-                    ?>
-			</div>
-
-            <div class="detail-column detail-left">
-                <?php $product->getAvgRatings(); ?>
-			    <button type="submit" class="harvest" onclick="openReview()">Recenze</button>
-		    </div>
-		    <div class="detail-column detail-right">
-			    <button type="submit" class="harvest" onclick="openHarvest()">Samosběry</button>	
-            </div>
+<div class="detail-container">
+    <div class="detail">
+        <a href="index.php"><button id="myBtn" class="back">Zpět</button></a>
+        <div class="detail-column detail-left">
+            <?php
+            $product->getName();
+            $product->getFarmer();
+            $product->getLocation();
+            $product->getDescript();
+            ?>
+        </div>
+        <div class="detail-column detail-right">
+            <input type="number" id="myText" min="1" value="0">
+            <?php
+            $product->getPrice();
+            $product->getavailable();
+            $product->addAmount();
+            ?>
         </div>
 
-		<div class="detail-harvest" id="detail-harvest">
-            <button type="button" class="back" onclick="closeHarvest()">Close</button>
-            <div class="popup-harvest">
-                <?php $product->harvest(); ?>
-            </div>
-			
-			
-		</div>
-
-        <div class="detail-review" id="detail-review">
-            <button type="button" class="back" onclick="closeReview()">Close</button>
-            Hodnocení: <input type="text" id="myRating">
-            <input type="number" min="0" max="5" id="myStars" value="0">
-            <?php $product->newrate(); ?>
-			<?php $product->getRatings();?>	   
-			
-		</div>
+        <div class="detail-column detail-left">
+            <?php $product->getAvgRatings(); ?>
+            <button type="submit" class="harvest" onclick="openReview()">Recenze</button>
+        </div>
+        <div class="detail-column detail-right">
+            <button type="submit" class="harvest" onclick="openHarvest()">Samosběry</button>
+        </div>
     </div>
-<script> 			
-let harvest = document.getElementById("detail-harvest");
-let review = document.getElementById("detail-review");
 
-function openHarvest (){
-	harvest .classList.add("open-popup");	
-}
-function closeHarvest (){
-	harvest .classList.remove("open-popup");
-}
-function openReview(){
-	review.classList.add("open-popup");	
-}
-function closeReview(){
-	review.classList.remove("open-popup");
-}
-function joinharvest(eid){
-    $.ajax({
-        url: 'joinharvest.php',
-        type: 'post',
-        data: { "param1": eid},
-        success: function(response) { alert(response); }
-    });
-}
-function buyproduct(amount, pid){
-    amount = document.getElementById("myText").value;
-    $.ajax({
-        url: 'buyproduct.php',
-        type: 'post',
-        data: { "paramount": amount, "parpid": pid},
-        success: function(response) { alert(response); }
-    });
-}
-function myrate(cid){
-    text = document.getElementById("myRating").value;
-    stars = document.getElementById("myStars").value;
-    $.ajax({
-        url: 'rateproduct.php',
-        type: 'post',
-        data: { "ptext": text, "pstars": stars, "pcid": cid},
-        success: function(response) { alert(response); }
-    });
-
-}
+    <div class="detail-harvest" id="detail-harvest">
+        <button type="button" class="back" onclick="closeHarvest()">Close</button>
+        <div class="popup-harvest">
+            <?php $product->harvest(); ?>
+        </div>
 
 
+    </div>
+
+    <div class="detail-review" id="detail-review">
+        <button type="button" class="back" onclick="closeReview()">Close</button>
+        Hodnocení: <input type="text" id="myRating">
+        <input type="number" min="0" max="5" id="myStars" value="0">
+        <?php $product->newrate(); ?>
+        <?php $product->getRatings(); ?>
+
+    </div>
+</div>
+<script>
+    let harvest = document.getElementById("detail-harvest");
+    let review = document.getElementById("detail-review");
+
+    function openHarvest() {
+        harvest.classList.add("open-popup");
+    }
+
+    function closeHarvest() {
+        harvest.classList.remove("open-popup");
+    }
+
+    function openReview() {
+        review.classList.add("open-popup");
+    }
+
+    function closeReview() {
+        review.classList.remove("open-popup");
+    }
+
+    function joinharvest(eid) {
+        $.ajax({
+            url: 'joinharvest.php',
+            type: 'post',
+            data: {
+                "param1": eid
+            },
+            success: function(response) {
+                alert(response);
+            }
+        });
+    }
+
+    function buyproduct(amount, pid) {
+        amount = document.getElementById("myText").value;
+        $.ajax({
+            url: 'buyproduct.php',
+            type: 'post',
+            data: {
+                "paramount": amount,
+                "parpid": pid
+            },
+            success: function(response) {
+                alert(response);
+            }
+        });
+    }
+
+    function myrate(cid) {
+        text = document.getElementById("myRating").value;
+        stars = document.getElementById("myStars").value;
+        $.ajax({
+            url: 'rateproduct.php',
+            type: 'post',
+            data: {
+                "ptext": text,
+                "pstars": stars,
+                "pcid": cid
+            },
+            success: function(response) {
+                alert(response);
+            }
+        });
+
+    }
 </script>
