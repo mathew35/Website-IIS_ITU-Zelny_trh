@@ -9,6 +9,9 @@ function profile_view() {
         newData = request.responseText;
         sessionStorage.setItem('profile_data', newData);
         console.log("profile");
+        // remove anything in table
+        let table = document.getElementById('table');
+        table.innerHTML = '';
         profile_form();
     });
     // console.log(sessionStorage.getItem('profile'));
@@ -70,6 +73,8 @@ function profile_form() {
     let div = document.createElement("div");
     div.style.width = "100%";
     div.style.display = "inline-flex";
+    div.style.padding = "10px";
+    div.style.justifyContent = "center";
     div.appendChild(form);
     content.appendChild(div);
 
@@ -92,9 +97,10 @@ function profile_form() {
 
     let update = document.createElement("button");
     let restore = document.createElement("button");
-    update.textContent = "Update";
+    update.textContent = "Aktualizovať";
     update.type = "submit";
-    restore.textContent = "Restore";
+    restore.textContent = "Obnoviť";
+    restore.type = "button";
     restore.addEventListener("click", (evt) => {
         profile_view();
     })

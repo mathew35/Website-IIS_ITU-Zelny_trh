@@ -234,7 +234,7 @@ function form_add() {
     form.appendChild(document.createElement("br"));
 
     let hr = document.createElement("hr");
-    hr.style.width = "40%";
+    hr.style.width = "80%";
     form.appendChild(hr);
     let submit = document.createElement("button");
     let cancel = document.createElement("button");
@@ -326,7 +326,7 @@ function generateEventForm(form, id) {
 
 
     let hr = document.createElement("hr");
-    hr.style.width = "120%";
+    hr.style.width = "80%";
     hr.style.translate = "-8.5%";
     form.appendChild(hr);
     let createEventButton = document.createElement('button');
@@ -553,11 +553,11 @@ function edit_product(product) {
     form.appendChild(document.createElement("br"));
 
     let hr = document.createElement("hr");
-    hr.style.width = "30%";
+    hr.style.width = "80%";
     form.appendChild(hr);
     let submit = document.createElement("button");
     let cancel = document.createElement("button");
-    submit.textContent = "Aplikovať";
+    submit.textContent = "Aktualizovať";
     cancel.textContent = "Obnoviť";
     cancel.addEventListener("click", (evt) => {
         document.getElementById("popupBackground").remove();
@@ -689,6 +689,7 @@ function generate_table(type, data) {
     // }
     // let table = document.getElementById("table");
     let content = document.getElementById("table");
+    content.innerHTML = '';
     // if (content == null) content = document.createElement("div");
     // content.id = "tableItems";
     // table.appendChild(content);
@@ -696,7 +697,10 @@ function generate_table(type, data) {
         let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
         addProduct.className = "shop-item";
-        addProduct.textContent = "Pridaj nový produkt";
+        // addProduct.textContent = "Pridaj nový produkt";
+        addProduct.style.backgroundImage = "url('../add_product.svg'";
+        addProduct.style.backgroundSize = "contain";
+        addProduct.style.backgroundPosition = "center";
         addProduct.addEventListener("click", (event) => {
             new_product();
         });
@@ -714,6 +718,7 @@ function generate_table(type, data) {
                 let id = null;
                 product.className = "shop-item";
                 if (type == "order_view") {
+                    product.style.padding = "10px";
                     product.style.width = "calc(100% - 40px)";
                     product.style.color = "black";
                     console.log(data[i]);
@@ -735,7 +740,10 @@ function generate_table(type, data) {
                     }
                 } else {
                     data[i] = data[i].split(';');
-                    product.style.backgroundImage = "url(" + data[i][7] + ")";
+                    if (data[i][7] != "") {
+                        product.style.backgroundImage = "url(" + data[i][7] + ")";
+
+                    }
                     let header = document.createElement("h2");
                     let span = document.createElement("span");
                     header.appendChild(span);
@@ -836,12 +844,44 @@ function order_view() {
 function farmer_view_pick() {
     if (sessionStorage.getItem('farmer_view') == "products") {
         farmer_view();
+        //hide filter 
+        let filter = document.getElementsByClassName('filter-section');
+        for (let i = 0; i < filter.length; i++) {
+            filter.item(i).style.display = 'none';
+        }
+        //adjust top marign of main section
+        let table = document.getElementById('table');
+        table.style.marginTop = '80px';
     } else if (sessionStorage.getItem('farmer_view') == "orders") {
         order_view();
+        //hide filter 
+        let filter = document.getElementsByClassName('filter-section');
+        for (let i = 0; i < filter.length; i++) {
+            filter.item(i).style.display = 'none';
+        }
+        //adjust top marign of main section
+        let table = document.getElementById('table');
+        table.style.marginTop = '80px';
     } else if (sessionStorage.getItem('farmer_view') == "cart") {
         cart_view();
+        //hide filter 
+        let filter = document.getElementsByClassName('filter-section');
+        for (let i = 0; i < filter.length; i++) {
+            filter.item(i).style.display = 'none';
+        }
+        //adjust top marign of main section
+        let table = document.getElementById('table');
+        table.style.marginTop = '80px';
     } else if (sessionStorage.getItem('farmer_view') == "profile") {
         profile_view();
+        //hide filter 
+        let filter = document.getElementsByClassName('filter-section');
+        for (let i = 0; i < filter.length; i++) {
+            filter.item(i).style.display = 'none';
+        }
+        //adjust top marign of main section
+        let table = document.getElementById('table');
+        table.style.marginTop = '80px';
     } else {
         // restoreAll();
         clearInterval(updateFarmer_view);

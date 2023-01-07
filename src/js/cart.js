@@ -3,6 +3,9 @@ function cart_view() {
         get_cart = setInterval(get_own, 5000, 'user_cart', '../php_ajax/get_cart.php');
         get_cart_items = setInterval(get_own, 5000, 'user_cart_items', '../php_ajax/get_cart_items.php');
     }
+    // remove anything in table
+    let table = document.getElementById('table');
+    table.innerHTML = '';
     cart_display();
     console.log("cart");
     console.log(sessionStorage.getItem('user_cart'));

@@ -1,3 +1,5 @@
+/* CSS Reset */
+
 * {
     box-sizing: border-box;
 }
@@ -164,11 +166,14 @@ h6 {
 .shop-item {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     border-radius: 10%;
     padding-bottom: 5%;
     overflow: hidden;
+=======
     background-size: cover;
     background-color: #f1f1f1;
+>>>>>>> 7bcb79f1c1c837a656064e81c984c197551ea902
 }
 
 .shop-item--strip {
@@ -212,10 +217,6 @@ h6 {
     margin-top: -5pt;
 }
 
-.shop-item .title>a {
-    display: block;
-}
-
 .shop-item .price span {
     margin-right: 1rem;
     text-align: center;
@@ -227,7 +228,7 @@ h6 {
 }
 
 
-/* footer ?? */
+/* footer */
 .main-footer {
     margin: 7rem 0;
     padding-top: 5rem;
@@ -436,8 +437,10 @@ h6 {
     transform: translateX(-25%);
 }
 
+
 ul {
     list-style: none;
+<<<<<<< HEAD
 }
 
 #filter-radio-list
@@ -465,3 +468,6 @@ ul {
 
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */
+=======
+}
+>>>>>>> 7bcb79f1c1c837a656064e81c984c197551ea902
