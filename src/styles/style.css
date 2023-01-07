@@ -1,3 +1,5 @@
+/* CSS Reset */
+
 * {
     box-sizing: border-box;
 }
@@ -164,6 +166,8 @@ h6 {
 .shop-item {
     display: flex;
     flex-direction: column;
+    background-size: cover;
+    background-color: #f1f1f1;
 }
 
 .shop-item--container {
@@ -331,6 +335,7 @@ h6 {
     overflow-x: hidden;
     /* border-collapse: collapse; */
     background-color: lightsteelblue;
+    padding: 10px;
 }
 
 .tableItem {
@@ -401,14 +406,16 @@ h6 {
 
 #popupWin {
     position: absolute;
-    width: 60vw;
-    height: 80vh;
-    top: 10vh;
-    left: 20vw;
-    background-color: aqua;
+    background-color: #EFF4F7;
     z-index: 1;
-    color: red;
+    color: #313233;
     justify-content: center;
+    display: flex;
+    padding: 20px;
+    border-radius: 20px;
+    top: 10vh;
+    left: 50vw;
+    transform: translateX(-25%);
 }
 
 .filter-crops:nth-child(odd) {
@@ -418,5 +425,3 @@ h6 {
 ul {
     list-style: none;
 }
-
-/* Source: https://codepen.io/ivorpad/pen/eKbJeb */

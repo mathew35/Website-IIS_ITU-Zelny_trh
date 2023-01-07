@@ -23,7 +23,6 @@ function form(type) {
     form.id = "loginForm";
     form.action = "javascript:formpost('../php_script/login.php')";
     form.method = "POST";
-
     let submit = document.createElement("button");
     let cancel = document.createElement("button");
     submit.textContent = "Prihlásiť";
@@ -150,7 +149,7 @@ function form(type) {
     }
     //divider
     let hr = document.createElement("hr");
-    hr.style.width = "40%";
+    hr.style.width = "80%";
     form.appendChild(hr);
     form.appendChild(submit);
     form.appendChild(cancel);
@@ -391,7 +390,15 @@ function orders() {
             get_own('ownOrders', '../php_ajax/farmer_orders.php');
             farmer_view_pick();
         } else {
-            console.log("order fallthrough");
+            var req = post("../php_ajax/farmer.php", null);
+            get_own('user_cart', '../php_ajax/get_cart.php');
+            get_own('user_cart_items', '../php_ajax/get_cart_items.php');
+            req.addEventListener("load", () => {
+                sessionStorage.setItem('farmer_view', "orders");
+                farmer_view_pick();
+                credents();
+                // location.reload();
+            })
         }
     }
 }
@@ -447,6 +454,7 @@ function credents() {
         if (document.getElementById("registerButton") != null) document.getElementById("registerButton").remove();
         if (document.getElementById("profileButton") != null) document.getElementById("profileButton").remove();
         if (document.getElementById("cartButton") != null) document.getElementById("cartButton").remove();
+        if (document.getElementById("orderButton") != null) document.getElementById("orderButton").remove();
         if (document.getElementById("farmerButton") != null) document.getElementById("farmerButton").remove();
         if (document.getElementById("logoutButton") != null) document.getElementById("logoutButton").remove();
         let profileButton = document.createElement('a');
@@ -457,18 +465,19 @@ function credents() {
         cartButton.onclick = cart;
         cartButton.textContent = "Košík";
         cartButton.id = "cartButton";
-        if (sessionStorage.getItem('farmer_view') == "orders", sessionStorage.getItem('farmer_view') == "products") {
-            cartButton.onclick = orders;
-            cartButton.textContent = "Objednávky";
-        }
-
+        let orderButton = document.createElement('a');
+        orderButton.onclick = cart;
+        orderButton.id = "orderButton";
         let farmerButton = document.createElement('a');
         if (sessionStorage.getItem('farmer') == null) {
             farmerButton.onclick = become_farmer;
             farmerButton.textContent = "Staň sa farmárom";
+            orderButton.style.display = 'none';
         } else {
             farmerButton.onclick = farmer;
             farmerButton.textContent = "Moje produkty";
+            orderButton.textContent = "Objednávky";
+            orderButton.onclick = orders;
         }
         farmerButton.id = "farmerButton";
         let logoutButton = document.createElement('a');
@@ -476,7 +485,7 @@ function credents() {
         logoutButton.textContent = "Odhlásiť sa";
         logoutButton.id = "logoutButton";
 
-        credents.append(profileButton, cartButton, farmerButton, logoutButton);
+        credents.append(profileButton, cartButton, orderButton, farmerButton, logoutButton);
     }
 }
 credents();
