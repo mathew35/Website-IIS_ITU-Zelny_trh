@@ -1,15 +1,18 @@
-<!-- Author: Natália Bubáková -->
-
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
 </head>
 
-<!-- <div id="tableItems"> -->
 <?php
+
+// Author: Natália Bubáková
+
+
 $db = new AccountService();
 
+/****** FARMERS_LIST ******/
 
 if ($_GET["category"] == "farmers") {
+    echo "<div class=\"farmer-items\">";
     echo "<h1>FARMÁRI</h1>";
 
     // SELECT A.LOGIN, A.FULLNAME, A.EMAIL, F.LOGIN, F.ADDRESS, F.ICO, F.PHONE, F.IBAN
@@ -19,7 +22,7 @@ if ($_GET["category"] == "farmers") {
     $arr = $crops->fetch();
 
     for ($i = 0; $i < $crops->rowCount(); $i++) {
-        echo "<div class='tableItemFarmer' id=\"{$arr['CROP_NAME']}\">";
+        echo "<div class='farmer-item' id=\"{$arr['CROP_NAME']}\">";
         echo "<div class='item_col'><h2>{$arr['LOGIN']}</h2>";
         echo "<p>{$arr['FULLNAME']}</p></div>";
         echo "<div class='item_col'><p>E-mail: {$arr['EMAIL']}</p>";
@@ -30,7 +33,13 @@ if ($_GET["category"] == "farmers") {
         echo "</div>";
         $arr = $crops->fetch();
     }
+    echo "</div>";
+
+
+/****** EVENTS_LIST ******/
+
 } elseif ($_GET["category"] == "events") {
+    echo "<div class=\"event-items\">";
     echo "<h1>SAMOZBERY</h1>";
 
     // // SELECT E.EVENTID, E.DATE_FROM, E.DATE_TO, E.PLACE, E.DESCRIPTION, E.POSTEDBY,C.EVENTID, C.CROPID, S.CROPID, S.CROP_NAME
@@ -50,7 +59,7 @@ if ($_GET["category"] == "farmers") {
         if ($tmp_id == $arr['EVENTID'])
             $crop_sum = "{$crop_sum}" . ", " . "{$arr['CROP_NAME']}";
         else {
-            echo "<div class='tableItemFarmer'>";
+            echo "<div class='event-item'>";
             echo "<div class='item_col'><p><span>Zberané plodiny:</span> {$crop_sum}</p>";
             echo "<p><span>Organizátor samozberu:</span> {$tmp_arr['POSTEDBY']}</p></div>";
             echo "<div class='item_col'><p><span>Kedy?</span> od {$tmp_arr['DATE_FROM']} do {$tmp_arr['DATE_TO']}</p>";
@@ -68,7 +77,13 @@ if ($_GET["category"] == "farmers") {
             $crop_sum =  "{$arr['CROP_NAME']}";
         }
     }
+    echo "</div>";
+
+
+/****** PRODUCTS_LIST ******/
+
 } else {
+    echo "<div class=\"shop-items\">";
 
     if (isset($_POST["price"]) || isset($_POST["price"]))
         $order = ($_POST["price"] == "price_down") ? "DESC" : "ASC";
@@ -79,12 +94,19 @@ if ($_GET["category"] == "farmers") {
     for ($i = 0; $i < $crop_type->rowCount(); $i++) {
         $filter = (isset($_POST["{$i}"])) ? $_POST["{$i}"] : "";
         $filter_bool = (isset($_POST["{$i}"]) || $filter_bool);
-        if ($i == 0)
-            $condition = "CROP=" . "\"{$filter}\"";
+        if ($filter == "Ovocie" || $filter == "Zelenina" )
+            $what_sql = "CATEGORY";
         else
-            $condition = "{$condition}" . " OR " . "CROP=" . "\"{$filter}\"";
-    }
+            $what_sql = "CROP";
 
+        if ($i == 0)
+            $condition = "{$what_sql}=" . "\"{$filter}\"";
+        else
+            $condition = "{$condition}" . " OR " . "{$what_sql}=" . "\"{$filter}\"";
+        
+        
+    }
+    // $condition = "{$condition}" . " OR " . "CATEGORY=" . "\"ovocie\"";
 
     if ($filter_bool || $order != "")    // crop_type filter is set
     {
@@ -94,39 +116,46 @@ if ($_GET["category"] == "farmers") {
             $condition = "{$condition}" . " ORDER BY PRICE {$order}";
         $crops = $db->get("SPECIFIC_CROP", "*", "{$condition}");
     } else {               // default filter is used
-        if ($_GET['category'] == 'ovocie' || $_GET['category'] == 'zelenina')
-            $crops = $db->getCrops("{$_GET['category']}");
-        else
             $crops = $db->getCrops(NULL);
     }
 
 
     $arr = $crops->fetch();
 
-    $getstars = $db->get("RATING", "STARS", "CROP=" . $arr['CROPID']);
-    $stars = $getstars->fetch();
-    // $stars_obj = $stars[0]*"*";
-
-
+    // for each product
     for ($i = 0; $i < $crops->rowCount(); $i++) {
+        $getstars = $db->get("RATING", "STARS", "CROP=" . $arr['CROPID']);
+        $stars = $getstars->fetch();
+        $count = $getstars->rowCount();
+        $sum = 0;
+        $avg_stars = 0;
+        for ($i = 0; $i < $count; $i++) {
+            $sum += $stars[0];
+            $stars = $getstars->fetch();
+        }
+        if ($count != 0) {
+            $avg_stars = $sum / $count;
+        }
+        $stars_obj="";
+        for ($s = 0; $s < 5; $s++) {
+            if ($s<$avg_stars)
+                $stars_obj .= "&#9733;";
+            else
+                $stars_obj .= "&#9734;";
+        }
+    
         echo "<div class='shop-item' id=\"{$arr['CROP_NAME']}\"  style=\"background-image: url({$arr['PHOTO_URL']});\" >";
-        echo "<h2><span>{$arr['CROP_NAME']}</span></h2>";
-        echo "<p><span>{$arr['FARMER']}</span></p>";
-        echo "<p><span><span class='price'>{$arr['PRICE']} Kč</span> / {$arr['PER_UNIT']}</span></p>";
-        echo '<p><a href="index.php?detail=' . $arr['CROPID'] . '"><button id="myBtn">Detail</button></a></p>';
-        echo "</div>";
+        echo '<a href="index.php?detail=' . $arr['CROPID'] . '">';
+        echo "<div class='shop-item--strip'>";
+        echo "<div class=\"line\"> <h3>{$arr['CROP_NAME']}</h3><span class=\"stars\">$stars_obj</span></div>";
+        echo "<div class=\"line\"> <p class=\"farmer\">{$arr['FARMER']}</p>";
+        echo "<p class='price'><span>{$arr['PRICE']}</span> Kč</span> / {$arr['PER_UNIT']}</p></div>";
+        echo "</div></a></div>";
 
-        // echo "<div class='shop-item' id=\"{$arr['CROP_NAME']}\">";
-        // echo '<a href=\"index.php?detail='. $arr['CROPID'] .'\" class=\"shop-item--container\">';
-        // // echo "<div class=\"meta\"> <span class=\"discount\">$stars *</span></div>";
-        // echo "<img src=\"{$arr['PHOTO_URL']}\" width=\"160\" height=\"160\">";
-        // echo "</a>";
-        // echo "<div class=\"title\"><h3><a href=\"#\">{$arr['CROP_NAME']}</a></h3><h4>{$arr['FARMER']}</h4></div>";
-        // echo "<div class=\"price\"><span>{$arr['PRICE']} Kč</span> / {$arr['PER_UNIT']}</span></div>";
-        // // echo '<p><a href="index.php?detail='. $arr['CROPID'] .'"><button id="myBtn">Detail</button></a></p>';
-        // echo "</div>";
         $arr = $crops->fetch();
     }
+    
+    echo "</div>";
 }
 
 ?>

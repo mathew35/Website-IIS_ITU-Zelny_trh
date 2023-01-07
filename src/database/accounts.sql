@@ -393,7 +393,7 @@ INSERT INTO `SPECIFIC_CROP` (
     '45',
     '22',
     'kg',
-    'https://publish.purewow.net/wp-content/uploads/sites/2/2021/03/types-of-apples-mutsu.jpg?fit=400%2C400',
+    'https://publish.purewow.net/wp-content/uploads/sites/2/2021/03/types-of-apples-mutsu.jpg?fit=600',
     'Sladká odroda zeleného jabĺčka.',
     'Orava',
     'Farmár_Ferko'
@@ -419,7 +419,7 @@ INSERT INTO `SPECIFIC_CROP` (
     '25',
     '26',
     'kg',
-    'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg?w=400&h=200&c=crop',
+    'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg?w=600&h=400&c=crop',
     'Nestriekané, priamo zo záhrady.',
     'Orava',
     'Farmár_Ferko'
@@ -445,7 +445,7 @@ INSERT INTO `SPECIFIC_CROP` (
     '8',
     '63',
     'kg',
-    'https://i1.wp.com/ceskozdrave.cz/wp-content/uploads/2015/12/maliny.png?resize=400%2C255&ssl=1',
+    'https://i1.wp.com/ceskozdrave.cz/wp-content/uploads/2015/12/maliny.png?resize=600%2C500',
     'Nazbierané v miestnom lesíku.',
     'Morava',
     'Farmárka_Anička'
@@ -471,7 +471,7 @@ INSERT INTO `SPECIFIC_CROP` (
     '88',
     '15',
     'ks',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Baby_Carrots_2.jpg/400px-Baby_Carrots_2.jpg',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Baby_Carrots_2.jpg/570px-Baby_Carrots_2.jpg',
     '...',
     'Morava',
     'Farmárka_Anička'

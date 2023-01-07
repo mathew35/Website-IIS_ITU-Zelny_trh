@@ -37,11 +37,18 @@ if (isset($_SESSION['user'])) {
         <header class="header">
             <div class="nav-container">
                 <nav class="menu">
-                    <a class="active" role='button' href='?category=ovocie'>Ovocie</a>
-                    <a role='button' href='?category=zelenina'>Zelenina</a>
-
-                    <a role='button' href='?category=farmers'>Farmári</a>
-                    <a role='button' href='?category=events'>Samozbery</a>
+                <?php
+                    function print_category($category, $name)
+                    {
+                        if($_GET['category'] == $category || ($_GET['category'] == "" && $category == "products"))
+                            echo "<a class=\"active\" role='button' href='?category=$category'>$name</a>";
+                        else
+                            echo "<a role='button' href='?category=$category'>$name</a>"; 
+                    }
+                    print_category("products","Produkty");
+                    print_category("farmers","Farmári");
+                    print_category("events","Samozbery");
+                ?>
                 </nav>
 
                 <nav class="logo" id="logo">
@@ -77,7 +84,7 @@ if (isset($_SESSION['user'])) {
             </div>
         </section>
 
-        <section class="shop-items" id="table">
+        <section id="table">
             <?php
             if (isset($_SESSION['farmer'])) {
             ?>
