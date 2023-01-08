@@ -598,8 +598,12 @@ function updateOnOrder(status, id) {
 
 function generate_table(type, data) {
     let scrollTop = 0;
-    let content = document.getElementById("table");
-    content.innerHTML = '';
+    let content = document.createElement("div");
+    content.style.display = "grid";
+    content.style.gridTemplateColumns = "1fr 1fr"
+    let wrapper = document.getElementById("table");
+    wrapper.innerHTML = '';
+    wrapper.appendChild(content);
     if (type == "farmer_view") {
         let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
