@@ -85,11 +85,6 @@ if ($_GET["category"] == "farmers") {
 } else {
     echo "<div class=\"shop-items\">";
 
-    if (isset($_POST["price"]) || isset($_POST["price"]))
-        $order = ($_POST["price"] == "price_down") ? "DESC" : "ASC";
-    else
-        $order = "";
-
     $filter_bool = false;
     for ($i = 0; $i < $crop_type->rowCount()+2; $i++) {
         $filter = (isset($_POST["{$i}"])) ? $_POST["{$i}"] : "";
@@ -103,21 +98,17 @@ if ($_GET["category"] == "farmers") {
             else
                 $condition = "{$condition}" . " OR " . "CROP=" . "\"{$filter}\"";
         }
-
-        
-        
     }
-    // $condition = "{$condition}" . " OR " . "CATEGORY=" . "\"ovocie\"";
 
     if ($filter_bool || $order != "")    // crop_type filter is set
     {
         if (!$filter_bool)
             $condition = "1";
-        if ($order != "")
-            $condition = "{$condition}" . " ORDER BY PRICE {$order}";
+        $condition = "{$condition}" . " ORDER BY PRICE ASC";
         $crops = $db->get("SPECIFIC_CROP", "*", "{$condition}");
     } else {               // default filter is used
-            $crops = $db->getCrops(NULL);
+            // $crops = $db->getCrops(NULL);
+            $crops = $db->get("SPECIFIC_CROP", "*", "1 ORDER BY PRICE ASC");
     }
 
 

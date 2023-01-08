@@ -5,12 +5,11 @@
 <!-- Add a new crop_type -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<img src="https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png" style="width:20%; height:20%; float:left">
+<img id="filter-pic" src="https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png">
+<div id="filter-box">
 <div id="filter-categories">
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-        <div>
             <label for="text">Chýba ti kategória?</label>
-        </div>
         <div>
             <ul style="float:left;padding-right:20px">
                 <li>
@@ -21,9 +20,13 @@
                     <input type="radio" name="category" value="zelenina">
                     <label for="zelenina">Zelenina</label><br>
                 </li>
+                <li>
+                    <input placeholder="Zadaj požadovanú kategóriu..." type="text" name="text" id="text" style="margin-bottom:5px"><br>
+                </li>
+                <li>
+                    <input type="submit" value="Navrhni" style=" width:62px;margin:0 5px">
+                </li>
             </ul>
-            <input placeholder="Zadaj požadovanú kategóriu..." type="text" name="text" id="text" style="margin-bottom:5px"><br>
-            <input type="submit" value="Navrhni" style=" width:62px;margin:0 70px">
         </div>
         <div>
 
@@ -46,16 +49,6 @@ if (isset($_POST["text"]) && !empty($_POST["text"]) && isset($_POST["category"])
 <!-- Crop_type filter -->
 <div id="filter-items">
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-        <ul id="filter-radio-list">
-            <li>
-                <input type="radio" name="price" value="price_up">
-                <label for="price_up">Od najlacnejšieho</label><br>
-            </li>
-            <li>
-                <input type="radio" name="price" value="price_down">
-                <label for="price_down">Od najdrahšieho</label><br>
-            </li>
-        </ul>
         <ul id="filter-checkbox-list">
             
             <?php
@@ -104,9 +97,17 @@ HTML;
 
 
 <div id="filter-search">
-    <input type="text" id="search_input" name="search" placeholder="Hľadaj v ponuke..." style="float:left;">
+    <div>Zoraď podľa ceny:<span id="order_up">&#11014;</span> <span id="order_down">&#11015;</span></div>
+    <input type="text" id="search_input" name="search" placeholder="Hľadaj v ponuke podľa názvu plodiny...">
+</div>
+
+
 </div>
 </div>
+
+
+
+
 <script>
 
     // to remember checked boxes when reloaded
@@ -154,14 +155,33 @@ HTML;
         localStorage.clear();
     }
 
+    // filter via search bar
     $(document).ready(function(){
         $("#search_input").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $(".shop-item").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(this).toggle(this.id.toLowerCase().indexOf(value) > -1)
             });
         });
     });
+
+    //
+    $('#order_up').click(function() {
+            // $(".shop-item").style.order=this.style.order=1;
+        items = document.getElementsByClassName("shop-item");
+        for (i = 0; i < items.length; i++) {
+            items[i].style.order = i;
+        }
+    });
+
+    $('#order_down').click(function() {
+            // $(".shop-item").style.order=this.style.order=1;
+        items = document.getElementsByClassName("shop-item");
+        for (i = 0; i < items.length; i++) {
+            items[i].style.order = items.length - i;
+        }
+    });
+
 
   </script>
 

@@ -138,17 +138,18 @@ h6 {
     color: grey;
 }
 
-.filter-slide img {
-    width: 30%;
-    height: 30%;
-    align-self: center;
-}
 
 .filter-slide .filters {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    /* align-items: center; */
+    
 }
+/* 
+#filters {
+    background:url("https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png") bottom left no-repeat;
+    background-size: 220px 100px;
+} */
 
 /* products view */
 .shop-items {
@@ -448,7 +449,8 @@ ul {
 #filter-checkbox-list
 {
     float:left;
-    width:300px;
+    width:250px;
+    padding-inline-start: 0px;
 }
 
 .filter-col:nth-child(odd) {
@@ -461,6 +463,17 @@ ul {
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 5pt;
+}
+
+#filter-pic {
+    width: 300pt;
+    max-width: 70%;
+    height:auto;
+    float:left;
+}
+
+#filter-box {
+    float:left;
 }
 
 #filter-categories {
@@ -483,7 +496,7 @@ ul {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    /* padding-inline-start: 0px; */
 }
 
 /* #fltr-btts {
@@ -496,5 +509,30 @@ ul {
     float: left;
     margin: 10pt;
 }
+
+#search_input {
+    float:left;
+    width: 200pt;
+}
+
+#order_up, #order_down {
+    color: #161616;
+    font-size: large;
+    text-decoration: none;
+    cursor: pointer;
+    width: 150pt;
+    padding: 1pt 5pt;
+    margin: 0 15pt;
+    text-align: center;
+}
+
+#order_up:hover, #order_down:hover {
+    color: #7e7e7e;
+    border: 1px solid grey;
+    margin: 0 14pt;
+    border-radius: 5px;
+}
+
+
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */
