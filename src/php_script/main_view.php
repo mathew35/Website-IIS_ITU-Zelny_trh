@@ -91,18 +91,19 @@ if ($_GET["category"] == "farmers") {
         $order = "";
 
     $filter_bool = false;
-    for ($i = 0; $i < $crop_type->rowCount(); $i++) {
+    for ($i = 0; $i < $crop_type->rowCount()+2; $i++) {
         $filter = (isset($_POST["{$i}"])) ? $_POST["{$i}"] : "";
         $filter_bool = (isset($_POST["{$i}"]) || $filter_bool);
         if ($filter == "Ovocie" || $filter == "Zelenina" )
-            $what_sql = "CATEGORY";
+            ;
         else
-            $what_sql = "CROP";
+        {
+            if ($i == 1)
+                $condition = "CROP=" . "\"{$filter}\"";
+            else
+                $condition = "{$condition}" . " OR " . "CROP=" . "\"{$filter}\"";
+        }
 
-        if ($i == 0)
-            $condition = "{$what_sql}=" . "\"{$filter}\"";
-        else
-            $condition = "{$condition}" . " OR " . "{$what_sql}=" . "\"{$filter}\"";
         
         
     }
@@ -129,7 +130,7 @@ if ($_GET["category"] == "farmers") {
         $count = $getstars->rowCount();
         $sum = 0;
         $avg_stars = 0;
-        for ($i = 0; $i < $count; $i++) {
+        for ($j = 0; $j < $count; $j++) {
             $sum += $stars[0];
             $stars = $getstars->fetch();
         }

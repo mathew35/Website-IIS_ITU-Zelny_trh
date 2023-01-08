@@ -463,5 +463,12 @@ ul {
     margin-bottom: 5pt;
 }
 
+#filter-categories {
+    float:left;
+}
+
+#filter-items {
+    float:left;
+}
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */

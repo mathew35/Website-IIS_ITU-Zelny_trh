@@ -79,6 +79,8 @@ class AccountService
     function get($table, $what, $condition)
     {
         if ($condition == NULL) $condition = 1;
+        // $xx="SELECT " . $what . " FROM " . $table . " WHERE " . $condition . ";";
+        // echo $xx;
         $query = $this->pdo->prepare("SELECT " . $what . " FROM " . $table . " WHERE " . $condition . ";");
         $query->execute();
         return $query;

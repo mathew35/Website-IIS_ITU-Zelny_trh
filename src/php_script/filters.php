@@ -1,10 +1,12 @@
-<!-- Author: Natália Bubáková -->
+<?php
+// Author: Natália Bubáková -->
+?>
 
 <!-- Add a new crop_type -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <img src="https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png" style="width:20%; height:20%; float:left">
-<div style="float:left">
+<div id="filter-categories">
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <div>
             <label for="text">Chýba ti kategória?</label>
@@ -42,7 +44,7 @@ if (isset($_POST["text"]) && !empty($_POST["text"]) && isset($_POST["category"])
 
 
 <!-- Crop_type filter -->
-<div id="filter_items" style="float:left">
+<div id="filter-items">
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <ul id="filter-radio-list">
             <li>
@@ -98,6 +100,10 @@ HTML;
     <button onclick='reset_filter()'>Reset</button>
 </div>
 
+<div id="filter-search">
+    <input type="text" id="search_input" name="search" placeholder="Zadaj názov plodiny..." style="float:left;">
+    <button onclick="filter_search()" id ="search_button" style="float:left;margin-left:-52px; margin-top:50px; width:52px">Hľadaj</button>
+</div>
 
 <script>
 
@@ -126,17 +132,39 @@ HTML;
         $(this.form.elements).filter('.Zelenina:checkbox').prop('checked', this.checked);
     });
 
+    $('.Ovocie').click(function() {
+        $('.Ovocie-all').prop('checked', false);
+    });
+
+    $('.Zelenina').click(function() {
+        $('.Zelenina-all').prop('checked', false);
+    });
+
     // function for reset button
     function reset_filter() {
         $('input').prop('checked', false);
         localStorage.clear();
     }
 
-    // to prevent the warning when refreshing (POST)
+    // avoid the warning window when refreshing
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
+        localStorage.clear();
     }
 
+    function filter_search() {
+        input = document.getElementById("search_input");
+        filter = input.value.toUpperCase();
+
+        items = document.getElementsByClassName("shop-item");
+        for (i = 0; i < items.length; i++) {
+            if (items[i].id.toUpperCase().indexOf(filter) > -1) {
+                items[i].style.display = "";
+            } else {
+                items[i].style.display = "none";
+            }
+        }
+    }
 
   </script>
 
