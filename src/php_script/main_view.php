@@ -160,7 +160,6 @@ if ($_GET["category"] == "farmers") {
 }
 
 ?>
-<!-- </div> -->
 
 
 

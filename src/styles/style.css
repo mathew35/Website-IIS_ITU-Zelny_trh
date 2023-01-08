@@ -465,10 +465,36 @@ ul {
 
 #filter-categories {
     float:left;
+    border: 1px solid grey;
+    margin: 10pt;
+    padding: 10pt;
 }
 
 #filter-items {
     float:left;
+    border: 1px solid grey;
+    margin: 10pt;
+    padding: 10pt;
+}
+#filter-search {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+/* #fltr-btts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.filter-button {
+    float: left;
+    margin: 10pt;
 }
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */

@@ -93,18 +93,20 @@ HTML;
             }
             ?>
 
+            
+                <div id="fltr-btts">
+                    <input class="filter-button" type="submit" value="Filtruj">
+                    <button class="filter-button" onclick='reset_filter()'>Reset</button>
+                </div>
             </div>
         </ul>
-        <input type="submit" value="Filtruj" style="float:left;margin-right:20px; margin-top:50px">
     </form>
-    <button onclick='reset_filter()'>Reset</button>
-</div>
+
 
 <div id="filter-search">
-    <input type="text" id="search_input" name="search" placeholder="Zadaj názov plodiny..." style="float:left;">
-    <button onclick="filter_search()" id ="search_button" style="float:left;margin-left:-52px; margin-top:50px; width:52px">Hľadaj</button>
+    <input type="text" id="search_input" name="search" placeholder="Hľadaj v ponuke..." style="float:left;">
 </div>
-
+</div>
 <script>
 
     // to remember checked boxes when reloaded
@@ -152,19 +154,14 @@ HTML;
         localStorage.clear();
     }
 
-    function filter_search() {
-        input = document.getElementById("search_input");
-        filter = input.value.toUpperCase();
-
-        items = document.getElementsByClassName("shop-item");
-        for (i = 0; i < items.length; i++) {
-            if (items[i].id.toUpperCase().indexOf(filter) > -1) {
-                items[i].style.display = "";
-            } else {
-                items[i].style.display = "none";
-            }
-        }
-    }
+    $(document).ready(function(){
+        $("#search_input").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".shop-item").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
   </script>
 
