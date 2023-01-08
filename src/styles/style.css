@@ -83,7 +83,7 @@ h6 {
     }
 }
 
-.nav-container nav a{
+.nav-container nav a {
     text-transform: uppercase;
 }
 
@@ -138,20 +138,22 @@ h6 {
     color: grey;
 }
 
-
 .filter-slide .filters {
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    
 }
+
+
 /* 
 #filters {
     background:url("https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png") bottom left no-repeat;
     background-size: 220px 100px;
 } */
 
+
 /* products view */
+
 .shop-items {
     margin-top: 3rem;
     display: grid;
@@ -223,12 +225,14 @@ h6 {
     font-size: 2.5rem;
     font-weight: bold;
 }
+
 .shop-item a {
     height: 100%;
 }
 
 
 /* footer ?? */
+
 .main-footer {
     margin: 7rem 0;
     padding-top: 5rem;
@@ -383,7 +387,6 @@ h6 {
     margin: 10px;
     padding: 0 10px;
     overflow: hidden;
-
     width: 77vw;
 }
 
@@ -395,7 +398,6 @@ h6 {
     margin: 10px;
     padding: 0 10px;
     overflow: hidden;
-
     width: 77vw;
 }
 
@@ -434,22 +436,20 @@ h6 {
     border-radius: 20px;
     top: 10vh;
     left: 50vw;
-    transform: translateX(-25%);
+    transform: translateX(-50%);
 }
 
 ul {
     list-style: none;
 }
 
-#filter-radio-list
-{
-    float:left;
+#filter-radio-list {
+    float: left;
 }
 
-#filter-checkbox-list
-{
-    float:left;
-    width:250px;
+#filter-checkbox-list {
+    float: left;
+    width: 250px;
     padding-inline-start: 0px;
 }
 
@@ -458,8 +458,7 @@ ul {
     margin-right: 20pt;
 }
 
-.filter-col .filter-crops:first-child
-{
+.filter-col .filter-crops:first-child {
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 5pt;
@@ -468,27 +467,28 @@ ul {
 #filter-pic {
     width: 300pt;
     max-width: 70%;
-    height:auto;
-    float:left;
+    height: auto;
+    float: left;
 }
 
 #filter-box {
-    float:left;
+    float: left;
 }
 
 #filter-categories {
-    float:left;
+    float: left;
     border: 1px solid grey;
     margin: 10pt;
     padding: 10pt;
 }
 
 #filter-items {
-    float:left;
+    float: left;
     border: 1px solid grey;
     margin: 10pt;
     padding: 10pt;
 }
+
 #filter-search {
     display: block;
     list-style-type: disc;
@@ -498,6 +498,7 @@ ul {
     margin-inline-end: 0px;
     /* padding-inline-start: 0px; */
 }
+
 
 /* #fltr-btts {
     display: flex;
@@ -511,11 +512,12 @@ ul {
 }
 
 #search_input {
-    float:left;
+    float: left;
     width: 200pt;
 }
 
-#order_up, #order_down {
+#order_up,
+#order_down {
     color: #161616;
     font-size: large;
     text-decoration: none;
@@ -526,13 +528,13 @@ ul {
     text-align: center;
 }
 
-#order_up:hover, #order_down:hover {
+#order_up:hover,
+#order_down:hover {
     color: #7e7e7e;
     border: 1px solid grey;
     margin: 0 14pt;
     border-radius: 5px;
 }
-
 
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */
