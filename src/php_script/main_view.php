@@ -65,13 +65,16 @@ if ($_GET["category"] == "farmers") {
             echo "<div class='item_col'><p><span>Kedy?</span> od {$tmp_arr['DATE_FROM']} do {$tmp_arr['DATE_TO']}</p>";
             echo "<p><span>Kde?</span> {$tmp_arr['PLACE']}</p></div>";
             echo "<div class='item_col'><p><span>Popis:</span></p><p>{$tmp_arr['DESCRIPTION']}</p></div>";
+
             if (isset($_SESSION['user'])) {
+                echo "<div class='item_col'>";
                 if ($db->get("HARVEST_EVENT_ATTENDANTS", "*", "LOGIN = \"{$_SESSION['user']}\" AND EVENTID = \"{$tmp_arr['EVENTID']}\"")->fetch()[0] == NULL)
-                    echo '<button type="submit" class="logharvest" onclick="joinharvest(' . $tmp_arr['EVENTID'] . ')">Zúčastnit se</button>';
+                    echo '<button type="submit" class="join-harvest" onclick="joinharvest(' . $tmp_arr['EVENTID'] . ', this)">Zúčastniť sa</button>';
                 else {
-                    echo "<h4>MÁM ZÁUJEM</h4>";
-                    echo '<button type="submit" class="logharvest2" onclick="leaveharvest(' . $tmp_arr['EVENTID'] . ')">Zrušiť záujem</button>';
+                    echo '<h4 class="leave-harvest">MÁM ZÁUJEM</h4>';
+                    echo '<button type="submit" class="leave-harvest" onclick="leaveharvest(' . $tmp_arr['EVENTID'] . ', this)">Zrušiť záujem</button>';
                 }
+                echo "</div>";
             }
             echo "</div>";
             $crop_sum =  "{$arr['CROP_NAME']}";
@@ -149,14 +152,15 @@ if ($_GET["category"] == "farmers") {
     
     echo "</div>";
 }
-
 ?>
 
 
 
 
 <script>
-    function joinharvest(eid) {
+
+    function joinharvest(eid,object) {
+
         $.ajax({
             url: 'joinharvest.php',
             type: 'post',
@@ -167,9 +171,12 @@ if ($_GET["category"] == "farmers") {
                 alert(response);
             }
         });
+
+
     }
 
-    function leaveharvest(eid) {
+    function leaveharvest(eid,object) {
+
         $.ajax({
             url: 'joinharvest.php',
             type: 'post',
@@ -180,5 +187,7 @@ if ($_GET["category"] == "farmers") {
                 alert(response);
             }
         });
+
+
     }
 </script>

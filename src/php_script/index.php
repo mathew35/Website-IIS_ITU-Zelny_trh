@@ -68,9 +68,7 @@ if (isset($_SESSION['user'])) {
         ?>
 
         <section class="filter-section">
-            <div class="filter-slide">
                 <div class="filters" id="filters">
-
                     <?php
                     if ($_GET["category"] == "farmers" || $_GET["category"] == "events") {
                         echo "<div id='filter' style=\"display: none;\"";
@@ -81,7 +79,6 @@ if (isset($_SESSION['user'])) {
                     <?php include 'filters.php'; ?>
 
                 </div>
-            </div>
         </section>
 
         <section id="table">

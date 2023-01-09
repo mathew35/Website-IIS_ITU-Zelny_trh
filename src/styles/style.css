@@ -60,31 +60,23 @@ h6 {
     left: 0;
     right: 0;
     padding: 3rem 10rem;
+    z-index: 1;
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    a.icon {
-        background: url(https://cdn.rawgit.com/ivorpad/b9adce880f800f53195041a4ed8546c9/raw/a905a3b479ab7880340856a3d15369a932f7b24c/ham.svg) center center no-repeat;
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        display: none;
-    }
 }
 
 .nav-container nav a {
     transition: border .1s ease-in-out;
     padding: 5pt;
-    &:hover {
-        border-bottom: 1px solid #161616;
-    }
+    text-transform: uppercase;
 }
 
-.nav-container nav a{
-    text-transform: uppercase;
+.nav-container nav a:hover{
+    color:#7e7e7e;
 }
 
 .nav-container nav a.active {
@@ -118,12 +110,11 @@ h6 {
 
 .filter-section {
     background: #f1f1f1;
-    padding: 5rem;
     margin-top: 8rem;
-    .filter-slide {
-        display: flex;
-        justify-content: space-around;
-    }
+}
+
+#filter {
+    margin: 5rem;
 }
 
 .filter-section h1 {
@@ -139,17 +130,11 @@ h6 {
 }
 
 
-.filter-slide .filters {
+.filter-section .filters {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     
 }
-/* 
-#filters {
-    background:url("https://www.freeiconspng.com/uploads/vegetable-icon-png-0.png") bottom left no-repeat;
-    background-size: 220px 100px;
-} */
 
 /* products view */
 .shop-items {
@@ -249,9 +234,6 @@ h6 {
 .main-footer>nav ul li a {
     color: grey;
     font-size: 1.2rem;
-    &:hover {
-        color: darken(grey, 50%);
-    }
 }
 
 .main-footer h3 {
@@ -283,11 +265,6 @@ h6 {
     .credents {
         display: none;
     }
-    .nav-container {
-        a.icon {
-            display: block;
-        }
-    }
 }
 
 @media (max-width: 895px) {
@@ -298,11 +275,8 @@ h6 {
 }
 
 @media (max-width: 425px) {
-    .filter-slide img {
+    #filter-pic {
         display: none;
-    }
-    .filter-slide .left {
-        width: 100%;
     }
     .main-footer {
         display: flex;
@@ -320,14 +294,11 @@ h6 {
         padding: 1.5rem;
         color: grey;
         font-size: 1.5rem;
-        &:hover {
-            color: grey;
-        }
     }
     .main-footer h3 {
         font-size: 1.5rem;
     }
-    .filter-slide .filters {
+    .filter-section .filters {
         width: 100%
     }
 }
@@ -383,8 +354,10 @@ h6 {
     margin: 10px;
     padding: 0 10px;
     overflow: hidden;
-
     width: 77vw;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .event-item {
@@ -395,8 +368,10 @@ h6 {
     margin: 10px;
     padding: 0 10px;
     overflow: hidden;
-
     width: 77vw;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .item_col {
@@ -405,7 +380,8 @@ h6 {
 
 .item_col span {
     font-weight: bold;
-    margin-right: 10px
+    margin-right: 10px;
+    display: block;
 }
 
 .item_col p {

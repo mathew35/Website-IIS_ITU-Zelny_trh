@@ -1,6 +1,5 @@
 <?php 
 // Author: Alena Klimecká
-
     require "../php_ajax/services.php";
     
     function joinharv($data){
@@ -33,11 +32,6 @@
             }
         }
 
-        if (isset($_POST['param1'])) {
-            joinharv($_POST['param1']);
-        }
-
-
 
     if (isset($_POST['param1'])) {
         joinharv($_POST['param1']);
@@ -45,3 +39,5 @@
     elseif(isset($_POST['param2'])) {
         leaveharv($_POST['param2']);
     }
+
+    ?>
