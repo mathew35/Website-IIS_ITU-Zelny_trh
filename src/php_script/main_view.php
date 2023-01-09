@@ -59,7 +59,7 @@ if ($_GET["category"] == "farmers") {
         if ($tmp_id == $arr['EVENTID'])
             $crop_sum = "{$crop_sum}" . ", " . "{$arr['CROP_NAME']}";
         else {
-            echo "<div class='event-item'>";
+            echo "<div class='event-item' eventid='" . $tmp_arr['EVENTID'] . "'>";
             echo "<div class='item_col'><p><span>Zberané plodiny:</span> {$crop_sum}</p>";
             echo "<p><span>Organizátor samozberu:</span> {$tmp_arr['POSTEDBY']}</p></div>";
             echo "<div class='item_col'><p><span>Kedy?</span> od {$tmp_arr['DATE_FROM']} do {$tmp_arr['DATE_TO']}</p>";
@@ -89,13 +89,11 @@ if ($_GET["category"] == "farmers") {
     echo "<div class=\"shop-items\">";
 
     $filter_bool = false;
-    for ($i = 0; $i < $crop_type->rowCount()+2; $i++) {
+    for ($i = 0; $i < $crop_type->rowCount() + 2; $i++) {
         $filter = (isset($_POST["{$i}"])) ? $_POST["{$i}"] : "";
         $filter_bool = (isset($_POST["{$i}"]) || $filter_bool);
-        if ($filter == "Ovocie" || $filter == "Zelenina" )
-            ;
-        else
-        {
+        if ($filter == "Ovocie" || $filter == "Zelenina");
+        else {
             if ($i == 1)
                 $condition = "CROP=" . "\"{$filter}\"";
             else
@@ -110,8 +108,8 @@ if ($_GET["category"] == "farmers") {
         $condition = "{$condition}" . " ORDER BY PRICE ASC";
         $crops = $db->get("SPECIFIC_CROP", "*", "{$condition}");
     } else {               // default filter is used
-            // $crops = $db->getCrops(NULL);
-            $crops = $db->get("SPECIFIC_CROP", "*", "1 ORDER BY PRICE ASC");
+        // $crops = $db->getCrops(NULL);
+        $crops = $db->get("SPECIFIC_CROP", "*", "1 ORDER BY PRICE ASC");
     }
 
 
@@ -131,14 +129,14 @@ if ($_GET["category"] == "farmers") {
         if ($count != 0) {
             $avg_stars = $sum / $count;
         }
-        $stars_obj="";
+        $stars_obj = "";
         for ($s = 0; $s < 5; $s++) {
-            if ($s<$avg_stars)
+            if ($s < $avg_stars)
                 $stars_obj .= "&#9733;";
             else
                 $stars_obj .= "&#9734;";
         }
-    
+
         echo "<div class='shop-item' id=\"{$arr['CROP_NAME']}\"  style=\"background-image: url({$arr['PHOTO_URL']});\" >";
         echo '<a href="index.php?detail=' . $arr['CROPID'] . '">';
         echo "<div class='shop-item--strip'>";
@@ -149,9 +147,10 @@ if ($_GET["category"] == "farmers") {
 
         $arr = $crops->fetch();
     }
-    
+
     echo "</div>";
 }
+
 ?>
 
 
@@ -159,9 +158,9 @@ if ($_GET["category"] == "farmers") {
 
 <script>
 
-    function joinharvest(eid,object) {
+    function joinharvest(eid) {
 
-        $.ajax({
+	$.ajax({
             url: 'joinharvest.php',
             type: 'post',
             data: {
@@ -172,10 +171,32 @@ if ($_GET["category"] == "farmers") {
             }
         });
 
-
+        let object = document.getElementsByClassName("event-item");
+        for (let i = 0; i < object.length; i++) {
+            if (object.item(i).getAttribute('eventid') == eid) {
+                object = object.item(i);
+                break;
+            }
+        }
+        // change of buttons
+        var joined = document.createElement("h4");
+        joined.class = "leave-harvest";
+        joined.textContent = "MÁM ZÁUJEM";
+        object.appendChild(joined);
+        var leave_button = document.createElement("button");
+        leave_button.type = "submit";
+        leave_button.className = "leave-harvest";
+        leave_button.addEventListener("click", () => {
+            leaveharvest(eid);
+        })
+        leave_button.textContent = "Zrušiť záujem";
+        object.getElementsByTagName("button").item(0).remove();
+        object.appendChild(joined);
+        object.appendChild(leave_button);
+       
     }
 
-    function leaveharvest(eid,object) {
+    function leaveharvest(eid) {
 
         $.ajax({
             url: 'joinharvest.php',
@@ -188,6 +209,50 @@ if ($_GET["category"] == "farmers") {
             }
         });
 
+        let object = document.getElementsByClassName("event-item");
+        for (let i = 0; i < object.length; i++) {
+            if (object.item(i).getAttribute('eventid') == eid) {
+                object = object.item(i);
+                break;
+            }
+        }
+        let h4 = object.getElementsByTagName("h4");
+        let btn = object.getElementsByTagName("button");
+        if (h4.length > 0) {
+            h4.item(0).remove();
+        }
+        if (btn.length > 0) {
+            btn.item(0).remove();
+        }
+        // change of buttons
+        var join_button = document.createElement("button");
+        join_button.type = "submit";
+        join_button.className = "join-harvest";
+        join_button.addEventListener("click", () => {
+            joinharvest(eid);
+        })
+        join_button.textContent = "Zúčastniť sa";
+        object.appendChild(join_button);
 
     }
+
+    function addJoinHarvestButton() {
+        if (sessionStorage.getItem('user') != null) {
+            let harvests = document.getElementsByClassName("event-item");
+            for (let i = 0; i < harvests.length; i++) {
+                if (harvests.item(i).getElementsByTagName("button") != null) continue;
+                console.log(harvests.item(i));
+                let btn = document.createElement("button");
+                btn.type = "submit";
+                btn.className = "logharvest";
+                harvests.item(i).appendChild(btn);
+                btn.addEventListener("click", () => {
+                    joinharvest(harvests.item(i).getAttribute('eventid'));
+                })
+                btn.textContent = " Zúčastnit se ";
+            }
+        }
+    }
+
+    setInterval(addJoinHarvestButton, 3000);
 </script>

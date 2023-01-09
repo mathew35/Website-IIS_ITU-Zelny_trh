@@ -129,11 +129,9 @@ h6 {
     color: grey;
 }
 
-
 .filter-section .filters {
     display: flex;
     flex-direction: column;
-    
 }
 
 /* products view */
@@ -155,6 +153,7 @@ h6 {
     overflow: hidden;
     background-size: cover;
     background-color: #f1f1f1;
+    z-index: 0;
 }
 
 .shop-item--strip {
@@ -208,6 +207,7 @@ h6 {
     font-size: 2.5rem;
     font-weight: bold;
 }
+
 .shop-item a {
     height: 100%;
 }
@@ -410,22 +410,20 @@ h6 {
     border-radius: 20px;
     top: 10vh;
     left: 50vw;
-    transform: translateX(-25%);
+    transform: translateX(-50%);
 }
 
 ul {
     list-style: none;
 }
 
-#filter-radio-list
-{
-    float:left;
+#filter-radio-list {
+    float: left;
 }
 
-#filter-checkbox-list
-{
-    float:left;
-    width:250px;
+#filter-checkbox-list {
+    float: left;
+    width: 250px;
     padding-inline-start: 0px;
 }
 
@@ -434,8 +432,7 @@ ul {
     margin-right: 20pt;
 }
 
-.filter-col .filter-crops:first-child
-{
+.filter-col .filter-crops:first-child {
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 5pt;
@@ -444,27 +441,28 @@ ul {
 #filter-pic {
     width: 300pt;
     max-width: 70%;
-    height:auto;
-    float:left;
+    height: auto;
+    float: left;
 }
 
 #filter-box {
-    float:left;
+    float: left;
 }
 
 #filter-categories {
-    float:left;
+    float: left;
     border: 1px solid grey;
     margin: 10pt;
     padding: 10pt;
 }
 
 #filter-items {
-    float:left;
+    float: left;
     border: 1px solid grey;
     margin: 10pt;
     padding: 10pt;
 }
+
 #filter-search {
     display: block;
     list-style-type: disc;
@@ -475,23 +473,18 @@ ul {
     /* padding-inline-start: 0px; */
 }
 
-/* #fltr-btts {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
 .filter-button {
     float: left;
     margin: 10pt;
 }
 
 #search_input {
-    float:left;
+    float: left;
     width: 200pt;
 }
 
-#order_up, #order_down {
+#order_up,
+#order_down {
     color: #161616;
     font-size: large;
     text-decoration: none;
@@ -502,13 +495,13 @@ ul {
     text-align: center;
 }
 
-#order_up:hover, #order_down:hover {
+#order_up:hover,
+#order_down:hover {
     color: #7e7e7e;
     border: 1px solid grey;
     margin: 0 14pt;
     border-radius: 5px;
 }
-
 
 
 /* Inspiration source: https://codepen.io/ivorpad/pen/eKbJeb */

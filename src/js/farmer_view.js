@@ -32,6 +32,8 @@ function event_post() {
     const request = post('../php_ajax/create_event.php', document.getElementById("eventForm"));
     request.addEventListener("load", (event) => {
         console.log(request.responseText);
+        document.getElementById('popupBackground').remove();
+        document.getElementById('popupWin').remove();
     })
 }
 
@@ -327,7 +329,6 @@ function generateEventForm(form, id) {
 
     let hr = document.createElement("hr");
     hr.style.width = "80%";
-    hr.style.translate = "-8.5%";
     form.appendChild(hr);
     let createEventButton = document.createElement('button');
     createEventButton.textContent = "Pridať samozber";
@@ -569,13 +570,12 @@ function edit_product(product) {
     form.appendChild(cancel);
 
     popup.appendChild(form);
+}
 
-
+function add_event(product) {
+    overlay();
+    let popup = document.getElementById("popupWin")
     let form2 = document.createElement('form');
-    form2.style.top = "10%";
-    form2.style.left = "10%";
-    form2.style.position = "absolute";
-    form2.style.display = "block";
     generateEventForm(form2, product[0]);
     popup.appendChild(form2);
 }
@@ -596,111 +596,22 @@ function updateOnOrder(status, id) {
     })
 }
 
-// function find(param) {
-//     let params = location.href.split('?');
-//     if (params.length <= 1) return null;
-//     params = params[1].split('&');
-//     for (let i = 0; i < params.length; i++) {
-//         let actual = params[i].split("=");
-//         if (actual[0] == param) return i;
-//     }
-//     return null;
-// }
-
-// function isset(parameter) {
-//     if (find(parameter) != null) return true;
-//     // let params = location.href.split('?');
-//     // for (let i = 1; i < params.length; i++) {
-//     //     if (params[i].split("=")[0] == parameter) return true;
-//     // }
-//     return false;
-// }
-
-// if (sessionStorage.getItem('removedParams') == "") sessionStorage.setItem('removedParams', Array(0));
-// else console.log(sessionStorage.getItem('removedParams'));
-
-// function store(param) {
-//     let removedParams = sessionStorage.getItem("removedParams").split(',');
-//     if (removedParams == "") removedParams = Array(0);
-//     // else {
-//     //     removedParams = removedParams;
-//     // }
-//     let params = location.href.split('?');
-//     if (params.length <= 1) return;
-//     pars = params[1].split('&');
-//     console.log(pars);
-//     console.log(pars[find(param)]);
-//     console.log(removedParams);
-//     removedParams.push(pars[find(param)]);
-//     console.log(removedParams);
-//     pars.pop();
-//     console.log(pars);
-//     if (pars.length > 0) {
-//         pars = pars.join('&');
-//         params.push(pars);
-//     }
-//     console.log(pars);
-//     console.log(params);
-//     if (pars.length < 1) {
-//         params = Array(params[0]);
-//     } else {
-//         params = Array(params[0], pars).join('?');
-//     }
-//     console.log(params);
-//     console.log(removedParams);
-//     sessionStorage.setItem("removedParams", removedParams);
-//     console.log(sessionStorage.getItem('removedParams'));
-//     location.href = params;
-// }
-
-// function restoreAll() {
-//     let removedParams = sessionStorage.getItem("removedParams");
-//     console.log(removedParams);
-//     if (removedParams == "") removedParams = Array(0);
-//     else {
-//         removedParams = Array(removedParams);
-//     }
-//     console.log(removedParams);
-//     let addr = location.href.split('?');
-//     console.log(addr);
-//     if (removedParams.length == 0) return;
-//     if (addr.length > 1) {
-//         addr[1] = Array(addr[1], removedParams.join("&")).join('&');
-//     } else {
-//         addr.push(removedParams.join("&"));
-//     }
-//     console.log(addr);
-//     addr = addr.join('?');
-//     console.log(addr);
-//     sessionStorage.setItem("removedParams", Array(0));
-//     console.log(removedParams);
-//     location.href = addr;
-// }
-
 function generate_table(type, data) {
-    // if (isset("detail")) {
-    //     console.log("storing");
-    //     store("detail");
-    // }
     let scrollTop = 0;
-    // if (document.getElementById("tableItems") != null) {
-    //     scrollTop = document.getElementById("tableItems").scrollTop;
-    //     document.getElementById("tableItems").remove();
-    // }
-    // let table = document.getElementById("table");
-    let content = document.getElementById("table");
-    content.innerHTML = '';
-    // if (content == null) content = document.createElement("div");
-    // content.id = "tableItems";
-    // table.appendChild(content);
+    let content = document.createElement("div");
+    content.style.display = "grid";
+    content.style.gridTemplateColumns = "1fr 1fr"
+    let wrapper = document.getElementById("table");
+    wrapper.innerHTML = '';
+    wrapper.appendChild(content);
     if (type == "farmer_view") {
         let addProduct = document.createElement("div");
         addProduct.id = "addProduct";
         addProduct.className = "shop-item";
-        // addProduct.textContent = "Pridaj nový produkt";
         addProduct.style.backgroundImage = "url('../add_product.svg'";
         addProduct.style.backgroundSize = "contain";
         addProduct.style.backgroundPosition = "center";
+        addProduct.style.backgroundRepeat = "no-repeat";
         addProduct.addEventListener("click", (event) => {
             new_product();
         });
@@ -766,9 +677,57 @@ function generate_table(type, data) {
                     p.appendChild(span);
                     product.appendChild(p);
                     product.id = data[i][0];
-                    product.addEventListener("click", () => {
+                    //pridanie tlacitok na edit produktu, vytvorenie samozberu a zrusenie produktu
+                    let buttonRow = document.createElement("div");
+                    buttonRow.style.display = "flex";
+                    buttonRow.style.justifyContent = "space-evenly";
+                    buttonRow.style.float = "right";
+                    let editButton = document.createElement("h2");
+                    editButton.textContent = "Editovať";
+                    editButton.style.backgroundColor = "rgba(138, 190, 214, 0.5)";
+                    editButton.style.padding = "10px";
+                    editButton.style.borderRadius = "20px";
+                    editButton.addEventListener("mouseover", () => {
+                        editButton.style.backgroundColor = "rgba(138, 190, 214, 0.8)";
+                    })
+                    editButton.addEventListener("mouseleave", () => {
+                        editButton.style.backgroundColor = "rgba(138, 190, 214, 0.5)";
+                    })
+                    editButton.addEventListener("click", () => {
                         edit_product(data[i]);
                     })
+                    let addEventButton = document.createElement("h2");
+                    addEventButton.textContent = "Pridať samozber";
+                    addEventButton.style.backgroundColor = "rgba(66, 167, 214, 0.5)";
+                    addEventButton.style.padding = "10px";
+                    addEventButton.style.borderRadius = "20px";
+                    addEventButton.addEventListener("mouseover", () => {
+                        addEventButton.style.backgroundColor = "rgba(66, 167, 214, 0.8)";
+                    })
+                    addEventButton.addEventListener("mouseleave", () => {
+                        addEventButton.style.backgroundColor = "rgba(66, 167, 214, 0.5)";
+                    })
+                    addEventButton.addEventListener("click", () => {
+                        add_event(data[i]);
+                    })
+                    let removeButton = document.createElement("h2");
+                    removeButton.textContent = "Vymazať produkt";
+                    removeButton.style.backgroundColor = "rgba(232, 32, 47, 0.5)";
+                    removeButton.style.padding = "10px";
+                    removeButton.style.borderRadius = "20px";
+                    removeButton.addEventListener("mouseover", () => {
+                        removeButton.style.backgroundColor = "rgba(232, 32, 47, 0.8)";
+                    })
+                    removeButton.addEventListener("mouseleave", () => {
+                        removeButton.style.backgroundColor = "rgba(232, 32, 47, 0.5)";
+                    })
+                    removeButton.addEventListener("click", () => {
+                        product.style.display = "none";
+                    })
+                    buttonRow.appendChild(editButton);
+                    buttonRow.appendChild(addEventButton);
+                    buttonRow.appendChild(removeButton);
+                    product.appendChild(buttonRow);
                 }
                 if (type == "order_view") {
                     let accButt = document.createElement("button");
