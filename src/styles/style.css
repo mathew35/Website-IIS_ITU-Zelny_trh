@@ -310,46 +310,15 @@ h6 {
     overflow-y: scroll;
     overflow-x: hidden;
     /* border-collapse: collapse; */
-    background-color: lightsteelblue;
+    background-color:rgb(234, 241, 247) ;
     padding: 10px;
 }
 
-.tableItem {
-    display: inline-block;
-    width: 13vw;
-    min-width: 200px;
-    height: 13vh;
-    min-height: 120px;
-    background-color: azure;
-    border-color: black;
-    border-style: solid;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 0 10px;
-    overflow: hidden;
-}
 
-.tableItem span .price {
-    background-color: transparent;
-    font-size: 20px;
-    font-weight: bold;
-}
 
-.tableItem p,
-.tableItem h2 {
-    margin: 2.5% 0;
-}
-
-.tableItem span {
-    background-color: rgba(255, 255, 255, 0.5);
-    ;
-    display: inline;
-}
 
 .farmer-item {
-    background-color: azure;
-    border-color: black;
-    border-style: solid;
+    background-color:  #f1f1f1;
     border-radius: 15px;
     margin: 10px;
     padding: 0 10px;
@@ -361,9 +330,7 @@ h6 {
 }
 
 .event-item {
-    background-color: azure;
-    border-color: black;
-    border-style: solid;
+    background-color: #f1f1f1;
     border-radius: 15px;
     margin: 10px;
     padding: 0 10px;
@@ -376,6 +343,10 @@ h6 {
 
 .item_col {
     display: block;
+}
+
+.item_col .join-harvest{
+    margin-top: 15pt;
 }
 
 .item_col span {

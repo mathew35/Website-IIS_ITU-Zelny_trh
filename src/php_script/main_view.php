@@ -178,11 +178,12 @@ if ($_GET["category"] == "farmers") {
                 break;
             }
         }
+        let col = object.getElementsByClassName('item_col')[3];
         // change of buttons
         var joined = document.createElement("h4");
         joined.class = "leave-harvest";
         joined.textContent = "MÁM ZÁUJEM";
-        object.appendChild(joined);
+        col.appendChild(joined);
         var leave_button = document.createElement("button");
         leave_button.type = "submit";
         leave_button.className = "leave-harvest";
@@ -190,9 +191,9 @@ if ($_GET["category"] == "farmers") {
             leaveharvest(eid);
         })
         leave_button.textContent = "Zrušiť záujem";
-        object.getElementsByTagName("button").item(0).remove();
-        object.appendChild(joined);
-        object.appendChild(leave_button);
+        col.getElementsByTagName("button").item(0).remove();
+        col.appendChild(joined);
+        col.appendChild(leave_button);
        
     }
 
@@ -216,8 +217,10 @@ if ($_GET["category"] == "farmers") {
                 break;
             }
         }
-        let h4 = object.getElementsByTagName("h4");
-        let btn = object.getElementsByTagName("button");
+
+        let col = object.getElementsByClassName('item_col')[3];
+        let h4 = col.getElementsByTagName("h4");
+        let btn = col.getElementsByTagName("button");
         if (h4.length > 0) {
             h4.item(0).remove();
         }
@@ -232,7 +235,7 @@ if ($_GET["category"] == "farmers") {
             joinharvest(eid);
         })
         join_button.textContent = "Zúčastniť sa";
-        object.appendChild(join_button);
+        col.appendChild(join_button);
 
     }
 
@@ -241,11 +244,13 @@ if ($_GET["category"] == "farmers") {
             let harvests = document.getElementsByClassName("event-item");
             for (let i = 0; i < harvests.length; i++) {
                 if (harvests.item(i).getElementsByTagName("button") != null) continue;
+                console.log("button");
                 console.log(harvests.item(i));
                 let btn = document.createElement("button");
                 btn.type = "submit";
                 btn.className = "logharvest";
-                harvests.item(i).appendChild(btn);
+                let col = harvests.item(i).getElementsByClassName("item_col")[3];
+                col.appendChild(btn);
                 btn.addEventListener("click", () => {
                     joinharvest(harvests.item(i).getAttribute('eventid'));
                 })
@@ -253,6 +258,6 @@ if ($_GET["category"] == "farmers") {
             }
         }
     }
+    // setInterval(addJoinHarvestButton, 3000);
 
-    setInterval(addJoinHarvestButton, 3000);
 </script>
