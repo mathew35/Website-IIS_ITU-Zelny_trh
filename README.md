@@ -1,2 +1,7 @@
-# IIS_ITU-Zelny_trh
-IIS/ITU projekt Zelny_trh
+# ITU projekt - Zelny_trh
+
+
+Authors:
+*   Natália Bubáková (xbubak01)
+*   Alena Klimecká (xklime47)
+*   Matúš Vráblik (xvrabl05)
